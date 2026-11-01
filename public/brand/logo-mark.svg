@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Tawthiq mark">
+  <defs>
+    <linearGradient id="shield" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#0B4F4A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="44" y1="8" x2="56" y2="24" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#D97706"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 3.5 55 12v17.5c0 14.2-9.2 25.1-23 30.9C18.2 54.6 9 43.7 9 29.5V12L32 3.5Z" fill="url(#shield)"/>
+  <path d="M20.5 33.2 28.7 41l15-17" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- negative-space finder square -->
+  <path d="M41 12h9v9h-9z" fill="none" stroke="#fff" stroke-width="2.2"/>
+  <rect x="44" y="15" width="3" height="3" rx="0.6" fill="#fff"/>
+  <circle cx="52" cy="49" r="7" fill="url(#accent)"/>
+  <path d="m49 49 2 2 4-4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env
+.env.*
+!.env.example
+storage
+samples
+coverage
+test-results
+playwright-report
+npm-install.log
+*.md
+!README.md

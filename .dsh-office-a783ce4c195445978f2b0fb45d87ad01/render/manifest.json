@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "backend": "native",
+  "rasterEngine": "pdfium",
+  "source": "saved",
+  "inputPath": "D:\\Bremer Project\\tmp-font-ibm.pdf",
+  "sourceSha256": "47df005efd7f8185a2814ae4a5300562555849fecb4dbe3b812d6980cb820867",
+  "dpi": 260,
+  "pageCount": 1,
+  "images": [
+    {
+      "index": 1,
+      "page": 1,
+      "path": "D:\\Bremer Project\\.dsh-office-a783ce4c195445978f2b0fb45d87ad01\\render\\page-0001.png",
+      "width": 2167,
+      "height": 1517,
+      "rectangle": {
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 560
+      },
+      "byteLength": 93434
+    }
+  ],
+  "missingFonts": []
+}

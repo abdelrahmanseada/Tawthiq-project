@@ -1,0 +1,129 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  AUTH_SECRET: ci-only-auth-secret-ci-only-auth-secret
+  TOTP_ENCRYPTION_KEY: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+  CARD_TOKEN_KEY: ci-only-card-token-key-at-least-32-chars
+  IP_HASH_SALT: ci-only-ip-hash-salt-value
+  MEDIA_SIGNING_SECRET: ci-only-media-signing-secret
+  CRON_SECRET: ci-only-cron-secret-value
+  BACKUP_PASSPHRASE: ci-only-backup-passphrase
+  APP_URL: http://localhost:3000
+  PUBLIC_VERIFY_URL: https://verify.example.com
+  DEFAULT_TIME_ZONE: Africa/Cairo
+  ALLOWED_SCRIPTS: latin
+  PLATFORM_ADMIN_EMAIL: platform@tawthiq.example
+  PLATFORM_ADMIN_PASSWORD: ChangeMe!2026
+  PLATFORM_ADMIN_NAME: Platform Operator
+  TRUSTED_PROXY_HOPS: "1"
+  STORAGE_DIR: ./storage/ci
+
+jobs:
+  verify:
+    name: Typecheck, lint, unit tests, build
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql://evs:evs@127.0.0.1:5432/evs?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@10.9.4
+      - run: npm ci --no-audit --no-fund
+      - run: npx prisma generate
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:unit
+      - run: npm run build
+      - name: Dependency audit gate (high and critical)
+        run: npm audit --omit=dev --audit-level=high
+
+  integration:
+    name: Integration tests (PostgreSQL)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: evs
+          POSTGRES_PASSWORD: evs
+          POSTGRES_DB: evs_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U evs -d evs_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://evs:evs@127.0.0.1:5432/evs_test?schema=public
+      TEST_DATABASE_URL: postgresql://evs:evs@127.0.0.1:5432/evs_test?schema=public
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@10.9.4
+      - run: npm ci --no-audit --no-fund
+      - run: npx prisma migrate deploy
+      - run: npm run test:integration
+
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: evs
+          POSTGRES_PASSWORD: evs
+          POSTGRES_DB: evs
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U evs -d evs"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://evs:evs@127.0.0.1:5432/evs?schema=public
+      REDIS_URL: redis://127.0.0.1:6379
+      E2E_ADMIN_EMAIL: e2e-admin@example.com
+      E2E_ADMIN_PASSWORD: E2e!Password2026
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install -g npm@10.9.4
+      - run: npm ci --no-audit --no-fund
+      - run: npx prisma migrate deploy
+      - run: npm run db:seed
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

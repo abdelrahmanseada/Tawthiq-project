@@ -1,0 +1,301 @@
+// Employee Verification System — Prisma schema
+// PostgreSQL. Soft delete is used for Employee. Token plaintext is never stored.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AdminRole {
+  PLATFORM_ADMIN
+  SUPER_ADMIN
+  ADMIN
+  VIEWER
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  SUSPENDED
+  TERMINATED
+}
+
+enum CompanyStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum CardStatus {
+  ACTIVE
+  REVOKED
+}
+
+enum ScanResult {
+  VALID
+  INVALID
+  EXPIRED
+  REVOKED
+  SUSPENDED
+}
+
+enum ImportStatus {
+  PENDING
+  PROCESSING
+  DONE
+  FAILED
+  ROLLED_BACK
+}
+
+enum DuplicateStrategy {
+  SKIP
+  UPDATE
+  FAIL
+}
+
+model Company {
+  id                         String        @id @default(uuid()) @db.Uuid
+  name                       String        @db.VarChar(200)
+  slug                       String        @unique @db.VarChar(80)
+  status                     CompanyStatus @default(ACTIVE)
+  max_employees              Int           @default(100)
+  time_zone                  String        @default("Africa/Cairo") @db.VarChar(64)
+  custom_domain              String?       @unique @db.VarChar(255)
+  onboarding_completed_at    DateTime?
+  onboarding_test_print_at   DateTime?
+  logo_url                   String?       @db.VarChar(512)
+  primary_color              String        @default("#0F766E") @db.VarChar(7)
+  secondary_color            String        @default("#F59E0B") @db.VarChar(7)
+  contact_phone              String        @db.VarChar(40)
+  contact_email              String        @db.VarChar(254)
+  verify_base_url            String        @db.VarChar(500)
+  idle_timeout_minutes       Int           @default(60)
+  default_card_validity_days Int           @default(365)
+  scan_log_retention_days    Int           @default(365)
+  created_at                 DateTime      @default(now())
+  updated_at                 DateTime      @updatedAt
+
+  admin_users AdminUser[]
+  employees   Employee[]
+  batches     ImportBatch[]
+}
+
+model AdminUser {
+  id                   String    @id @default(uuid()) @db.Uuid
+  company_id           String?   @db.Uuid
+  email                String    @unique @db.VarChar(254)
+  name                 String    @db.VarChar(120)
+  password_hash        String
+  role                 AdminRole @default(ADMIN)
+  totp_secret          String? // AES-256-GCM ciphertext, never plaintext
+  totp_enabled         Boolean   @default(false)
+  must_change_password Boolean   @default(true)
+  is_active            Boolean   @default(true)
+  theme                String    @default("system") @db.VarChar(10)
+  failed_logins        Int       @default(0)
+  locked_until         DateTime?
+  last_login_at        DateTime?
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+
+  company        Company?       @relation(fields: [company_id], references: [id], onDelete: Restrict)
+  import_batches ImportBatch[]
+  audit_logs     AuditLog[]
+  recovery_codes RecoveryCode[]
+  sessions       UserSession[]
+
+  @@index([company_id])
+  @@index([role])
+}
+
+model Employee {
+  id            String         @id @default(uuid()) @db.Uuid
+  company_id    String         @db.Uuid
+  employee_code String         @db.VarChar(64)
+  full_name     String         @db.VarChar(200)
+  department    String?        @db.VarChar(120)
+  job_title     String?        @db.VarChar(120)
+  photo_path    String?        @db.VarChar(512)
+  status        EmployeeStatus @default(ACTIVE)
+  batch_id      String?        @db.Uuid
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  deleted_at    DateTime?
+
+  company Company      @relation(fields: [company_id], references: [id], onDelete: Restrict)
+  batch   ImportBatch? @relation(fields: [batch_id], references: [id], onDelete: SetNull)
+  cards   Card[]
+
+  @@unique([company_id, employee_code])
+  @@index([company_id, deleted_at])
+  @@index([company_id, status])
+  @@index([batch_id])
+  @@index([full_name])
+}
+
+model Card {
+  id              String     @id @default(uuid()) @db.Uuid
+  employee_id     String     @db.Uuid
+  token_hash      String     @unique @db.VarChar(64) // SHA-256 hex of the raw token; raw token is never stored
+  token_prefix    String     @db.VarChar(6) // first 6 chars of the raw token, for admin lookup only
+  status          CardStatus @default(ACTIVE)
+  issued_at       DateTime   @default(now())
+  expires_at      DateTime
+  revoked_at      DateTime?
+  revoked_reason  String?    @db.VarChar(200)
+  token_enc       String?    @db.Text // AES-256-GCM ciphertext of the raw token (CARD_TOKEN_KEY); never logged or returned
+  created_by      String?    @db.Uuid
+  import_batch_id String?    @db.Uuid // set when the card was issued by a bulk import (used by rollback)
+  created_at      DateTime   @default(now())
+
+  employee Employee     @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+  batch    ImportBatch? @relation(fields: [import_batch_id], references: [id], onDelete: SetNull)
+  scans    ScanLog[]
+
+  @@index([employee_id, status])
+  @@index([token_prefix])
+  @@index([expires_at])
+  @@index([import_batch_id])
+}
+
+model ScanLog {
+  id           String     @id @default(uuid()) @db.Uuid
+  company_id   String?    @db.Uuid
+  card_id      String?    @db.Uuid
+  token_prefix String     @db.VarChar(6)
+  result       ScanResult
+  ip_hash      String     @db.VarChar(64)
+  user_agent   String?    @db.VarChar(400)
+  reported     Boolean    @default(false)
+  created_at   DateTime   @default(now())
+
+  card Card? @relation(fields: [card_id], references: [id], onDelete: SetNull)
+
+  @@index([company_id, created_at])
+  @@index([created_at])
+  @@index([result, created_at])
+  @@index([card_id, created_at])
+  @@index([token_prefix])
+  @@index([ip_hash, created_at])
+}
+
+model ImportBatch {
+  id                 String            @id @default(uuid()) @db.Uuid
+  company_id         String            @db.Uuid
+  admin_id           String            @db.Uuid
+  filename           String            @db.VarChar(255)
+  total_rows         Int               @default(0)
+  processed_rows     Int               @default(0)
+  success_count      Int               @default(0)
+  failed_count       Int               @default(0)
+  skipped_count      Int               @default(0)
+  status             ImportStatus      @default(PENDING)
+  duplicate_strategy DuplicateStrategy @default(SKIP)
+  error_report_path  String?           @db.VarChar(512)
+  error_message      String?           @db.VarChar(500)
+  summary            Json?
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
+
+  company   Company    @relation(fields: [company_id], references: [id], onDelete: Restrict)
+  admin     AdminUser  @relation(fields: [admin_id], references: [id], onDelete: Restrict)
+  employees Employee[]
+  cards     Card[]
+
+  @@index([admin_id, created_at])
+  @@index([company_id, created_at])
+  @@index([status])
+}
+
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  company_id String?  @db.Uuid
+  admin_id   String?  @db.Uuid
+  action     String   @db.VarChar(80)
+  entity     String   @db.VarChar(80)
+  entity_id  String?  @db.VarChar(128)
+  metadata   Json?
+  ip         String?  @db.VarChar(64) // HMAC-SHA256 of the client IP (never raw)
+  created_at DateTime @default(now())
+
+  admin AdminUser? @relation(fields: [admin_id], references: [id], onDelete: SetNull)
+
+  @@index([company_id, created_at])
+  @@index([admin_id, created_at])
+  @@index([entity, entity_id])
+  @@index([created_at])
+}
+
+// Optional "Report a problem" submissions from the public verify page.
+model VerificationReport {
+  id           String   @id @default(uuid()) @db.Uuid
+  company_id   String?  @db.Uuid
+  card_id      String?  @db.Uuid
+  token_prefix String   @db.VarChar(6)
+  note         String   @db.VarChar(500)
+  ip_hash      String   @db.VarChar(64)
+  created_at   DateTime @default(now())
+
+  @@index([company_id, created_at])
+  @@index([created_at])
+  @@index([token_prefix])
+}
+
+// Platform-operator audit trail (separate from tenant audit logs).
+model PlatformAuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  actor_id   String?  @db.Uuid
+  action     String   @db.VarChar(80)
+  entity     String   @db.VarChar(80)
+  entity_id  String?  @db.VarChar(128)
+  company_id String?  @db.Uuid
+  metadata   Json?
+  ip_hash    String?  @db.VarChar(64)
+  created_at DateTime @default(now())
+
+  @@index([created_at])
+  @@index([actor_id, created_at])
+  @@index([entity, entity_id])
+}
+
+// Fixed-window counters used by the Postgres rate limiter (Redis is preferred in production).
+model RateLimitCounter {
+  key          String   @id @db.VarChar(160)
+  window_start DateTime
+  count        Int      @default(0)
+
+  @@index([window_start])
+}
+
+// Single-use two-factor recovery codes (Argon2id hashes, plaintext shown once).
+model RecoveryCode {
+  id         String    @id @default(uuid()) @db.Uuid
+  admin_id   String    @db.Uuid
+  code_hash  String
+  used_at    DateTime?
+  created_at DateTime  @default(now())
+
+  admin AdminUser @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+
+  @@index([admin_id, used_at])
+}
+
+// Server-side registry of JWT sessions so admins can list and revoke sessions.
+model UserSession {
+  id           String    @id @default(uuid()) @db.Uuid
+  admin_id     String    @db.Uuid
+  jti          String    @unique @db.VarChar(64)
+  user_agent   String?   @db.VarChar(400)
+  ip_hash      String    @db.VarChar(64)
+  created_at   DateTime  @default(now())
+  last_seen_at DateTime  @default(now())
+  expires_at   DateTime
+  revoked_at   DateTime?
+
+  admin AdminUser @relation(fields: [admin_id], references: [id], onDelete: Cascade)
+
+  @@index([admin_id, revoked_at])
+  @@index([expires_at])
+}
