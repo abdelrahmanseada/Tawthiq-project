@@ -61,11 +61,9 @@ export function ImportProgress({ batchId, initial }: { batchId: string; initial:
         aria-valuenow={percent}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={t("progress")}
-        className="h-3 w-full overflow-hidden rounded-full bg-ink-200"
+        aria-label={t("progress")} className="h-3 w-full overflow-hidden rounded-full bg-ink-200"
       >
-        <div
-          className="h-full rounded-full bg-teal-600 transition-[width] duration-500"
+        <div className="h-full rounded-full bg-teal-600 transition-[width] duration-500"
           style={{ width: `${percent}%` }}
         />
       </div>

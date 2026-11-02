@@ -41,8 +41,7 @@ export default async function AnalyticsPage({
     <div>
       <PageHeader title={t("analytics")} subtitle={td("chartSubtitle")} />
       <div className="grid gap-5 xl:grid-cols-3">
-        <SectionCard
-          className="xl:col-span-2"
+        <SectionCard className="xl:col-span-2"
           title={td("chartTitle")}
           actions={
             <div className="flex rounded-control border border-border p-0.5">

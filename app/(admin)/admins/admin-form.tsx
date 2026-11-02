@@ -46,8 +46,7 @@ export function AdminForm() {
           required
           minLength={12}
           maxLength={128}
-          autoComplete="new-password"
-          className="input"
+          autoComplete="new-password" className="input"
           dir="ltr"
         />
       </Field>

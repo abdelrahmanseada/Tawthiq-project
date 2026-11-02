@@ -1,4 +1,4 @@
-import "dotenv/config";
+﻿import "dotenv/config";
 
 /**
  * Deterministic test environment. Runs before any application module is imported.
@@ -14,13 +14,13 @@ process.env.MEDIA_SIGNING_SECRET = "test-media-signing-secret-value";
 process.env.MEDIA_URL_TTL = "300";
 process.env.CRON_SECRET = "test-cron-secret-value";
 process.env.APP_URL = "http://localhost:3000";
-process.env.SYSTEM_LANGUAGE = "ar";
+process.env.SYSTEM_LANGUAGE = "en";
 process.env.PUBLIC_VERIFY_URL = "https://verify.example.com";
 process.env.CARD_TOKEN_KEY = "test-card-token-key-value-at-least-32-characters";
 process.env.BACKUP_PASSPHRASE = "test-backup-passphrase-value";
 process.env.TRUSTED_PROXY_HOPS = "1";
 process.env.MAX_SPREADSHEET_BYTES = "10485760";
-process.env.MAX_ZIP_BYTES = "209715200";
+process.env.MAX_ZIP_BYTES = "94371840";
 process.env.MAX_IMAGE_BYTES = "5242880";
 process.env.MAX_IMPORT_ROWS = "5000";
 

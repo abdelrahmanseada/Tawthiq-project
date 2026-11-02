@@ -1,4 +1,4 @@
-import type { CardStatus, EmployeeStatus, ScanResult } from "@prisma/client";
+import type { CardStatus, EmployeeStatus, ScanReason, ScanResult } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { normalizeUnicode, truncate } from "@/lib/text";
 import {
@@ -8,7 +8,7 @@ import {
   safeTokenPrefix,
 } from "@/lib/security/crypto";
 import { recordInvalidVerifyAttempt } from "@/lib/security/rate-limit";
-import { PRODUCT_NAME } from "@/lib/brand";
+import { COMPANY_NAME } from "@/lib/brand";
 
 export type VerificationState = "valid" | "expired" | "cancelled" | "invalid";
 
@@ -76,10 +76,10 @@ export interface VerificationRequestMeta {
 export const NEUTRAL_PRODUCT = {
   id: "product",
   time_zone: "Africa/Cairo",
-  name: PRODUCT_NAME,
+  name: COMPANY_NAME,
   logo_url: null,
-  primary_color: "#0F766E",
-  secondary_color: "#F59E0B",
+  primary_color: "#000000",
+  secondary_color: "#8F0015",
   contact_phone: "",
   contact_email: "",
 } as const satisfies PublicCompany;
@@ -111,6 +111,7 @@ async function safeLogScan(input: {
   cardId: string | null;
   tokenPrefix: string;
   result: ScanResult;
+  reason?: ScanReason | null;
   ipHash: string;
   userAgent: string | null;
 }): Promise<void> {
@@ -121,6 +122,7 @@ async function safeLogScan(input: {
         card_id: input.cardId,
         token_prefix: input.tokenPrefix.slice(0, 6),
         result: input.result,
+        reason: input.reason ?? null,
         ip_hash: input.ipHash,
         user_agent: input.userAgent ? truncate(input.userAgent, 400) : null,
       },
@@ -132,7 +134,7 @@ async function safeLogScan(input: {
 
 /**
  * Tenant is resolved exclusively from the token hash. There is no primary-company
- * fallback: invalid tokens and suspended companies always use neutral Tawthiq branding.
+ * fallback: invalid tokens and suspended companies always use neutral Bremer branding.
  */
 export async function verifyPublicToken(
   token: string,
@@ -171,25 +173,14 @@ export async function verifyPublicToken(
   }
 
   const company = card.employee.company;
-  const host = meta.host?.toLowerCase().replace(/:\d+$/, "") ?? null;
-  let hostTenantId: string | null = null;
-  if (host) {
-    const hostCompany = await prisma.company.findFirst({
-      where: { custom_domain: host },
-      select: { id: true },
-    });
-    hostTenantId = hostCompany?.id ?? null;
-  }
-  const hostMismatch =
-    (company.custom_domain && host && company.custom_domain.toLowerCase() !== host) ||
-    (hostTenantId !== null && hostTenantId !== company.id);
 
-  if (company.status === "SUSPENDED" || hostMismatch) {
+  if (company.status === "SUSPENDED") {
     await safeLogScan({
       companyId: company.id,
       cardId: card.id,
       tokenPrefix: card.token_prefix,
       result: "INVALID",
+      reason: "COMPANY_SUSPENDED",
       ipHash: meta.ipHash,
       userAgent: meta.userAgent,
     });
@@ -203,6 +194,18 @@ export async function verifyPublicToken(
     cardId: card.id,
     tokenPrefix: card.token_prefix,
     result: outcome.result,
+    reason:
+      outcome.result === "REVOKED"
+        ? card.employee.deleted_at
+          ? "EMPLOYEE_DELETED"
+          : card.employee.status === "TERMINATED"
+            ? "EMPLOYEE_TERMINATED"
+            : "REVOKED"
+        : outcome.result === "EXPIRED"
+          ? "EXPIRED"
+          : outcome.result === "SUSPENDED"
+            ? "EMPLOYEE_SUSPENDED"
+            : null,
     ipHash: meta.ipHash,
     userAgent: meta.userAgent,
   });

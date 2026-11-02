@@ -1,4 +1,4 @@
-﻿/**
+/**
  * The single source of truth for the CR80 card.
  *
  * All coordinates are millimetres from the top-left of the 85.6 Ã— 54 mm card.
@@ -41,7 +41,7 @@ export const BACK = {
   accent: { x: 0, y: 8, w: CARD_WIDTH_MM, h: 0.8 },
   panel: { x: 4, y: 12, w: 30, h: 30, radius: 2 },
   qr: { x: 6, y: 14, w: 26, h: 26, quietModules: 4, minModuleMm: 0.45 },
-  column: { x: 38, y: 13, w: 43.6, bottom: 44, gap: 1.5 },
+  column: { x: 38, y: 13, w: 43.6, bottom: 44, gap: 2 },
   heading: { pt: 10, maxLines: 1 },
   host: { minPt: 6.5, maxPt: 7.5, maxLines: 2 },
   phone: { minPt: 6.5, maxPt: 7, maxLines: 1 },
@@ -58,7 +58,10 @@ export interface CardTextInput {
   employeeCode: string;
   companyName: string;
   validUntil: string;
-  host: string;
+  host: string | null;
+  website: string | null;
+  tagline: string | null;
+  showVerifyHostOnCard: boolean;
   phone: string;
   email: string;
   hasPhoto: boolean;
@@ -91,7 +94,8 @@ export interface CardLayout {
   back: {
     company: TextBlock;
     heading: TextBlock;
-    host: TextBlock;
+    host: TextBlock | null;
+    website: TextBlock | null;
     phone: TextBlock;
     email: TextBlock;
     returns: TextBlock;
@@ -289,7 +293,7 @@ export function layoutCard(input: CardTextInput): CardLayout {
   const backCompany = fitText(input.companyName, BACK.column.w, 1, 7, 6, "bold");
   const backCompanyBlock = block(
     input.companyName,
-    BACK.header.x,
+    4,
     2.4,
     CARD_WIDTH_MM - 8,
     backCompany.fontSizePt,
@@ -304,13 +308,13 @@ export function layoutCard(input: CardTextInput): CardLayout {
   const headingBlock = block("Scan to verify", BACK.column.x, by, BACK.column.w, 10, 11.8, "bold", "primary", 1);
   by += headingBlock.h + BACK.column.gap;
 
-  let hostFit = fitText(input.host, BACK.column.w, 2, 7.5, 6.5, "bold", false);
-  const hostLines = wrapHost(input.host, BACK.column.w, hostFit.fontSizePt);
-  if (hostLines.length > 2) {
-    hostFit = { lines: hostLines.slice(0, 2), fontSizePt: 6.5 };
-  }
-  const hostBlock = block(input.host, BACK.column.x, by, BACK.column.w, hostFit.fontSizePt, hostFit.fontSizePt * 1.2, "bold", CARD_COLORS.ink, 2, hostLines);
-  by += hostBlock.h + BACK.column.gap;
+  const websiteText = input.website ? input.website.replace(/^https?:\/\//i, "").replace(/\/$/, "") : "";
+  const websiteFit = websiteText ? fitText(websiteText, BACK.column.w, 2, 7.5, 6.5, "bold", false) : null;
+  const websiteLines = websiteFit ? wrapHost(websiteText, BACK.column.w, websiteFit.fontSizePt) : [];
+  const websiteBlock = websiteFit
+    ? block(websiteText, BACK.column.x, by, BACK.column.w, websiteFit.fontSizePt, websiteFit.fontSizePt * 1.2, "bold", CARD_COLORS.ink, 2, websiteLines)
+    : null;
+  if (websiteBlock) by += websiteBlock.h + BACK.column.gap;
 
   const phoneFit = fitText(input.phone, BACK.column.w, 1, 7, 6.5, "regular");
   const phoneBlock = block(input.phone, BACK.column.x, by, BACK.column.w, phoneFit.fontSizePt, phoneFit.fontSizePt * 1.25, "regular", CARD_COLORS.ink, 1, phoneFit.lines);
@@ -323,8 +327,15 @@ export function layoutCard(input: CardTextInput): CardLayout {
   const returnText = `If found, please return to ${input.companyName}.`;
   const returnFit = fitText(returnText, BACK.column.w, 3, 6, 6, "regular");
   const returnBlock = block(returnText, BACK.column.x, by, BACK.column.w, 6, 7.2, "regular", CARD_COLORS.muted, 3, returnFit.lines);
+  by += returnBlock.h + BACK.column.gap;
 
-  const backFooter = block("Powered by Tawthiq", BACK.footer.x, BACK.footer.y, 60, 6, 7, "regular", CARD_COLORS.muted, 1);
+  let hostBlock: TextBlock | null = null;
+  if (input.showVerifyHostOnCard && input.host) {
+    const hostLines = wrapHost(input.host, BACK.column.w, 6.2);
+    hostBlock = block(input.host, BACK.column.x, by, BACK.column.w, 6.2, 7.0, "bold", CARD_COLORS.muted, 2, hostLines);
+  }
+
+  const backFooter = block(input.tagline ?? "", BACK.footer.x, BACK.footer.y, 72, 6, 7, "regular", CARD_COLORS.muted, 1);
 
   return {
     front: {
@@ -339,6 +350,7 @@ export function layoutCard(input: CardTextInput): CardLayout {
       company: backCompanyBlock,
       heading: headingBlock,
       host: hostBlock,
+      website: websiteBlock,
       phone: phoneBlock,
       email: emailBlock,
       returns: returnBlock,

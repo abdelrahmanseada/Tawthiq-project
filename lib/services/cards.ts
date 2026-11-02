@@ -32,11 +32,15 @@ export function companyCardData(company: Company): CardCompanyData {
   return {
     name: company.name,
     logo_path: company.logo_url,
+    logo_bg_dark: company.logo_bg_dark,
     primary_color: company.primary_color,
     secondary_color: company.secondary_color,
     contact_phone: company.contact_phone,
     contact_email: company.contact_email,
     verify_base_url: company.verify_base_url,
+    website: company.website,
+    tagline: company.tagline,
+    show_verify_host_on_card: company.show_verify_host_on_card,
     time_zone: company.time_zone,
     status: company.status,
   };
@@ -147,6 +151,26 @@ export async function getLatestCard(employeeId: string): Promise<Card | null> {
 
 export function cardToken(card: Pick<Card, "token_enc">): string | null {
   return decryptCardToken(card.token_enc);
+}
+
+/**
+ * Old cards can carry a token encrypted with a previous CARD_TOKEN_KEY (for
+ * example after moving a database into a new Docker stack). Rotate that card
+ * in place so printing works again; the old printed QR becomes invalid.
+ */
+async function ensureCardToken(card: Card): Promise<string | null> {
+  const existing = cardToken(card);
+  if (existing) return existing;
+  const prepared = prepareCard(card.expires_at);
+  try {
+    await prisma.card.update({
+      where: { id: card.id },
+      data: { token_hash: prepared.tokenHash, token_prefix: prepared.tokenPrefix, token_enc: prepared.tokenEnc },
+    });
+    return decryptCardToken(prepared.tokenEnc);
+  } catch {
+    return null;
+  }
 }
 
 export async function revokeCard(
@@ -341,7 +365,7 @@ export async function buildPrintableCards(
     if (!check.ok) {
       throw new CardOperationError(check.errors[0] ?? "print_blocked", "Card cannot be printed", 409);
     }
-    const token = cardToken(card);
+    const token = await ensureCardToken(card);
     if (!token) throw new CardOperationError("card_needs_reissue", "Card must be re-issued", 409);
     const bytes = await renderCardPdf({
       company: companyCardData(employee.company),
@@ -398,7 +422,7 @@ export async function loadPrintableCard(
     new Date(),
   );
   if (!check.ok) throw new CardOperationError(check.errors[0] ?? "print_blocked", "Card cannot be printed", 409);
-  const token = cardToken(card);
+  const token = await ensureCardToken(card);
   if (!token) throw new CardOperationError("card_needs_reissue", "Card must be re-issued", 409);
   const bytes = await renderCardPdf({
     company: companyCardData(card.employee.company),

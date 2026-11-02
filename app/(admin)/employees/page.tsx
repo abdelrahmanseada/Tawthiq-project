@@ -60,14 +60,12 @@ export default async function EmployeesPage({
                 {tc("export")}
               </summary>
               <div className="absolute end-0 z-20 mt-2 w-48 rounded-card border border-border bg-card p-1.5 shadow-raised">
-                <a
-                  className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
+                <a className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
                   href={`/api/admin/employees/export?format=csv&${exportQuery.toString()}`}
                 >
                   {t("exportCsv")}
                 </a>
-                <a
-                  className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
+                <a className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
                   href={`/api/admin/employees/export?format=xlsx&${exportQuery.toString()}`}
                 >
                   {t("exportXlsx")}
@@ -97,8 +95,7 @@ export default async function EmployeesPage({
                 name="q"
                 type="search"
                 defaultValue={query.q}
-                placeholder={t("searchPlaceholder")}
-                className="input ps-9"
+                placeholder={t("searchPlaceholder")} className="input ps-9"
               />
             </div>
           </div>
@@ -152,8 +149,7 @@ export default async function EmployeesPage({
             {tc("results")}
           </span>
           <Link
-            href={`/employees?${new URLSearchParams({ ...(query.q ? { q: query.q } : {}), deleted: query.deleted === "1" ? "0" : "1" }).toString()}`}
-            className="link ms-auto text-sm"
+            href={`/employees?${new URLSearchParams({ ...(query.q ? { q: query.q } : {}), deleted: query.deleted === "1" ? "0" : "1" }).toString()}`} className="link ms-auto text-sm"
           >
             {query.deleted === "1" ? t("backToList") : t("viewDeleted")}
           </Link>

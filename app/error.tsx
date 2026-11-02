@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LogoMark } from "@/components/ui";
+import { copyrightText } from "@/lib/brand";
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations("errors");
@@ -25,6 +26,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
           {t("backDashboard")}
         </Link>
       </div>
+      <p className="mt-4 text-xs text-subtle">{copyrightText()}</p>
     </main>
   );
 }

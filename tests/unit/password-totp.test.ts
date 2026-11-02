@@ -58,6 +58,6 @@ describe("TOTP", () => {
     const uri = buildTotpKeyUri(secret, "admin@example.com");
     expect(uri.startsWith("otpauth://totp/")).toBe(true);
     expect(decodeURIComponent(uri)).toContain("admin@example.com");
-    expect(decodeURIComponent(uri)).toContain("Employee Verification System");
+    expect(decodeURIComponent(uri)).toContain("Bremer");
   });
 });

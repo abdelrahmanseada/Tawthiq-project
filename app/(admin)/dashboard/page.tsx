@@ -145,8 +145,7 @@ export default async function DashboardPage({
       </div>
 
       <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-3">
-        <SectionCard
-          className="xl:col-span-2"
+        <SectionCard className="xl:col-span-2"
           title={t("chartTitle")}
           description={t("chartSubtitle")}
           actions={
@@ -201,8 +200,7 @@ export default async function DashboardPage({
               {attention.map((item) => (
                 <li key={item.key}>
                   <Link
-                    href={item.href}
-                    className="flex items-center justify-between gap-2 rounded-control border border-border px-3 py-2.5 hover:bg-surface"
+                    href={item.href} className="flex items-center justify-between gap-2 rounded-control border border-border px-3 py-2.5 hover:bg-surface"
                   >
                     <span className="flex items-center gap-2 text-sm">
                       <AlertTriangle

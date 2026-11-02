@@ -73,10 +73,10 @@ export async function renderCardsSheet(
 ): Promise<Uint8Array> {
   const out = await PDFDocument.create();
   out.setTitle("Employee ID cards — A4 sheet");
-  out.setAuthor(options.author ?? "Tawthiq");
+  out.setAuthor(options.author ?? "Bremer");
   out.setSubject("Print-ready employee ID cards");
-  out.setProducer("Tawthiq");
-  out.setCreator("Tawthiq");
+  out.setProducer("Bremer");
+  out.setCreator("Bremer");
   out.setCreationDate(new Date());
   out.setModificationDate(new Date());
 

@@ -1,17 +1,20 @@
-/** Product identity — never tenant data. */
+/** Single-company identity. The Company row is the source of truth at runtime. */
 export const PRODUCT_NAME = "Tawthiq";
+export const COMPANY_NAME = PRODUCT_NAME;
 export const TAGLINE = "Verified identity for every workforce.";
-export const PRODUCT_DESCRIPTION = "Multi-company employee identity and verification.";
-export const POWERED_BY = `Powered by ${PRODUCT_NAME}`;
+export const COMPANY_DESCRIPTION = "Employee identity and verification.";
+export const DEFAULT_COPYRIGHT_TEMPLATE = "© {year} Tawthiq";
 
-/** Support URL is optional at build time; set SUPPORT_URL in production. */
-export const SUPPORT_URL = process.env.SUPPORT_URL ?? "https://support.tawthiq.example";
+export function copyrightText(year = new Date().getFullYear()): string {
+  const template = process.env.COPYRIGHT_TEXT?.trim() || DEFAULT_COPYRIGHT_TEMPLATE;
+  return template.replaceAll("{year}", String(year));
+}
 
 export const BRAND = {
-  name: PRODUCT_NAME,
+  name: COMPANY_NAME,
   tagline: TAGLINE,
-  description: PRODUCT_DESCRIPTION,
-  poweredBy: POWERED_BY,
+  description: COMPANY_DESCRIPTION,
+  copyright: copyrightText(),
 } as const;
 
 export function brandFor(_locale?: string) {

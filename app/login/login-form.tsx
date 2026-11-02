@@ -30,8 +30,7 @@ export function LoginForm() {
           autoComplete="username"
           required
           maxLength={254}
-          defaultValue={state.email ?? ""}
-          className="input"
+          defaultValue={state.email ?? ""} className="input"
           dir="ltr"
         />
       </Field>
@@ -43,8 +42,7 @@ export function LoginForm() {
           type="password"
           autoComplete="current-password"
           required
-          maxLength={128}
-          className="input"
+          maxLength={128} className="input"
           dir="ltr"
         />
       </Field>

@@ -3,17 +3,19 @@ import { getTranslations } from "next-intl/server";
 import { requireAdmin } from "@/lib/auth/session";
 import { roleLabel } from "@/lib/auth/rbac";
 import { can } from "@/lib/auth/rbac";
-import { env } from "@/lib/env";
+import { env, twoFactorRequired } from "@/lib/env";
+import { redirect } from "next/navigation";
 import { validateVerifyBaseUrl } from "@/lib/qr";
-import { normalizeTheme } from "@/lib/theme";
 import { getNotifications } from "@/lib/services/notifications";
 import { AdminShell, type ShellNavGroup } from "@/components/AdminShell";
+import { copyrightText } from "@/lib/brand";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
   const t = await getTranslations();
   const headerStore = await headers();
   const pathname = headerStore.get("x-pathname") ?? "/dashboard";
+  if (twoFactorRequired && !admin.totpEnabled) redirect("/2fa/setup");
 
   const nav: ShellNavGroup[] = [
     {
@@ -90,9 +92,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const urlCheck = validateVerifyBaseUrl(admin.company.verify_base_url, env.NODE_ENV === "production");
   const invalidDomain = !urlCheck.ok || !urlCheck.productionValid;
-  const logoUrl = admin.company.logo_url
-    ? `/api/media/logo?company=${admin.company.id}&v=${encodeURIComponent(admin.company.updated_at.toISOString())}`
-    : null;
 
   return (
     <AdminShell
@@ -100,9 +99,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         name: admin.name,
         email: admin.email,
         roleLabel: roleLabel(admin.role),
-        theme: normalizeTheme(admin.theme),
       }}
-      company={{ name: admin.company.name, logoUrl }}
+      copyright={copyrightText()}
       nav={nav}
       notifications={notificationViews}
       breadcrumbs={breadcrumbs}

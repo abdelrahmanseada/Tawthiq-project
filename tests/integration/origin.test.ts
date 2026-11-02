@@ -41,7 +41,7 @@ describe("route-handler origin policy", () => {
     const { assertSameOrigin } = await import("@/lib/http");
     expect(() => assertSameOrigin(request("https://random-name.trycloudflare.com"), options)).toThrow(ApiError);
     expect(() =>
-      assertSameOrigin(request("https://random-name.trycloudflare.com"), {
+      assertSameOrigin(request("https://random-name.trycloudflare.com", { host: "random-name.trycloudflare.com", proto: "https" }), {
         ...options,
         allowedOrigins: "https://random-name.trycloudflare.com",
       }),
@@ -66,10 +66,10 @@ describe("route-handler origin policy", () => {
     expect(evaluateOrigin(local, { ...options, appUrl: "https://app.example", production: true, trustHost: false }).allowed).toBe(false);
   });
 
-  it("adds the request host only when AUTH_TRUST_HOST is enabled", async () => {
+  it("allows a tunnel only when it is explicitly in ALLOWED_ORIGINS", async () => {
     const { evaluateOrigin } = await import("@/lib/http");
     const tunnelRequest = request("https://tunnel.example", { host: "tunnel.example", proto: "https" });
-    expect(evaluateOrigin(tunnelRequest, { ...options, trustHost: false }).allowed).toBe(false);
-    expect(evaluateOrigin(tunnelRequest, { ...options, trustHost: true }).allowed).toBe(true);
+    expect(evaluateOrigin(tunnelRequest, { ...options, trustHost: true }).allowed).toBe(false);
+    expect(evaluateOrigin(tunnelRequest, { ...options, allowedOrigins: "https://tunnel.example" }).allowed).toBe(true);
   });
 });

@@ -43,7 +43,7 @@ async function main() {
         JSON.stringify(
           {
             createdAt: new Date().toISOString(),
-            app: "Tawthiq",
+            app: "Bremer",
             version: process.env.npm_package_version ?? "1.0.0",
             database: "postgresql",
           },

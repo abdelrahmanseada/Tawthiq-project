@@ -122,3 +122,25 @@ export function parseImageDataUrl(value: string, maxBytes = 5 * 1024 * 1024): Bu
   if (!detectImageType(buffer)) throw new ImageValidationError("Unsupported image format");
   return buffer;
 }
+
+/** Sample the four corners of a logo; opaque, very dark corners need no white plate. */
+export async function logoBackgroundIsDark(buffer: Buffer): Promise<boolean> {
+  const { data, info } = await sharp(buffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const points = [
+    [1, 1],
+    [info.width - 2, 1],
+    [1, info.height - 2],
+    [info.width - 2, info.height - 2],
+  ];
+  let total = 0;
+  for (const [x, y] of points) {
+    const offset = (Math.max(0, y) * info.width + Math.max(0, x)) * 4;
+    const alpha = data[offset + 3]! / 255;
+    const r = data[offset]! * alpha + 255 * (1 - alpha);
+    const g = data[offset + 1]! * alpha + 255 * (1 - alpha);
+    const b = data[offset + 2]! * alpha + 255 * (1 - alpha);
+    total += (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  }
+  return total / points.length < 0.2;
+}
+

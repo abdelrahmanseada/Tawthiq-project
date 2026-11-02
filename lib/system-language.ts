@@ -7,5 +7,5 @@ export function getSystemLanguage(): EnabledLocale {
 }
 
 export function supportUrl(): string {
-  return env.SUPPORT_URL ?? "https://support.tawthiq.example";
+  return env.SUPPORT_URL ?? "https://bremer.example/support";
 }

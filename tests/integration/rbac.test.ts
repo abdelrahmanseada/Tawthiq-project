@@ -56,14 +56,14 @@ describe.skipIf(!hasDatabase)("RBAC and tenant scoping integration", () => {
     await prisma.$disconnect();
   });
 
-  it("enforces the permission matrix server-side, including the platform role", async () => {
+  it("enforces the permission matrix server-side, across company roles", async () => {
     const { can, assertCan, ForbiddenError } = await import("@/lib/auth/rbac");
     expect(can("SUPER_ADMIN", "settings.manage")).toBe(true);
     expect(can("ADMIN", "settings.manage")).toBe(false);
     expect(can("VIEWER", "employees.write")).toBe(false);
     expect(can("VIEWER", "employees.read")).toBe(true);
-    expect(can("PLATFORM_ADMIN", "dashboard.view")).toBe(false);
-    expect(can("PLATFORM_ADMIN", "settings.manage")).toBe(false);
+    expect(can("ADMIN", "logs.audit")).toBe(false);
+    expect(can("SUPER_ADMIN", "logs.audit")).toBe(true);
     expect(() => assertCan("VIEWER", "imports.manage")).toThrow(ForbiddenError);
     expect(() => assertCan("ADMIN", "admins.manage")).toThrow(ForbiddenError);
   });
@@ -125,7 +125,7 @@ describe.skipIf(!hasDatabase)("RBAC and tenant scoping integration", () => {
     }
   });
 
-  it("verifies suspended companies and custom-host mismatches as neutral INVALID", async () => {
+  it("keeps a valid token valid regardless of request host and blocks suspended companies", async () => {
     const { verifyPublicToken } = await import("@/lib/services/verification");
     const { issueCardForEmployee } = await import("@/lib/services/cards");
     const { decryptCardToken } = await import("@/lib/security/crypto");
@@ -137,7 +137,6 @@ describe.skipIf(!hasDatabase)("RBAC and tenant scoping integration", () => {
         contact_phone: "+20 100 000 0003",
         contact_email: "verify@example.com",
         verify_base_url: "https://verify-tenant.example.com",
-        custom_domain: "cards.verify-tenant.example.com",
         time_zone: "Africa/Cairo",
       },
     });
@@ -149,10 +148,8 @@ describe.skipIf(!hasDatabase)("RBAC and tenant scoping integration", () => {
       const token = decryptCardToken(card.token_enc)!;
       const meta = { ipHash: "test-ip", userAgent: "vitest" };
 
-      const mismatch = await verifyPublicToken(token, { ...meta, host: "other.example.com" });
-      expect(mismatch.state).toBe("invalid");
-      expect(mismatch.company).toBeNull();
-
+      const otherHost = await verifyPublicToken(token, { ...meta, host: "other.example.com" });
+      expect(otherHost.state).toBe("valid");
       const valid = await verifyPublicToken(token, { ...meta, host: "cards.verify-tenant.example.com" });
       expect(valid.state).toBe("valid");
       expect(valid.company?.name).toBe("Verify Tenant");

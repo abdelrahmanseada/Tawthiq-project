@@ -99,8 +99,7 @@ export default async function CardsPage({
               name="q"
               type="search"
               defaultValue={query.q}
-              placeholder={t("searchPlaceholder")}
-              className="input"
+              placeholder={t("searchPlaceholder")} className="input"
             />
           </div>
           <button type="submit" className="btn btn-primary">

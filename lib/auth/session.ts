@@ -14,7 +14,7 @@ export interface SessionAdmin {
   role: Role;
   companyId: string | null;
   mustChangePassword: boolean;
-  theme: string;
+  totpEnabled: boolean;
   sessionId: string;
   company: Company | null;
 }
@@ -36,7 +36,7 @@ export async function getCurrentAdmin(): Promise<SessionAdmin | null> {
     include: { company: true },
   });
   if (!admin || !admin.is_active) return null;
-  if (admin.role !== "PLATFORM_ADMIN" && !admin.company) return null;
+  if (!admin.company) return null;
 
   const validated = await validateUserSession(
     admin.id,
@@ -52,24 +52,24 @@ export async function getCurrentAdmin(): Promise<SessionAdmin | null> {
     role: admin.role,
     companyId: admin.company_id,
     mustChangePassword: admin.must_change_password,
-    theme: admin.theme,
+    totpEnabled: admin.totp_enabled,
     sessionId: validated.id,
     company: admin.company,
   };
 }
 
-/** Page guard for tenant pages. Platform operators are sent to their console. */
+/** Page guard for company pages. */
 export async function requireAdmin(): Promise<SessionAdmin & { companyId: string; company: Company }> {
   const admin = await getCurrentAdmin();
   if (!admin) redirect("/login");
-  if (admin.role === "PLATFORM_ADMIN" || !admin.company || !admin.companyId) redirect("/platform");
+  if (!admin.company || !admin.companyId) redirect("/login");
   return admin as SessionAdmin & { companyId: string; company: Company };
 }
 
 /** Page guard with RBAC: unauthorised roles are sent back to the dashboard. */
 export async function requirePermission(permission: Permission): Promise<SessionAdmin & { companyId: string; company: Company }> {
   const admin = await requireAdmin();
-  if (!can(admin.role, permission)) redirect("/dashboard?denied=1");
+  if (!can(admin.role, permission)) redirect("/403");
   return admin;
 }
 
@@ -77,8 +77,8 @@ export async function requirePermission(permission: Permission): Promise<Session
 export async function requireActionAdmin(): Promise<SessionAdmin & { companyId: string; company: Company }> {
   const admin = await getCurrentAdmin();
   if (!admin) throw new ApiError(401, "UNAUTHENTICATED", "You must sign in first");
-  if (admin.role === "PLATFORM_ADMIN" || !admin.company || !admin.companyId) {
-    throw new ApiError(403, "FORBIDDEN", "Platform operators cannot use tenant actions");
+  if (!admin.company || !admin.companyId) {
+    throw new ApiError(403, "FORBIDDEN", "Company context is required");
   }
   return admin as SessionAdmin & { companyId: string; company: Company };
 }
@@ -94,17 +94,3 @@ export async function requireActionPermission(permission: Permission): Promise<S
   return admin;
 }
 
-/** Platform console guard. No tenant fallback is allowed. */
-export async function requirePlatformAdmin(): Promise<SessionAdmin> {
-  const admin = await getCurrentAdmin();
-  if (!admin) redirect("/login");
-  if (admin.role !== "PLATFORM_ADMIN") redirect("/dashboard");
-  return admin;
-}
-
-export async function requirePlatformAction(): Promise<SessionAdmin> {
-  const admin = await getCurrentAdmin();
-  if (!admin) throw new ApiError(401, "UNAUTHENTICATED", "You must sign in first");
-  if (admin.role !== "PLATFORM_ADMIN") throw new ApiError(403, "FORBIDDEN", "Platform operators only");
-  return admin;
-}

@@ -10,8 +10,12 @@ const TOKEN = "Zx7Qp2Lm9Rt4Vw8Yb3Nc6Hd1Ks5Jf0Ga";
 function input(): RenderCardInput {
   return {
     company: {
-      name: "Northwind Demo",
+      name: "Bremer",
       logo_path: null,
+      logo_bg_dark: false,
+      website: "bremer.example",
+      tagline: "Established 1989",
+      show_verify_host_on_card: false,
       primary_color: "#0F766E",
       secondary_color: "#F59E0B",
       contact_phone: "+20 100 000 0000",
@@ -76,7 +80,7 @@ describe("card PDF rendering", () => {
   it("handles 60-character names/titles, a 40-character company and missing images", async () => {
     const bytes = await renderCardPdf({
       ...input(),
-      company: { ...input().company, name: "Northwind International Facilities Group Ltd" },
+      company: { ...input().company, name: "Bremer International Facilities Group Ltd" },
       employee: {
         ...input().employee,
         full_name: "Abdelrahman Mohamed Abdelrahman Mohamed Abdelrahman Mohamed Ali",
@@ -86,12 +90,12 @@ describe("card PDF rendering", () => {
     expect((await PDFDocument.load(bytes)).getPageCount()).toBe(2);
   });
 
-  it("sets English metadata with the Tawthiq producer and no employee name", async () => {
+  it("sets English metadata with the Bremer producer and no employee name", async () => {
     const bytes = await renderCardPdf(input());
     const pdf = await PDFDocument.load(bytes, { updateMetadata: false });
     expect(pdf.getTitle()).toBe("ID card - Amelia Hart");
-    expect(pdf.getProducer()).toBe("Tawthiq");
-    expect(pdf.getAuthor()).toBe("Northwind Demo");
+    expect(pdf.getProducer()).toBe("Employee ID system");
+    expect(pdf.getAuthor()).toBe("Bremer");
   });
 
   it("composes cards onto A4 sheets with mirrored backs", async () => {

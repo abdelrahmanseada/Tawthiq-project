@@ -87,6 +87,10 @@ export default async function ScanLogsPage({
                 <dd><Badge tone={selected.result === "VALID" ? "success" : "danger"}>{ts(resultLabelKey(selected.result))}</Badge></dd>
               </div>
               <div>
+                <dt className="text-muted">Reason</dt>
+                <dd className="font-mono text-xs text-ink">{selected.reason ?? "VALID"}</dd>
+              </div>
+              <div>
                 <dt className="text-muted">{t("employee")}</dt>
                 <dd className="text-ink">
                   {selected.card?.employee ? (
@@ -185,8 +189,7 @@ export default async function ScanLogsPage({
                   <td className="td hidden font-mono text-xs lg:table-cell" dir="ltr">{scan.ip_hash.slice(0, 12)}…</td>
                   <td className="td text-end">
                     <Link
-                      href={`/logs/scans?${new URLSearchParams({ ...(query.result ? { result: query.result } : {}), ...(query.employee ? { employee: query.employee } : {}), ...(query.from ? { from: query.from } : {}), ...(query.to ? { to: query.to } : {}), scan: scan.id }).toString()}`}
-                      className="link text-xs"
+                      href={`/logs/scans?${new URLSearchParams({ ...(query.result ? { result: query.result } : {}), ...(query.employee ? { employee: query.employee } : {}), ...(query.from ? { from: query.from } : {}), ...(query.to ? { to: query.to } : {}), scan: scan.id }).toString()}`} className="link text-xs"
                     >
                       {t("openDetails")}
                     </Link>

@@ -81,13 +81,11 @@ export function ImportWizard() {
           name="spreadsheet"
           type="file"
           required
-          accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
-          className="sr-only"
+          accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" className="sr-only"
           onChange={(event) => setSpreadsheetName(event.target.files?.[0]?.name ?? null)}
         />
         <label
-          htmlFor="spreadsheet"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-7 text-center hover:border-brand"
+          htmlFor="spreadsheet" className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-7 text-center hover:border-brand"
         >
           <FileSpreadsheet className="h-8 w-8 text-brand" aria-hidden="true" />
           <span className="text-sm font-semibold text-ink">{t("dropSpreadsheet")}</span>
@@ -108,13 +106,11 @@ export function ImportWizard() {
           id="photo_zip"
           name="photo_zip"
           type="file"
-          accept=".zip,application/zip"
-          className="sr-only"
+          accept=".zip,application/zip" className="sr-only"
           onChange={(event) => setZipName(event.target.files?.[0]?.name ?? null)}
         />
         <label
-          htmlFor="photo_zip"
-          className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-6 text-center hover:border-brand"
+          htmlFor="photo_zip" className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-6 text-center hover:border-brand"
         >
           <Images className="h-7 w-7 text-muted" aria-hidden="true" />
           <span className="text-sm font-semibold text-ink">{t("dropZip")}</span>

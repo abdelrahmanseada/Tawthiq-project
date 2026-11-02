@@ -15,7 +15,7 @@ export default defineConfig({
   retries: 0,
   reporter: [["list"], ["html", { open: "never" }]],
   use: {
-    baseURL: process.env.E2E_BASE_URL ?? "http://127.0.0.1:3000",
+    baseURL: process.env.E2E_BASE_URL ?? "http://localhost:3010",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "off",
@@ -24,13 +24,13 @@ export default defineConfig({
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: "npm run dev",
-        url: "http://127.0.0.1:3000/login",
+        command: "npx next dev -p 3010 -H 0.0.0.0",
+        url: "http://localhost:3010/login",
         reuseExistingServer: true,
         timeout: 180_000,
         stdout: "ignore",
         stderr: "pipe",
-        env: { ...process.env, E2E_MODE: "1" },
+        env: { ...process.env, E2E_MODE: "1", APP_URL: "http://localhost:3010", AUTH_URL: "http://localhost:3010", PUBLIC_BASE_URL: "http://localhost:3010", PUBLIC_VERIFY_URL: "http://localhost:3010", REQUIRE_2FA: "false" },
       },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
 });

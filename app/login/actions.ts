@@ -14,6 +14,7 @@ import {
   checkRateLimit,
 } from "@/lib/security/rate-limit";
 import { createMfaTicket, hashIp, hashOpaque } from "@/lib/security/crypto";
+import { setMfaTicketCookie } from "@/lib/auth/mfa-cookie";
 import { burnPasswordVerification, verifyPassword } from "@/lib/security/password";
 import { getClientIp } from "@/lib/http";
 import { env } from "@/lib/env";
@@ -145,6 +146,11 @@ export async function startLoginAction(_previous: LoginState | undefined, formDa
     data: { failed_logins: 0, locked_until: null },
   });
 
+  if (admin.totp_enabled) {
+    await setMfaTicketCookie(createMfaTicket(admin.id, "totp"));
+    redirect("/2fa");
+  }
+
   const ticket = createMfaTicket(admin.id, "password_only");
   try {
     const result = (await signIn("credentials", {
@@ -168,6 +174,5 @@ export async function startLoginAction(_previous: LoginState | undefined, formDa
     ip,
   });
 
-  if (admin.role === "PLATFORM_ADMIN") redirect("/platform");
   redirect(admin.must_change_password ? "/change-password" : "/dashboard");
 }

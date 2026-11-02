@@ -2,7 +2,7 @@ import type { Company } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { writeAuditLog } from "@/lib/audit";
 import { normalizeUnicode } from "@/lib/text";
-import { normalizeCompanyLogo, ImageValidationError } from "@/lib/images";
+import { normalizeCompanyLogo, ImageValidationError, logoBackgroundIsDark } from "@/lib/images";
 import { removeStorageFile, storageKey, writeStorageFile } from "@/lib/storage";
 import { env } from "@/lib/env";
 import { validateVerifyBaseUrl } from "@/lib/qr";
@@ -72,13 +72,15 @@ export async function updateCompanySettings(
     where: { id: companyId },
     data: {
       name: normalizeUnicode(input.name),
+      tagline: normalizeUnicode(input.tagline ?? ""),
+      website: input.website ? input.website : null,
+      show_verify_host_on_card: input.show_verify_host_on_card === "1",
       primary_color: input.primary_color.toLowerCase(),
       secondary_color: input.secondary_color.toLowerCase(),
       contact_phone: normalizeUnicode(input.contact_phone),
       contact_email: input.contact_email,
       verify_base_url: normalizedUrl,
       time_zone: input.time_zone,
-      custom_domain: input.custom_domain || null,
       idle_timeout_minutes: input.idle_timeout_minutes,
       default_card_validity_days: input.default_card_validity_days,
       scan_log_retention_days: input.scan_log_retention_days,
@@ -94,7 +96,6 @@ export async function updateCompanySettings(
       name: updated.name,
       verify_base_url: updated.verify_base_url,
       time_zone: updated.time_zone,
-      custom_domain: updated.custom_domain,
       previous_verify_base_url: existing.verify_base_url,
       domain_changed: domainChanged,
       active_cards_affected: activeCards,
@@ -116,11 +117,12 @@ export async function updateCompanyLogo(
 ): Promise<Company> {
   if (imageBuffer.length > env.MAX_IMAGE_BYTES) throw new ImageValidationError("Image too large");
   const normalized = await normalizeCompanyLogo(imageBuffer);
+  const dark = await logoBackgroundIsDark(normalized.buffer);
   const key = storageKey("logos", companyId, "logo.png");
   await writeStorageFile(key, normalized.buffer);
 
   const previous = await prisma.company.findUnique({ where: { id: companyId }, select: { logo_url: true } });
-  const company = await prisma.company.update({ where: { id: companyId }, data: { logo_url: key } });
+  const company = await prisma.company.update({ where: { id: companyId }, data: { logo_url: key, logo_bg_dark: dark } });
   if (previous?.logo_url && previous.logo_url !== key) await removeStorageFile(previous.logo_url);
 
   await writeAuditLog({
@@ -135,7 +137,7 @@ export async function updateCompanyLogo(
 
 export async function removeCompanyLogo(companyId: string, adminId: string, ip: string | null): Promise<Company> {
   const previous = await prisma.company.findUnique({ where: { id: companyId }, select: { logo_url: true } });
-  const company = await prisma.company.update({ where: { id: companyId }, data: { logo_url: null } });
+  const company = await prisma.company.update({ where: { id: companyId }, data: { logo_url: null, logo_bg_dark: false } });
   if (previous?.logo_url) await removeStorageFile(previous.logo_url);
   await writeAuditLog({
     adminId,

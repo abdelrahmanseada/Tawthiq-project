@@ -61,7 +61,7 @@ function applySecurityHeaders(response: NextResponse, csp: string, secure: boole
 /**
  * Edge middleware: nonce CSP and hardened headers, a cheap admin session gate
  * (real RBAC happens server-side), and no-store/noindex on public verification.
- * The deployment language is fixed by Company.locale; there is no locale switcher.
+ * The deployment is fixed to English; there is no locale switcher.
  */
 export function middleware(request: NextRequest) {
   const isDev = process.env.NODE_ENV !== "production";

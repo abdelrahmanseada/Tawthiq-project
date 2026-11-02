@@ -90,8 +90,11 @@ export type EmployeeInput = z.infer<typeof employeeInputSchema>;
 
 export const companySettingsSchema = z.object({
   name: latinText(1, 200),
-  primary_color: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/, "invalid_color"),
-  secondary_color: z.string().trim().regex(/^#[0-9a-fA-F]{6}$/, "invalid_color"),
+  tagline: z.string().trim().max(120, "too_long").optional().default(""),
+  website: z.union([z.string().trim().url("invalid_url").max(255), z.literal("")]).optional().default(""),
+  primary_color: z.string().trim().transform((value) => (value.length === 0 ? "#000000" : value)).refine((value) => /^#[0-9a-fA-F]{6}$/.test(value), "invalid_color"),
+  secondary_color: z.string().trim().transform((value) => (value.length === 0 ? "#8F0015" : value)).refine((value) => /^#[0-9a-fA-F]{6}$/.test(value), "invalid_color"),
+  show_verify_host_on_card: z.enum(["0", "1"]).optional().default("0"),
   contact_phone: z.string().trim().min(3, "required").max(40, "too_long"),
   contact_email: emailSchema,
   verify_base_url: z
@@ -110,15 +113,12 @@ export const companySettingsSchema = z.object({
       }
     }),
   time_zone: z.string().trim().min(1, "required").max(64, "too_long").refine((value) => isValidTimeZone(value), "invalid_time_zone"),
-  custom_domain: z.string().trim().toLowerCase().max(255).regex(/^(?=.{1,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/, "invalid_domain").optional().nullable().or(z.literal("").transform(() => null)),
   idle_timeout_minutes: z.coerce.number().int().min(5).max(1440),
   default_card_validity_days: z.coerce.number().int().min(1).max(3650),
   scan_log_retention_days: z.coerce.number().int().min(30).max(3650),
 });
 
 export type CompanySettingsInput = z.infer<typeof companySettingsSchema>;
-
-export const themeSchema = z.enum(["system", "light", "dark"]);
 
 export const recoveryCodeSchema = z.object({
   code: z
@@ -227,14 +227,3 @@ export function formValue(formData: FormData, key: string): string {
   return typeof value === "string" ? value : "";
 }
 
-export const platformCompanySchema = z.object({
-  name: latinText(2, 200),
-  slug: z.string().trim().toLowerCase().min(2, "too_short").max(80, "too_long").regex(/^[a-z0-9-]+$/, "invalid_slug"),
-  owner_name: latinText(2, 120),
-  owner_email: emailSchema,
-  temporary_password: newPasswordSchema,
-  max_employees: z.coerce.number().int().min(1).max(100000),
-  time_zone: z.string().trim().min(1, "required").max(64, "too_long").refine((value) => isValidTimeZone(value), "invalid_time_zone"),
-});
-
-export type PlatformCompanyInput = z.infer<typeof platformCompanySchema>;

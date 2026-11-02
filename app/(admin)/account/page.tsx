@@ -4,12 +4,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { KeyRound, Monitor } from "lucide-react";
 import { Alert, Badge, PageHeader, SectionCard } from "@/components/ui";
 import { ConfirmForm } from "@/components/ConfirmForm";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { requirePermission } from "@/lib/auth/session";
 import { listUserSessions } from "@/lib/auth/session-registry";
 import { formatDateTime } from "@/lib/format";
 import type { Locale } from "@/lib/locale";
-import { normalizeTheme } from "@/lib/theme";
 import { signOutOtherSessionsAction } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -74,9 +72,6 @@ export default async function AccountPage({
           </div>
         </SectionCard>
 
-        <SectionCard title={t("appearance")} description={t("appearanceHint")}>
-          <ThemeToggle current={normalizeTheme(admin.theme)} />
-        </SectionCard>
 
         <SectionCard title={t("sessionsTitle")} description={t("sessionsHint")}>
           <ul className="space-y-2">

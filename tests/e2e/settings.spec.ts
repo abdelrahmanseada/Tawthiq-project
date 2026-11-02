@@ -12,7 +12,7 @@ test("settings accepts IANA zones, reports every invalid field and falls back ca
   await page.locator('main form button[type="submit"]').first().click();
   await page.waitForURL(/saved=1/);
 
-  const saved = await prisma.company.findFirstOrThrow({ where: { slug: "e2e-test-company" } });
+  const saved = await prisma.company.findFirstOrThrow({ where: { slug: "bremer" } });
   expect(saved.time_zone).toBe("Europe/London");
 
   await page.goto("/settings");
@@ -31,11 +31,11 @@ test("settings accepts IANA zones, reports every invalid field and falls back ca
   await expect(page.getByText("Choose a valid IANA time zone.").first()).toBeVisible();
   await expect(page.getByText("Use a six-digit hex colour.").first()).toBeVisible();
 
-  await expect(page.locator('[data-card-side="front"] > div').first()).toHaveCSS("background-color", "rgb(15, 118, 110)");
+  await expect(page.locator('[data-card-side="front"] > div').first()).toHaveCSS("background-color", "rgb(0, 0, 0)");
 
-  await page.fill('input[name="name"]', "E2E Test Company");
-  await page.fill('input[name="primary_color"]', "#0F766E");
-  await page.fill('input[name="secondary_color"]', "#F59E0B");
+  await page.fill('input[name="name"]', "Bremer");
+  await page.fill('input[name="primary_color"]', "#000000");
+  await page.fill('input[name="secondary_color"]', "#8F0015");
   await page.fill('input[name="time_zone"]', "Africa/Cairo");
   await page.locator('main form button[type="submit"]').first().click();
   await page.waitForURL(/saved=1/);

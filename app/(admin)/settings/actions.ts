@@ -9,6 +9,7 @@ import { ImageValidationError } from "@/lib/images";
 import { env } from "@/lib/env";
 import { companySettingsSchema, formValue, parseInput } from "@/lib/validation/schemas";
 import { validateVerifyBaseUrl } from "@/lib/qr";
+import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR } from "@/lib/colors";
 import {
   CompanySettingsError,
   DomainChangeRequiresConfirmationError,
@@ -36,12 +37,21 @@ export async function saveCompanySettingsAction(
   const admin = await requireActionPermission("settings.manage");
   const ip = getClientIp(await headers());
 
+  const rawPrimary = formValue(formData, "primary_color");
+  const rawSecondary = formValue(formData, "secondary_color");
+  const colorErrors: Record<string, string> = {};
+  if (!/^#[0-9a-fA-F]{6}$/.test(rawPrimary.trim())) colorErrors.primary_color = "invalid_color";
+  if (!/^#[0-9a-fA-F]{6}$/.test(rawSecondary.trim())) colorErrors.secondary_color = "invalid_color";
+
   let input;
   try {
     input = parseInput(companySettingsSchema, {
       name: formValue(formData, "name"),
-      primary_color: formValue(formData, "primary_color"),
-      secondary_color: formValue(formData, "secondary_color"),
+      tagline: formValue(formData, "tagline"),
+      website: formValue(formData, "website"),
+      show_verify_host_on_card: formValue(formData, "show_verify_host_on_card") === "1" ? "1" : "0",
+      primary_color: colorErrors.primary_color ? DEFAULT_PRIMARY_COLOR : rawPrimary,
+      secondary_color: colorErrors.secondary_color ? DEFAULT_SECONDARY_COLOR : rawSecondary,
       contact_phone: formValue(formData, "contact_phone"),
       contact_email: formValue(formData, "contact_email"),
       verify_base_url: formValue(formData, "verify_base_url"),
@@ -57,6 +67,7 @@ export async function saveCompanySettingsAction(
       for (const issue of error.issues) {
         if (issue.path && !fieldErrors[issue.path]) fieldErrors[issue.path] = issue.message;
       }
+      Object.assign(fieldErrors, colorErrors);
       return { error: "validation", fieldErrors };
     }
     return { error: "unknown" };
@@ -100,6 +111,7 @@ export async function saveCompanySettingsAction(
   }
 
   revalidatePath("/", "layout");
+  if (Object.keys(colorErrors).length > 0) return { error: "validation", fieldErrors: colorErrors };
   redirect("/settings?saved=1");
 }
 
@@ -111,7 +123,7 @@ export async function testVerifyUrlAction(url: string): Promise<{ ok: boolean; d
     const response = await fetch(`${check.normalized}/api/health`, {
       cache: "no-store",
       signal: AbortSignal.timeout(5000),
-      headers: { "user-agent": "Tawthiq-URL-Test/1.0" },
+      headers: { "user-agent": "Bremer-URL-Test/1.0" },
     });
     const body = (await response.json().catch(() => null)) as { status?: string } | null;
     if (response.ok && body?.status === "ok") return { ok: true, detail: "ok" };

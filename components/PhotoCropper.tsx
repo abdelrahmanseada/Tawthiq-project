@@ -143,8 +143,7 @@ export function PhotoCropper({
             }}
             onPointerCancel={() => {
               dragRef.current = null;
-            }}
-            className="h-48 w-48 cursor-move touch-none rounded-card border-2 border-brand object-cover"
+            }} className="h-48 w-48 cursor-move touch-none rounded-card border-2 border-brand object-cover"
           />
         ) : initialUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -159,16 +158,14 @@ export function PhotoCropper({
           <input
             ref={inputRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp"
-            className="sr-only"
+            accept="image/jpeg,image/png,image/webp" className="sr-only"
             onChange={(event) => handleFile(event.target.files?.[0])}
           />
           <input
             ref={cameraRef}
             type="file"
             accept="image/jpeg,image/png,image/webp"
-            capture="environment"
-            className="sr-only"
+            capture="environment" className="sr-only"
             onChange={(event) => handleFile(event.target.files?.[0])}
           />
           <div className="flex flex-wrap gap-2">
@@ -196,8 +193,7 @@ export function PhotoCropper({
                 max={3}
                 step={0.01}
                 value={zoom}
-                onChange={(event) => setZoom(Number(event.target.value))}
-                className="w-48 accent-brand"
+                onChange={(event) => setZoom(Number(event.target.value))} className="w-48 accent-brand"
               />
             </div>
           ) : null}

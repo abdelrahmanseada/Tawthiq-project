@@ -24,7 +24,7 @@ async function main() {
   }
 
   const payload = await readFile(path.resolve(process.cwd(), archive));
-  if (payload.subarray(0, 6).toString("utf8") !== "EVSBK1") throw new Error("Not a Tawthiq backup archive");
+  if (payload.subarray(0, 6).toString("utf8") !== "EVSBK1") throw new Error("Not a Bremer backup archive");
   const salt = payload.subarray(6, 22);
   const iv = payload.subarray(22, 34);
   const tag = payload.subarray(34, 50);

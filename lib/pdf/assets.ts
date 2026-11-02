@@ -44,7 +44,7 @@ export async function embedPdfFonts(pdf: PDFDocument, _locale?: string): Promise
 
 export async function embedWatermarkFont(pdf: PDFDocument, _locale?: string): Promise<PDFFont> {
   pdf.registerFontkit(fontkit);
-  return pdf.embedFont(await load("inter-600.ttf"), { subset: false, customName: "TawthiqWatermark" });
+  return pdf.embedFont(await load("inter-600.ttf"), { subset: false, customName: "BremerWatermark" });
 }
 
 export async function loadStorageBuffer(key: string | null | undefined): Promise<Buffer | null> {

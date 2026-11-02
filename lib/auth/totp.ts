@@ -5,7 +5,7 @@ import { renderQrDataUrl } from "@/lib/qr";
 /** Accept the current 30-second window plus one step of clock drift. */
 authenticator.options = { window: 1, step: 30 };
 
-export const TOTP_ISSUER = "Employee Verification System";
+export const TOTP_ISSUER = "Bremer";
 
 export function generateTotpSecret(): string {
   return authenticator.generateSecret();

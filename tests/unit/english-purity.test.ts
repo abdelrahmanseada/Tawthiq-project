@@ -55,6 +55,17 @@ describe("English-only active build", () => {
     }
   });
 
+  it("contains no product or old company names in active source", async () => {
+    const offenders: string[] = [];
+    for (const directory of ACTIVE_DIRECTORIES) {
+      for (const file of await activeFiles(directory)) {
+        const contents = await readFile(path.join(ROOT, file), "utf8");
+        if (/\b(Tawthiq|Facilities)\b/.test(contents)) offenders.push(file);
+      }
+    }
+    expect(offenders).toEqual([]);
+  });
+
   it("loads only the English catalog and only Inter font assets", async () => {
     const requestConfig = await readFile(path.join(ROOT, "i18n", "request.ts"), "utf8");
     expect(requestConfig).toContain('import en from "@/messages/en.json"');
@@ -68,8 +79,12 @@ describe("English-only active build", () => {
   it("renders English-only card PDF text", async () => {
     const bytes = await renderCardPdf({
       company: {
-        name: "Northwind Demo",
+        name: "Bremer",
         logo_path: null,
+        logo_bg_dark: false,
+        website: "bremer.example",
+        tagline: "Established 1989",
+        show_verify_host_on_card: false,
         primary_color: "#0F766E",
         secondary_color: "#F59E0B",
         contact_phone: "+20 100 000 0000",

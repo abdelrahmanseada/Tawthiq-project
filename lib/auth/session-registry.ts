@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/db";
-import { env, isProduction } from "@/lib/env";
+import { env } from "@/lib/env";
 import { sanitizeUserAgent, getClientIpDetails } from "@/lib/http";
 import { hashIp } from "@/lib/security/crypto";
 
@@ -32,7 +32,7 @@ export async function createUserSession(
     value: session.id,
     httpOnly: true,
     sameSite: "lax",
-    secure: isProduction,
+    secure: env.APP_URL.startsWith("https://"),
     path: "/",
     maxAge: maxAgeSeconds,
   });

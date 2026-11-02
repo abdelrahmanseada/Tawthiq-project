@@ -2,7 +2,7 @@
  * Server-side role-based access control. The UI hides what a role cannot do, but
  * every page, Server Action and Route Handler re-checks permissions here.
  */
-export type Role = "PLATFORM_ADMIN" | "SUPER_ADMIN" | "ADMIN" | "VIEWER";
+export type Role = "SUPER_ADMIN" | "ADMIN" | "VIEWER";
 
 export type Permission =
   | "dashboard.view"
@@ -28,7 +28,7 @@ const PERMISSION_MATRIX: Record<Permission, readonly Role[]> = {
   "cards.write": MANAGERS,
   "imports.manage": MANAGERS,
   "logs.scans": ALL_ROLES,
-  "logs.audit": MANAGERS,
+  "logs.audit": SUPER_ONLY,
   "settings.manage": SUPER_ONLY,
   "admins.manage": SUPER_ONLY,
 };
@@ -43,7 +43,6 @@ export class ForbiddenError extends Error {
 }
 
 export function can(role: Role, permission: Permission): boolean {
-  if (role === "PLATFORM_ADMIN") return false;
   return PERMISSION_MATRIX[permission].includes(role);
 }
 
@@ -56,5 +55,5 @@ export function permissionsFor(role: Role): Permission[] {
 }
 
 export function roleLabel(role: Role): string {
-  return role === "SUPER_ADMIN" ? "Owner" : role === "PLATFORM_ADMIN" ? "Platform admin" : role === "ADMIN" ? "Admin" : "Viewer";
+  return role === "SUPER_ADMIN" ? "Owner" : role === "ADMIN" ? "Admin" : "Viewer";
 }

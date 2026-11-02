@@ -6,7 +6,7 @@ export { MFA_TICKET_COOKIE };
 const TEN_MINUTES = 10 * 60;
 
 function secureCookies(): boolean {
-  return process.env.NODE_ENV === "production" || (process.env.APP_URL ?? "").startsWith("https://");
+  return (process.env.APP_URL ?? "").startsWith("https://");
 }
 
 /** Short-lived, HMAC-signed ticket that proves the password step succeeded. */

@@ -12,12 +12,12 @@ import {
   layoutCard,
   type TextBlock,
 } from "@/lib/card/layout";
-import { PRODUCT_NAME } from "@/lib/brand";
-import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor } from "@/lib/colors";
+import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor, readableTextOn } from "@/lib/colors";
 
 export interface CardPreviewData {
   companyName: string;
   companyLogoUrl: string | null;
+  logoBgDark?: boolean;
   primaryColor: string;
   secondaryColor: string;
   employeeName: string;
@@ -27,6 +27,9 @@ export interface CardPreviewData {
   photoUrl: string | null;
   validUntil: string;
   domain: string;
+  website?: string | null;
+  tagline?: string | null;
+  showVerifyHostOnCard?: boolean;
   phone: string;
   email: string;
   qrValue?: string;
@@ -47,8 +50,7 @@ function boxStyle(box: { x: number; y: number; w: number; h: number }) {
 
 function TextBox({ block, title }: { block: TextBlock; title?: string }) {
   return (
-    <div
-      className="absolute overflow-hidden"
+    <div className="absolute overflow-hidden"
       style={{
         ...boxStyle(block),
         color: block.color === "primary" ? "var(--card-primary)" : block.color,
@@ -100,11 +102,16 @@ export function CardPreview({
     employeeCode: data.employeeCode,
     companyName: data.companyName,
     validUntil: data.validUntil,
-    host: data.domain,
+    host: data.showVerifyHostOnCard ? data.domain : null,
+    website: data.website ?? null,
+    tagline: data.tagline ?? null,
+    showVerifyHostOnCard: data.showVerifyHostOnCard ?? false,
     phone: data.phone,
     email: data.email,
     hasPhoto: Boolean(data.photoUrl),
   });
+  layout.front.company.color = readableTextOn(primaryColor);
+  layout.back.company.color = readableTextOn(primaryColor);
 
   useEffect(() => {
     let cancelled = false;
@@ -159,8 +166,7 @@ export function CardPreview({
         </button>
       </div>
 
-      <div
-        className="relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] bg-white shadow-raised ring-1 ring-black/10 [container-type:inline-size]"
+      <div className="relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] bg-white shadow-raised ring-1 ring-black/10 [container-type:inline-size]"
         style={
           {
             "--card-primary": primaryColor,
@@ -173,8 +179,7 @@ export function CardPreview({
           <>
             <div className="absolute inset-x-0 top-0" style={{ height: mm(FRONT.header.h), background: primaryColor }} />
             <div className="absolute inset-x-0" style={{ top: mm(FRONT.accent.y), height: mm(FRONT.accent.h), background: secondaryColor }} />
-            <div
-              className="absolute flex items-center justify-center overflow-hidden rounded-[3px] bg-white"
+            <div className={`absolute flex items-center justify-center overflow-hidden rounded-[3px] ${data.logoBgDark ? "bg-transparent" : "bg-white"}`}
               style={{ ...boxStyle(FRONT.logo), padding: mm(FRONT.logo.padding) }}
             >
               {data.companyLogoUrl ? (
@@ -185,8 +190,7 @@ export function CardPreview({
               )}
             </div>
             <TextBox block={layout.front.company} />
-            <div
-              className="absolute overflow-hidden bg-slate-200"
+            <div className="absolute overflow-hidden bg-slate-200"
               style={{
                 ...boxStyle(FRONT.photo),
                 border: `${mm(FRONT.photo.borderPt / 2.834645669)} solid ${secondaryColor}`,
@@ -209,8 +213,7 @@ export function CardPreview({
             <TextBox block={layout.front.code} />
             <TextBox block={layout.front.validUntil} />
             <ShieldCheck
-              aria-hidden="true"
-              className="absolute"
+              aria-hidden="true" className="absolute"
               style={{ left: mm(37.5), top: mm(FRONT.footer.y + 0.1), width: mm(2.2), height: mm(2.2), color: primaryColor }}
             />
           </>
@@ -219,8 +222,7 @@ export function CardPreview({
             <div className="absolute inset-x-0 top-0" style={{ height: mm(BACK.header.h), background: primaryColor }} />
             <div className="absolute inset-x-0" style={{ top: mm(BACK.accent.y), height: mm(BACK.accent.h), background: secondaryColor }} />
             <TextBox block={layout.back.company} />
-            <div
-              className="absolute rounded-[4px] border bg-white p-0"
+            <div className="absolute rounded-[4px] border bg-white p-0"
               style={{ ...boxStyle(BACK.panel), borderColor: CARD_COLORS.border }}
             >
               <div className="h-full w-full p-[6.666%]">
@@ -233,11 +235,12 @@ export function CardPreview({
               </div>
             </div>
             <TextBox block={layout.back.heading} />
-            <TextBox block={layout.back.host} />
+            {layout.back.host ? <TextBox block={layout.back.host} /> : null}
+            {layout.back.website ? <TextBox block={layout.back.website} /> : null}
             <TextBox block={layout.back.phone} />
             <TextBox block={layout.back.email} />
             <TextBox block={layout.back.returns} />
-            <TextBox block={layout.back.footer} title={`${PRODUCT_NAME} card`} />
+            {layout.back.footer.text ? <TextBox block={layout.back.footer} /> : null}
           </>
         )}
       </div>

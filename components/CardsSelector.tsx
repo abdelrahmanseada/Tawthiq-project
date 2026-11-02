@@ -38,6 +38,7 @@ export function CardsSelector({
     id: string;
     name: string;
     logo_url: string | null;
+    logo_bg_dark: boolean;
     primary_color: string;
     secondary_color: string;
     contact_phone: string;
@@ -137,8 +138,7 @@ export function CardsSelector({
           <div className="flex flex-wrap items-center gap-2">
             <p className="text-sm font-semibold text-ink">{t("selectedCount", { count: selected.length })}</p>
             <button
-              type="button"
-              className="btn btn-ghost btn-sm"
+              type="button" className="btn btn-ghost btn-sm"
               onClick={() => setSelected(rows.map((row) => row.id))}
             >
               {t("selectAll")}
@@ -176,8 +176,7 @@ export function CardsSelector({
                           setSelected((current) =>
                             current.includes(row.id) ? current.filter((id) => id !== row.id) : [...current, row.id],
                           )
-                        }
-                        className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
+                        } className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
                       />
                     </td>
                     <td className="td">
@@ -228,8 +227,7 @@ export function CardsSelector({
                     name="output_choice"
                     value={option.value}
                     checked={mode === option.value}
-                    onChange={() => setMode(option.value)}
-                    className="mt-1 h-4 w-4 text-brand focus:ring-brand"
+                    onChange={() => setMode(option.value)} className="mt-1 h-4 w-4 text-brand focus:ring-brand"
                   />
                   <span>
                     <span className="block text-sm font-semibold text-ink">{option.title}</span>
@@ -282,6 +280,7 @@ export function CardsSelector({
               data={{
                 companyName: company.name,
                 companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.logo_url)}` : null,
+                logoBgDark: company.logo_bg_dark,
                 primaryColor: company.primary_color,
                 secondaryColor: company.secondary_color,
                 employeeName: first.full_name,

@@ -4,14 +4,16 @@ import { isValidTimeZone, normalizeTimeZone, supportedTimeZones } from "@/lib/ti
 import { companySettingsSchema } from "@/lib/validation/schemas";
 
 const base = {
-  name: "Northwind Demo",
+  name: "Bremer",
+  tagline: "Established 1989",
+  website: "https://bremer.example",
+  show_verify_host_on_card: "0",
   primary_color: "#0F766E",
   secondary_color: "#F59E0B",
   contact_phone: "+20 100 000 0000",
   contact_email: "hr@example.com",
   verify_base_url: "https://verify.example.com",
   time_zone: "Africa/Cairo",
-  custom_domain: null,
   idle_timeout_minutes: 60,
   default_card_validity_days: 365,
   scan_log_retention_days: 365,

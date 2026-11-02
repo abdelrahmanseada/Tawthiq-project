@@ -40,17 +40,20 @@ export default async function SettingsPage({
       <SettingsForm
         initial={{
           name: company.name,
+          tagline: company.tagline,
+          website: company.website ?? "",
+          show_verify_host_on_card: company.show_verify_host_on_card,
           primary_color: company.primary_color,
           secondary_color: company.secondary_color,
           contact_phone: company.contact_phone,
           contact_email: company.contact_email,
           verify_base_url: company.verify_base_url,
           time_zone: company.time_zone,
-          custom_domain: company.custom_domain,
           idle_timeout_minutes: company.idle_timeout_minutes,
           default_card_validity_days: company.default_card_validity_days,
           scan_log_retention_days: company.scan_log_retention_days,
           logoUrl,
+          logoBgDark: company.logo_bg_dark,
         }}
         activeCardCount={activeCards}
         domainWarning={domainWarning}

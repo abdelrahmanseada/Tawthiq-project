@@ -20,17 +20,17 @@ export function newCardToken(): string {
 }
 
 async function ensureCompany() {
-  const existing = await prisma.company.findUnique({ where: { slug: "e2e-test-company" } });
+  const existing = await prisma.company.findUnique({ where: { slug: "bremer" } });
   if (existing) {
     return prisma.company.update({
       where: { id: existing.id },
       data: {
-        name: "E2E Test Company",
-        slug: "e2e-test-company",
+        name: "Bremer",
+        slug: "bremer",
         status: "ACTIVE",
         max_employees: 100,
         time_zone: "Africa/Cairo",
-        verify_base_url: "https://verify.e2e.example",
+        verify_base_url: "http://localhost:3010",
         idle_timeout_minutes: 60,
         onboarding_completed_at: new Date(),
       },
@@ -38,14 +38,14 @@ async function ensureCompany() {
   }
   return prisma.company.create({
     data: {
-      name: "E2E Test Company",
-      slug: "e2e-test-company",
+      name: "Bremer",
+      slug: "bremer",
       status: "ACTIVE",
       max_employees: 100,
       time_zone: "Africa/Cairo",
       contact_phone: "+20 100 000 0000",
       contact_email: "e2e@example.com",
-      verify_base_url: "https://verify.e2e.example",
+      verify_base_url: "http://localhost:3010",
       onboarding_completed_at: new Date(),
       default_card_validity_days: 365,
       scan_log_retention_days: 365,
@@ -70,7 +70,7 @@ export async function ensureE2eAdmin(): Promise<E2eAdmin> {
     where: { email },
     create: {
       company_id: company.id,
-      name: "E2E Administrator",
+      name: "Bremer Owner",
       email,
       password_hash: passwordHash,
       role: "SUPER_ADMIN",

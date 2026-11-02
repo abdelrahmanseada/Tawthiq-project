@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { LogoMark } from "@/components/ui";
+import { copyrightText } from "@/lib/brand";
 
 export default async function NotFound() {
   const t = await getTranslations("errors");
-  const tb = await getTranslations("brand");
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-surface px-4 text-center">
       <LogoMark className="h-12 w-12" />
@@ -14,7 +14,7 @@ export default async function NotFound() {
       <Link href="/dashboard" className="btn btn-primary mt-2">
         {t("backDashboard")}
       </Link>
-      <p className="mt-4 text-xs text-subtle">{tb("name")}</p>
+      <p className="mt-4 text-xs text-subtle">{copyrightText()}</p>
     </main>
   );
 }

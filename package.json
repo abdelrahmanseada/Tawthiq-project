@@ -23,15 +23,16 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
-    "db:reset-demo": "tsx prisma/seed.ts --reset",
     "db:studio": "prisma studio",
     "worker": "tsx workers/import-worker.ts",
     "retention": "tsx scripts/purge-scan-logs.ts",
     "samples": "tsx scripts/generate-samples.ts",
-    "brand": "tsx scripts/generate-brand.ts",
     "backup": "tsx scripts/backup.ts",
     "restore": "tsx scripts/restore.ts",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "db:demo": "tsx scripts/demo.ts",
+    "db:clear-demo": "tsx scripts/demo-clear.ts",
+    "init-env:prod": "tsx scripts/init-env-prod.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -3,22 +3,23 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { BadgeCheck, CalendarClock, ShieldAlert, ShieldX, TriangleAlert, UserRound } from "lucide-react";
-import { normalizeHexColor } from "@/lib/colors";
+import { BadgeCheck, CalendarClock, ShieldX, TriangleAlert, UserRound } from "lucide-react";
+import { LogoMark } from "@/components/ui";
+import { PRODUCT_PRIMARY_COLOR, PRODUCT_SECONDARY_COLOR } from "@/lib/colors";
 import { formatDate, formatDateTime } from "@/lib/format";
 import { getIpHash, sanitizeUserAgent } from "@/lib/http";
 import { checkVerifyRateLimit } from "@/lib/security/rate-limit";
 import { verifyPublicToken, type VerificationView } from "@/lib/services/verification";
-import { PRODUCT_NAME } from "@/lib/brand";
+import { COMPANY_NAME, PRODUCT_NAME, copyrightText } from "@/lib/brand";
 import { DEFAULT_TIME_ZONE } from "@/lib/config";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [t, tb] = await Promise.all([getTranslations("verify"), getTranslations("brand")]);
+  const t = await getTranslations("verify");
   return {
-    title: `${t("pageTitle")} · ${tb("name")}`,
+    title: t("pageTitle"),
     robots: { index: false, follow: false, nocache: true },
   };
 }
@@ -46,16 +47,14 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
   const now = new Date();
 
   const rate = await checkVerifyRateLimit(ipHash);
-  const productPrimary = "#0F766E";
+  const productPrimary = PRODUCT_PRIMARY_COLOR;
 
   if (!rate.allowed) {
     return (
       <main className="min-h-screen bg-surface" style={{ "--brand": productPrimary } as CSSProperties}>
         <header className="border-b border-border bg-card">
           <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-control bg-brand-tint text-brand">
-              <ShieldAlert className="h-5 w-5" aria-hidden="true" />
-            </span>
+            <LogoMark className="h-10 w-10" />
             <span className="font-bold text-ink">{PRODUCT_NAME}</span>
           </div>
         </header>
@@ -72,9 +71,9 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
 
   const result = await verifyPublicToken(token, { ipHash, userAgent, host: requestHost }, now);
   const company = result.company;
-  const brandPrimary = normalizeHexColor(company?.primary_color, productPrimary);
-  const brandSecondary = normalizeHexColor(company?.secondary_color, "#F59E0B");
-  const brandName = company?.name ?? PRODUCT_NAME;
+  const brandPrimary = PRODUCT_PRIMARY_COLOR;
+  const brandSecondary = PRODUCT_SECONDARY_COLOR;
+  const brandName = company?.name ?? COMPANY_NAME;
   const timeZone = company?.time_zone ?? DEFAULT_TIME_ZONE;
   const valid = result.state === "valid";
   const title =
@@ -103,30 +102,15 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
     result.state === "valid" ? "bg-success text-white" : result.state === "expired" ? "bg-warning text-white" : "bg-danger text-white";
 
   return (
-    <main
-      className="min-h-screen bg-surface"
+    <main className="min-h-screen bg-surface"
       style={{ "--brand": brandPrimary, "--secondary": brandSecondary } as CSSProperties}
     >
       <header className="border-b border-border bg-card">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4">
           <div className="flex min-w-0 items-center gap-3">
-            {company?.logo_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={`/api/media/logo?company=${company.id}`}
-                alt={t("companyLogoAlt")}
-                className="h-10 w-10 rounded-control bg-white object-contain p-1 ring-1 ring-border"
-              />
-            ) : (
-              <span className="flex h-10 w-10 items-center justify-center rounded-control bg-brand-tint text-brand">
-                <BadgeCheck className="h-5 w-5" aria-hidden="true" />
-              </span>
-            )}
-            <span className="truncate text-base font-bold text-ink">{brandName}</span>
+            <LogoMark className="h-10 w-10" />
+            <span className="truncate text-base font-bold text-ink">{PRODUCT_NAME}</span>
           </div>
-          <span className="hidden rounded-pill bg-surface px-3 py-1 text-xs font-semibold text-muted sm:inline">
-            {tb("name")}
-          </span>
         </div>
       </header>
 
@@ -153,8 +137,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
                   src={result.employee.photo_url}
                   alt={t("employeePhotoAlt")}
                   width={480}
-                  height={640}
-                  className="aspect-[3/4] w-full object-cover"
+                  height={640} className="aspect-[3/4] w-full object-cover"
                 />
               ) : (
                 <div className="flex aspect-[3/4] w-full items-center justify-center bg-surface text-subtle">
@@ -225,9 +208,8 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
       </section>
 
       <footer className="border-t border-border bg-card">
-        <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-semibold text-ink">{t("poweredBy", { brand: PRODUCT_NAME })}</p>
-          <p>{t("footerNote")}</p>
+        <div className="mx-auto max-w-5xl px-4 py-5 text-center text-xs text-muted">
+          <p className="font-semibold text-ink">{copyrightText()}</p>
         </div>
       </footer>
 

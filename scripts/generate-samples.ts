@@ -27,7 +27,7 @@ const PHOTOS = [
   { filename: "sofia.jpg", background: "#1e40af", accent: "#60a5fa" },
 ];
 
-const README = "Sample employee photos for the Tawthiq import demo.\nUse these file names in the \"Photo file name\" column of the import template.\nImages are re-encoded, stripped of metadata and resized on import.\n";
+const README = "Sample employee photos for the Bremer import demo.\nUse these file names in the \"Photo file name\" column of the import template.\nImages are re-encoded, stripped of metadata and resized on import.\n";
 
 async function main() {
   await mkdir(SAMPLES_DIR, { recursive: true });

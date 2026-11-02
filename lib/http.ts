@@ -37,6 +37,10 @@ export interface ClientIpDetails {
  * Raw addresses are only hashed downstream and never stored/logged.
  */
 export function getClientIpDetails(headers: Headers): ClientIpDetails {
+  if (env.TRUSTED_PROXY === "cloudflare") {
+    const cf = headers.get("cf-connecting-ip");
+    if (cf) return { ip: normalizeIp(cf), chain: [normalizeIp(cf)], source: "cf-connecting-ip" };
+  }
   const forwarded = headers.get("x-forwarded-for");
   if (forwarded) {
     const chain = forwarded
@@ -116,15 +120,6 @@ export function originAllowList(request: Request, options: OriginPolicyOptions =
   if (authOrigin) expected.add(authOrigin);
   for (const allowed of splitOrigins(options.allowedOrigins ?? env.ALLOWED_ORIGINS)) expected.add(allowed);
 
-  const trustHost = options.trustHost ?? env.AUTH_TRUST_HOST;
-  if (trustHost) {
-    const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-    const proto = request.headers.get("x-forwarded-proto") ?? new URL(request.url).protocol.replace(":", "");
-    if (host && /^[a-z0-9.:[\]-]+$/i.test(host) && (proto === "http" || proto === "https")) {
-      expected.add(`${proto}://${host}`.toLowerCase());
-    }
-  }
-
   const production = options.production ?? env.NODE_ENV === "production";
   if (!production) {
     expected.add("http://localhost:3000");
@@ -148,7 +143,16 @@ export function evaluateOrigin(request: Request, options: OriginPolicyOptions = 
 
   const normalized = normalizeOrigin(received);
   if (!normalized) return { allowed: false, origin: received.slice(0, 200), expected };
-  return { allowed: expected.includes(normalized), origin: normalized, expected };
+  const effectiveHost =
+    (env.AUTH_TRUST_HOST ? request.headers.get("x-forwarded-host") : null) ?? request.headers.get("host") ?? "";
+  let originHost = "";
+  try {
+    originHost = new URL(normalized).host.toLowerCase();
+  } catch {
+    originHost = "";
+  }
+  const hostMatches = Boolean(originHost) && Boolean(effectiveHost) && originHost === effectiveHost.toLowerCase();
+  return { allowed: expected.includes(normalized) && hostMatches, origin: normalized, expected };
 }
 
 /** Only configured application origins are accepted for mutations. */

@@ -45,18 +45,6 @@ test("dashboard and employees have no serious or critical axe violations", async
   expect(await scan(page)).toEqual([]);
 });
 
-test("platform console has no serious or critical axe violations", async ({ page }) => {
-  await page.goto("/login");
-  await page.fill('input[name="email"]', process.env.PLATFORM_ADMIN_EMAIL ?? "platform@tawthiq.example");
-  await page.fill('input[name="password"]', process.env.PLATFORM_ADMIN_PASSWORD ?? "ChangeMe!2026");
-  await page.click('button[type="submit"]');
-  await page.waitForURL(/\/platform/);
-  await page.goto("/platform");
-  expect(await scan(page)).toEqual([]);
-  await page.goto("/platform/companies");
-  expect(await scan(page)).toEqual([]);
-});
-
 test("verification states have no serious or critical axe violations", async ({ page }) => {
   const card = await prisma.card.findFirstOrThrow({
     where: { status: "ACTIVE", token_enc: { not: null }, employee: { status: "ACTIVE", deleted_at: null } },

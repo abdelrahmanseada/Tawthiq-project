@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import { decryptCardToken } from "@/lib/security/crypto";
 
 const BASE = process.env.APP_URL ?? "http://localhost:3000";
-const OUT = "screenshots/v2";
+const OUT = "screenshots/v3";
 const prisma = new PrismaClient();
 
 async function shot(page: Page, name: string, fullPage = true) {
@@ -38,7 +38,7 @@ async function main() {
   await loginOwner(page);
   await shot(page, "dashboard-light");
 
-  const employeeId = (await prisma.employee.findFirstOrThrow({ where: { company: { slug: "northwind-demo" }, deleted_at: null }, orderBy: { employee_code: "asc" } })).id;
+  const employeeId = (await prisma.employee.findFirstOrThrow({ where: { company: { slug: "bremer" }, deleted_at: null }, orderBy: { employee_code: "asc" } })).id;
   const routes: Array<[string, string]> = [
     ["employees", "/employees"],
     ["employee-detail", `/employees/${employeeId}`],
@@ -59,45 +59,19 @@ async function main() {
     await shot(page, name);
   }
 
-  await page.emulateMedia({ colorScheme: "dark" });
-  await page.goto(`${BASE}/dashboard`, { waitUntil: "networkidle" });
-  await shot(page, "dashboard-dark");
-  await page.goto(`${BASE}/employees`, { waitUntil: "networkidle" });
-  await shot(page, "employees-dark");
-  await page.emulateMedia({ colorScheme: "light" });
-
-  const card = await prisma.card.findFirstOrThrow({ where: { status: "ACTIVE", token_enc: { not: null }, employee: { company: { slug: "northwind-demo" }, deleted_at: null } } });
+  const card = await prisma.card.findFirstOrThrow({ where: { status: "ACTIVE", token_enc: { not: null }, employee: { company: { slug: "bremer" }, deleted_at: null } } });
   const token = decryptCardToken(card.token_enc)!;
   const verify = await context.newPage();
   await verify.goto(`${BASE}/v/${token}`, { waitUntil: "networkidle" });
   await shot(verify, "verify-valid");
   await verify.goto(`${BASE}/v/${"B".repeat(32)}`, { waitUntil: "networkidle" });
   await shot(verify, "verify-invalid");
-  await verify.emulateMedia({ colorScheme: "dark" });
-  await verify.goto(`${BASE}/v/${token}`, { waitUntil: "networkidle" });
-  await shot(verify, "verify-valid-dark");
 
   const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
   const phone = await mobile.newPage();
   await phone.goto(`${BASE}/login`);
   await shot(phone, "login-mobile");
   await phone.close();
-
-  const platformContext = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
-  const platform = await platformContext.newPage();
-  await platform.goto(`${BASE}/login`);
-  await platform.fill('input[name="email"]', process.env.PLATFORM_ADMIN_EMAIL ?? "platform@tawthiq.example");
-  await platform.fill('input[name="password"]', process.env.PLATFORM_ADMIN_PASSWORD ?? "ChangeMe!2026");
-  await platform.click('button[type="submit"]');
-  await platform.waitForURL(/\/platform/);
-  await shot(platform, "platform-overview");
-  await platform.goto(`${BASE}/platform/companies`, { waitUntil: "networkidle" });
-  await shot(platform, "platform-companies");
-  await platform.goto(`${BASE}/platform/companies/new`, { waitUntil: "networkidle" });
-  await shot(platform, "platform-create-company");
-  const northwind = await prisma.company.findUniqueOrThrow({ where: { slug: "northwind-demo" } });
-  await platform.goto(`${BASE}/platform/companies/${northwind.id}`, { waitUntil: "networkidle" });
-  await shot(platform, "platform-company-detail");
 
   await browser.close();
   await prisma.$disconnect();

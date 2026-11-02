@@ -1,7 +1,10 @@
 /** Colour helpers shared by the web UI (CSS variables) and the PDF renderer. */
 
-export const DEFAULT_PRIMARY_COLOR = "#0F766E";
-export const DEFAULT_SECONDARY_COLOR = "#F59E0B";
+export const PRODUCT_PRIMARY_COLOR = "#0F766E";
+export const PRODUCT_SECONDARY_COLOR = "#F59E0B";
+
+export const DEFAULT_PRIMARY_COLOR = "#000000";
+export const DEFAULT_SECONDARY_COLOR = "#8F0015";
 
 const HEX_PATTERN = /^#[0-9a-fA-F]{6}$/;
 

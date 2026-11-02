@@ -9,8 +9,7 @@ import { CARD_HEIGHT_MM, CARD_WIDTH_MM, FRONT, BACK, CARD_COLORS, MM_TO_PT, layo
 import { buildVerifyUrl, displayVerifyDomain, qrModules } from "@/lib/qr";
 import { formatDate } from "@/lib/format";
 import { embedPdfFonts, embedStoredImage, loadRoundedPortrait, pdfColor, type FontFamily } from "@/lib/pdf/assets";
-import { PRODUCT_NAME } from "@/lib/brand";
-import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor } from "@/lib/colors";
+import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor, readableTextOn } from "@/lib/colors";
 
 export const CARD_WIDTH = CARD_WIDTH_MM * MM_TO_PT;
 export const CARD_HEIGHT = CARD_HEIGHT_MM * MM_TO_PT;
@@ -20,11 +19,15 @@ export type CardPrintMode = "cr80" | "print_shop" | "test";
 export interface CardCompanyData {
   name: string;
   logo_path: string | null;
+  logo_bg_dark: boolean;
   primary_color: string;
   secondary_color: string;
   contact_phone: string;
   contact_email: string;
   verify_base_url: string;
+  website: string | null;
+  tagline: string;
+  show_verify_host_on_card: boolean;
   time_zone?: string;
   status?: "ACTIVE" | "SUSPENDED";
 }
@@ -117,7 +120,7 @@ async function drawLogo(
   primary: RGB,
 ) {
   const box = FRONT.logo;
-  page.drawRectangle({
+  if (!input.company.logo_bg_dark) page.drawRectangle({
     x: x(g, box.x),
     y: y(g, box.y + box.h),
     width: MM(box.w),
@@ -239,11 +242,15 @@ async function drawFront(
     employeeCode: input.employee.employee_code,
     companyName: input.company.name,
     validUntil: formatDate(input.expiresAt, "en", input.company.time_zone),
-    host: displayVerifyDomain(input.company.verify_base_url),
+    host: input.company.show_verify_host_on_card ? displayVerifyDomain(input.company.verify_base_url) : null,
+    website: input.company.website,
+    tagline: input.company.tagline,
+    showVerifyHostOnCard: input.company.show_verify_host_on_card,
     phone: input.company.contact_phone,
     email: input.company.contact_email,
     hasPhoto: Boolean(photo),
   });
+  layout.front.company.color = readableTextOn(normalizeHexColor(input.company.primary_color, DEFAULT_PRIMARY_COLOR));
 
   page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: rgb(1, 1, 1) });
   // Header and accent extend into the bleed for print-shop output.
@@ -329,13 +336,18 @@ async function drawBack(
     employeeCode: input.employee.employee_code,
     companyName: input.company.name,
     validUntil: formatDate(input.expiresAt, "en", input.company.time_zone),
-    host: displayVerifyDomain(input.company.verify_base_url),
+    host: input.company.show_verify_host_on_card ? displayVerifyDomain(input.company.verify_base_url) : null,
+    website: input.company.website,
+    tagline: input.company.tagline,
+    showVerifyHostOnCard: input.company.show_verify_host_on_card,
     phone: input.company.contact_phone,
     email: input.company.contact_email,
     hasPhoto: false,
   });
+  layout.back.company.color = readableTextOn(normalizeHexColor(input.company.primary_color, DEFAULT_PRIMARY_COLOR));
 
-  if (layout.back.host.lines.length > 2) throw new Error("Verification host is too long for the card");
+  if (layout.back.host && layout.back.host.lines.length > 2) throw new Error("Verification host is too long for the card");
+  if (layout.back.website && layout.back.website.lines.length > 2) throw new Error("Website is too long for the card");
   page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: rgb(1, 1, 1) });
   page.drawRectangle({
     x: 0,
@@ -383,7 +395,8 @@ async function drawBack(
 
   drawBlock(page, g, layout.back.company, fonts, primary);
   drawBlock(page, g, layout.back.heading, fonts, primary);
-  drawBlock(page, g, layout.back.host, fonts, primary);
+  if (layout.back.host) drawBlock(page, g, layout.back.host, fonts, primary);
+  if (layout.back.website) drawBlock(page, g, layout.back.website, fonts, primary);
   drawBlock(page, g, layout.back.phone, fonts, primary);
   drawBlock(page, g, layout.back.email, fonts, primary);
   drawBlock(page, g, layout.back.returns, fonts, primary);
@@ -418,8 +431,8 @@ export async function renderCardPdf(input: RenderCardInput): Promise<Uint8Array>
   pdf.setTitle(`ID card - ${input.employee.full_name}`);
   pdf.setAuthor(input.company.name);
   pdf.setSubject("Employee identity card");
-  pdf.setCreator(PRODUCT_NAME);
-  pdf.setProducer(PRODUCT_NAME);
+  pdf.setCreator("Employee ID system");
+  pdf.setProducer("Employee ID system");
   pdf.setCreationDate(new Date());
   pdf.setModificationDate(new Date());
 

@@ -37,8 +37,7 @@ export function ChangePasswordForm() {
           type="password"
           autoComplete="current-password"
           required
-          maxLength={128}
-          className="input"
+          maxLength={128} className="input"
           dir="ltr"
         />
       </Field>
@@ -56,8 +55,7 @@ export function ChangePasswordForm() {
           autoComplete="new-password"
           required
           minLength={12}
-          maxLength={128}
-          className="input"
+          maxLength={128} className="input"
           dir="ltr"
         />
       </Field>
@@ -74,8 +72,7 @@ export function ChangePasswordForm() {
           autoComplete="new-password"
           required
           minLength={12}
-          maxLength={128}
-          className="input"
+          maxLength={128} className="input"
           dir="ltr"
         />
       </Field>

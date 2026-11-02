@@ -26,6 +26,10 @@ export interface FormCompany {
   id: string;
   name: string;
   logo_url: string | null;
+  logo_bg_dark: boolean;
+  website: string | null;
+  tagline: string;
+  show_verify_host_on_card: boolean;
   primary_color: string;
   secondary_color: string;
   contact_phone: string;
@@ -95,8 +99,7 @@ export function EmployeeForm({
                 maxLength={64}
                 value={employeeCode}
                 onChange={(event) => setEmployeeCode(event.target.value)}
-                readOnly={Boolean(initial.id)}
-                className="input read-only:bg-surface read-only:text-muted"
+                readOnly={Boolean(initial.id)} className="input read-only:bg-surface read-only:text-muted"
                 dir="ltr"
               />
             </Field>
@@ -110,8 +113,7 @@ export function EmployeeForm({
                 minLength={2}
                 maxLength={200}
                 value={fullName}
-                onChange={(event) => setFullName(event.target.value)}
-                className="input"
+                onChange={(event) => setFullName(event.target.value)} className="input"
               />
             </Field>
 
@@ -122,8 +124,7 @@ export function EmployeeForm({
                 type="text"
                 maxLength={120}
                 value={department}
-                onChange={(event) => setDepartment(event.target.value)}
-                className="input"
+                onChange={(event) => setDepartment(event.target.value)} className="input"
               />
             </Field>
 
@@ -134,8 +135,7 @@ export function EmployeeForm({
                 type="text"
                 maxLength={120}
                 value={jobTitle}
-                onChange={(event) => setJobTitle(event.target.value)}
-                className="input"
+                onChange={(event) => setJobTitle(event.target.value)} className="input"
               />
             </Field>
 
@@ -153,8 +153,7 @@ export function EmployeeForm({
                 name="expires_at"
                 type="date"
                 value={expiresAt}
-                onChange={(event) => setExpiresAt(event.target.value)}
-                className="input"
+                onChange={(event) => setExpiresAt(event.target.value)} className="input"
                 dir="ltr"
               />
             </Field>
@@ -197,6 +196,7 @@ export function EmployeeForm({
             data={{
               companyName: company.name,
               companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.logo_url)}` : null,
+              logoBgDark: company.logo_bg_dark,
               primaryColor: company.primary_color,
               secondaryColor: company.secondary_color,
               employeeName: fullName || t("sampleName"),
@@ -206,6 +206,9 @@ export function EmployeeForm({
               photoUrl,
               validUntil: expiresAt ? formatDate(new Date(`${expiresAt}T12:00:00.000Z`), "en", company.time_zone) : "—",
               domain,
+              website: company.website,
+              tagline: company.tagline,
+              showVerifyHostOnCard: company.show_verify_host_on_card,
               phone: company.contact_phone,
               email: company.contact_email,
             }}

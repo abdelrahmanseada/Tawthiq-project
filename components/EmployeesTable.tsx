@@ -52,8 +52,7 @@ export function EmployeesTable({
             </button>
           </form>
           <form
-            action={bulkSuspendEmployeesAction}
-            className="contents"
+            action={bulkSuspendEmployeesAction} className="contents"
             onSubmit={(event) => {
               if (!window.confirm(t("bulkConfirmSuspend"))) event.preventDefault();
             }}
@@ -69,8 +68,7 @@ export function EmployeesTable({
             {t("bulkClear")}
           </button>
           <button
-            type="button"
-            className="btn btn-ghost btn-sm ms-auto"
+            type="button" className="btn btn-ghost btn-sm ms-auto"
             onClick={() => setCompact((value) => !value)}
             aria-pressed={compact}
             title={t("density")}
@@ -91,8 +89,7 @@ export function EmployeesTable({
                     type="checkbox"
                     aria-label={t("selectAll")}
                     checked={allSelected}
-                    onChange={toggleAll}
-                    className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
+                    onChange={toggleAll} className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
                   />
                 </th>
               ) : null}
@@ -118,8 +115,7 @@ export function EmployeesTable({
                         type="checkbox"
                         aria-label={`${tc("select")} ${row.full_name}`}
                         checked={selected.includes(row.id)}
-                        onChange={() => toggle(row.id)}
-                        className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
+                        onChange={() => toggle(row.id)} className="h-4 w-4 rounded border-border text-brand focus:ring-brand"
                       />
                     </td>
                   ) : null}
@@ -131,8 +127,7 @@ export function EmployeesTable({
                           alt={t("photoAlt", { name: row.full_name })}
                           width={40}
                           height={40}
-                          unoptimized
-                          className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border"
+                          unoptimized className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border"
                         />
                       ) : (
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface text-subtle ring-1 ring-border">
@@ -197,8 +192,7 @@ export function EmployeesTable({
                         </Link>
                         {canWrite ? (
                           <Link
-                            href={`/employees/${row.id}/edit`}
-                            className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
+                            href={`/employees/${row.id}/edit`} className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
                           >
                             {t("editEmployee")}
                           </Link>
@@ -206,8 +200,7 @@ export function EmployeesTable({
                         {row.card?.status === "ACTIVE" ? (
                           printingAllowed && row.photoUrl && row.card.has_token ? (
                             <a
-                              href={`/api/admin/cards/${row.card.id}/pdf`}
-                              className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
+                              href={`/api/admin/cards/${row.card.id}/pdf`} className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
                             >
                               {t("printCard")}
                             </a>

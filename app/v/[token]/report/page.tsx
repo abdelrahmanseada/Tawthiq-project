@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { normalizeHexColor, readableTextOn } from "@/lib/colors";
-import { getPublicCompanyForToken } from "@/lib/services/verification";
-import { PRODUCT_NAME } from "@/lib/brand";
+import { PRODUCT_PRIMARY_COLOR, readableTextOn } from "@/lib/colors";
+import { PRODUCT_NAME, copyrightText } from "@/lib/brand";
+import { LogoMark } from "@/components/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -23,16 +23,17 @@ export default async function ReportProblemPage({
   const query = await searchParams;
   const t = await getTranslations("verify");
   const tc = await getTranslations("common");
-  const company = await getPublicCompanyForToken(token);
-  const primary = normalizeHexColor(company?.primary_color, "#0F766E");
-  const brandName = company?.name ?? PRODUCT_NAME;
+  const primary = PRODUCT_PRIMARY_COLOR;
   const backHref = `/v/${encodeURIComponent(token)}`;
 
   return (
     <main className="min-h-screen bg-surface" style={{ "--brand": primary } as React.CSSProperties}>
       <header style={{ background: primary, color: readableTextOn(primary) }}>
         <div className="mx-auto flex max-w-xl items-center justify-between gap-3 px-4 py-4">
-          <p className="truncate text-base font-bold">{brandName}</p>
+          <span className="flex items-center gap-2">
+            <LogoMark className="h-8 w-8" />
+            <span className="truncate text-base font-bold">{PRODUCT_NAME}</span>
+          </span>
           <Link href={backHref} className="text-xs font-semibold underline underline-offset-2">
             {t("backToCard")}
           </Link>
@@ -66,8 +67,7 @@ export default async function ReportProblemPage({
               minLength={3}
               maxLength={500}
               rows={5}
-              placeholder={t("reportPlaceholder")}
-              className="input min-h-32"
+              placeholder={t("reportPlaceholder")} className="input min-h-32"
             />
             <div className="flex flex-wrap gap-2">
               <button type="submit" className="btn btn-primary">
@@ -80,6 +80,7 @@ export default async function ReportProblemPage({
           </form>
         </div>
       </section>
+      <footer className="border-t border-border bg-card py-4 text-center text-xs text-subtle">{copyrightText()}</footer>
     </main>
   );
 }

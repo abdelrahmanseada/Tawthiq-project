@@ -75,8 +75,7 @@ export default async function AdminsPage({
                             <select
                               name="role"
                               defaultValue={entry.role}
-                              aria-label={t("role")}
-                              className="input w-auto min-w-36 py-1.5 text-xs"
+                              aria-label={t("role")} className="input w-auto min-w-36 py-1.5 text-xs"
                               disabled={!entry.is_active || isSelf}
                             >
                               <option value="ADMIN">{tr("ADMIN")}</option>

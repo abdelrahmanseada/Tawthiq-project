@@ -7,22 +7,26 @@ import { AlertTriangle, CheckCircle2, ImagePlus, Loader2, Save, Trash2, XCircle 
 import { saveCompanySettingsAction, testVerifyUrlAction, type SettingsState } from "./actions";
 import { CardPreview } from "@/components/CardPreview";
 import { Alert, Field, SectionCard, cn } from "@/components/ui";
-import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, contrastRatio, normalizeHexColor, readableTextOn } from "@/lib/colors";
+import { PRODUCT_PRIMARY_COLOR, DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, contrastRatio, normalizeHexColor, readableTextOn } from "@/lib/colors";
+import { PRODUCT_NAME } from "@/lib/brand";
 import { supportedTimeZones } from "@/lib/timezone";
 
 export interface SettingsFormValues {
   name: string;
+  tagline: string;
+  website: string;
+  show_verify_host_on_card: boolean;
   primary_color: string;
   secondary_color: string;
   contact_phone: string;
   contact_email: string;
   verify_base_url: string;
   time_zone: string;
-  custom_domain: string | null;
   idle_timeout_minutes: number;
   default_card_validity_days: number;
   scan_log_retention_days: number;
   logoUrl: string | null;
+  logoBgDark: boolean;
 }
 
 export function SettingsForm({
@@ -42,13 +46,15 @@ export function SettingsForm({
   const [testing, startTest] = useTransition();
 
   const [name, setName] = useState(initial.name);
+  const [tagline, setTagline] = useState(initial.tagline);
+  const [website, setWebsite] = useState(initial.website);
+  const [showHost, setShowHost] = useState(initial.show_verify_host_on_card);
   const [primary, setPrimary] = useState(initial.primary_color);
   const [secondary, setSecondary] = useState(initial.secondary_color);
   const [phone, setPhone] = useState(initial.contact_phone);
   const [email, setEmail] = useState(initial.contact_email);
   const [url, setUrl] = useState(initial.verify_base_url);
   const [timeZone, setTimeZone] = useState(initial.time_zone);
-  const [customDomain, setCustomDomain] = useState(initial.custom_domain ?? "");
   const [idle, setIdle] = useState(initial.idle_timeout_minutes);
   const [validity, setValidity] = useState(initial.default_card_validity_days);
   const [retention, setRetention] = useState(initial.scan_log_retention_days);
@@ -82,14 +88,17 @@ export function SettingsForm({
   const secondaryContrast = contrastRatio(secondaryPreview, "#ffffff");
   const colorError = (value: string) =>
     fieldError("primary_color") ??
-    (value.trim() && !/^#[0-9a-fA-F]{6}$/.test(value.trim()) ? tv("invalid_color") : undefined);
+    (!/^#[0-9a-fA-F]{6}$/.test(value.trim()) ? tv("invalid_color") : undefined);
   const secondaryColorError = (value: string) =>
     fieldError("secondary_color") ??
-    (value.trim() && !/^#[0-9a-fA-F]{6}$/.test(value.trim()) ? tv("invalid_color") : undefined);
+    (!/^#[0-9a-fA-F]{6}$/.test(value.trim()) ? tv("invalid_color") : undefined);
   const failedFields = Object.keys(state.fieldErrors ?? {});
   const fieldLabel = (key: string): string => {
     const labels: Record<string, string> = {
       name: t("companyName"),
+      tagline: "Tagline",
+      website: "Website",
+      show_verify_host_on_card: "Print verification address",
       primary_color: t("primaryColor"),
       secondary_color: t("secondaryColor"),
       contact_phone: t("contactPhone"),
@@ -114,8 +123,7 @@ export function SettingsForm({
   return (
     <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
       <form
-        action={formAction}
-        className="space-y-5"
+        action={formAction} className="space-y-5"
         noValidate
         onChange={() => setDirty(true)}
         onInput={() => setDirty(true)}
@@ -147,11 +155,18 @@ export function SettingsForm({
                 id="name"
                 name="name"
                 value={name}
-                onChange={(event) => setName(event.target.value)}
-                className="input"
+                onChange={(event) => setName(event.target.value)} className="input"
                 required
                 maxLength={200}
               />
+            </Field>
+
+            <Field label="Tagline" htmlFor="tagline" error={fieldError("tagline")}>
+              <input id="tagline" name="tagline" value={tagline} onChange={(event) => setTagline(event.target.value)} className="input" maxLength={120} placeholder="Established 1989" />
+            </Field>
+
+            <Field label="Website" htmlFor="website" error={fieldError("website")}>
+              <input id="website" name="website" value={website} onChange={(event) => setWebsite(event.target.value)} className="input" type="url" maxLength={255} placeholder="https://bremer.example" />
             </Field>
 
             <Field label="Time zone" htmlFor="time_zone" error={fieldError("time_zone")}>
@@ -159,8 +174,7 @@ export function SettingsForm({
                 id="time_zone"
                 name="time_zone"
                 value={timeZone}
-                onChange={(event) => setTimeZone(event.target.value)}
-                className="input"
+                onChange={(event) => setTimeZone(event.target.value)} className="input"
                 list="time-zone-options"
                 autoComplete="off"
                 required
@@ -175,18 +189,17 @@ export function SettingsForm({
               <p className="mt-1 text-xs text-muted">Searchable IANA time zone list. Defaults to Africa/Cairo.</p>
             </Field>
 
-            <Field label="Custom domain (optional)" htmlFor="custom_domain" error={fieldError("custom_domain")}>
+            <label className="flex items-start gap-2 text-sm text-ink">
               <input
-                id="custom_domain"
-                name="custom_domain"
-                value={customDomain}
-                onChange={(event) => setCustomDomain(event.target.value)}
-                className="input"
-                maxLength={255}
-                placeholder="verify.example.com"
+                type="checkbox"
+                name="show_verify_host_on_card"
+                value="1"
+                checked={showHost}
+                onChange={(event) => setShowHost(event.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-border"
               />
-              <p className="mt-1 text-xs text-muted">Point a CNAME at the app, then enter the hostname here. Tokens presented on another tenant’s host are invalid.</p>
-            </Field>
+              <span>Print the verification address on the card back</span>
+            </label>
 
             <div>
               <p className="label">{t("logo")}</p>
@@ -204,8 +217,7 @@ export function SettingsForm({
                     id="logo"
                     name="logo"
                     type="file"
-                    accept="image/png,image/jpeg,image/svg+xml"
-                    className="sr-only"
+                    accept="image/png,image/jpeg,image/svg+xml" className="sr-only"
                     onChange={(event) => {
                       const file = event.target.files?.[0];
                       if (file) {
@@ -222,8 +234,7 @@ export function SettingsForm({
                   <p className="hint">{t("logoHint")}</p>
                   {initial.logoUrl ? (
                     <button
-                      type="button"
-                      className="btn btn-ghost btn-sm text-danger-fg"
+                      type="button" className="btn btn-ghost btn-sm text-danger-fg"
                       onClick={() => {
                         setRemoveLogo(true);
                         setLogoPreview(null);
@@ -249,15 +260,13 @@ export function SettingsForm({
                   id="primary_color"
                   type="color"
                   value={primaryPreview}
-                  onChange={(event) => setPrimary(event.target.value)}
-                  className="h-11 w-14 cursor-pointer rounded-control border border-border bg-card p-1"
+                  onChange={(event) => setPrimary(event.target.value)} className="h-11 w-14 cursor-pointer rounded-control border border-border bg-card p-1"
                 />
                 <input
                   aria-label={t("primaryColor")}
                   name="primary_color"
                   value={primary}
-                  onChange={(event) => setPrimary(event.target.value)}
-                  className="input font-mono text-sm uppercase"
+                  onChange={(event) => setPrimary(event.target.value)} className="input font-mono text-sm uppercase"
                   dir="ltr"
                 />
               </div>
@@ -268,29 +277,25 @@ export function SettingsForm({
                   id="secondary_color"
                   type="color"
                   value={secondaryPreview}
-                  onChange={(event) => setSecondary(event.target.value)}
-                  className="h-11 w-14 cursor-pointer rounded-control border border-border bg-card p-1"
+                  onChange={(event) => setSecondary(event.target.value)} className="h-11 w-14 cursor-pointer rounded-control border border-border bg-card p-1"
                 />
                 <input
                   aria-label={t("secondaryColor")}
                   name="secondary_color"
                   value={secondary}
-                  onChange={(event) => setSecondary(event.target.value)}
-                  className="input font-mono text-sm uppercase"
+                  onChange={(event) => setSecondary(event.target.value)} className="input font-mono text-sm uppercase"
                   dir="ltr"
                 />
               </div>
             </Field>
           </div>
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
-            <span
-              className="inline-flex items-center gap-1 rounded-pill px-2.5 py-1 font-semibold"
+            <span className="inline-flex items-center gap-1 rounded-pill px-2.5 py-1 font-semibold"
               style={{ background: primaryPreview, color: readableTextOn(primaryPreview) }}
             >
               {primaryPreview} · {primaryContrast.toFixed(2)}:1
             </span>
-            <span
-              className="inline-flex items-center gap-1 rounded-pill px-2.5 py-1 font-semibold"
+            <span className="inline-flex items-center gap-1 rounded-pill px-2.5 py-1 font-semibold"
               style={{ background: secondaryPreview, color: readableTextOn(secondaryPreview) }}
             >
               {secondaryPreview} · {secondaryContrast.toFixed(2)}:1
@@ -309,8 +314,7 @@ export function SettingsForm({
                 id="contact_phone"
                 name="contact_phone"
                 value={phone}
-                onChange={(event) => setPhone(event.target.value)}
-                className="input"
+                onChange={(event) => setPhone(event.target.value)} className="input"
                 dir="ltr"
                 required
               />
@@ -321,8 +325,7 @@ export function SettingsForm({
                 name="contact_email"
                 type="email"
                 value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="input"
+                onChange={(event) => setEmail(event.target.value)} className="input"
                 dir="ltr"
                 required
               />
@@ -340,8 +343,7 @@ export function SettingsForm({
               onChange={(event) => {
                 setUrl(event.target.value);
                 setTestResult(null);
-              }}
-              className="input font-mono text-sm"
+              }} className="input font-mono text-sm"
               dir="ltr"
               required
               placeholder="https://verify.example.com"
@@ -351,8 +353,7 @@ export function SettingsForm({
           <p className="mt-1 text-xs text-muted">On a phone, open the LAN address on the same Wi-Fi. Windows may prompt to allow Node.js on private networks; allow it. For HTTPS, use Cloudflare Tunnel or ngrok and paste the tunnel URL here.</p>
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <button
-              type="button"
-              className="btn btn-secondary btn-sm"
+              type="button" className="btn btn-secondary btn-sm"
               disabled={testing}
               onClick={() =>
                 startTest(async () => {
@@ -365,8 +366,7 @@ export function SettingsForm({
               {testing ? t("testingUrl") : t("testUrl")}
             </button>
             <button
-              type="button"
-              className="btn btn-ghost btn-sm"
+              type="button" className="btn btn-ghost btn-sm"
               onClick={async () => {
                 const response = await fetch("/api/admin/network", { cache: "no-store" });
                 if (!response.ok) return;
@@ -419,8 +419,7 @@ export function SettingsForm({
                 min={1}
                 max={3650}
                 value={validity}
-                onChange={(event) => setValidity(Number(event.target.value))}
-                className="input"
+                onChange={(event) => setValidity(Number(event.target.value))} className="input"
                 dir="ltr"
               />
             </Field>
@@ -432,8 +431,7 @@ export function SettingsForm({
                 min={5}
                 max={1440}
                 value={idle}
-                onChange={(event) => setIdle(Number(event.target.value))}
-                className="input"
+                onChange={(event) => setIdle(Number(event.target.value))} className="input"
                 dir="ltr"
               />
             </Field>
@@ -449,8 +447,7 @@ export function SettingsForm({
               min={30}
               max={3650}
               value={retention}
-              onChange={(event) => setRetention(Number(event.target.value))}
-              className="input max-w-xs"
+              onChange={(event) => setRetention(Number(event.target.value))} className="input max-w-xs"
               dir="ltr"
             />
           </Field>
@@ -472,6 +469,7 @@ export function SettingsForm({
             data={{
               companyName: name || t("sampleName"),
               companyLogoUrl: logoPreview && !removeLogo ? logoPreview : null,
+              logoBgDark: initial.logoBgDark,
               primaryColor: primaryPreview,
               secondaryColor: secondaryPreview,
               employeeName: t("sampleName"),
@@ -489,9 +487,10 @@ export function SettingsForm({
         </div>
 
         <div className="card overflow-hidden">
-          <div className="px-4 py-3" style={{ background: primary, color: readableTextOn(primary) }}>
+          <div className="px-4 py-3" style={{ background: PRODUCT_PRIMARY_COLOR, color: readableTextOn(PRODUCT_PRIMARY_COLOR) }}>
             <p className="text-xs font-semibold uppercase tracking-wide opacity-80">{t("verifyPreview")}</p>
-            <p className="mt-1 text-lg font-bold">{name || t("sampleName")}</p>
+            <p className="mt-1 text-lg font-bold">{PRODUCT_NAME}</p>
+            <p className="text-xs opacity-80">{name || t("sampleName")}</p>
           </div>
           <div className="p-4">
             <div className="flex items-center gap-2">

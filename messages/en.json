@@ -2,8 +2,8 @@
   "brand": {
     "name": "Tawthiq",
     "tagline": "Verified identity for every workforce.",
-    "description": "Multi-company employee identity and verification.",
-    "poweredBy": "Powered by Tawthiq",
+    "description": "Employee identity and verification.",
+    "poweredBy": "© {year} Tawthiq",
     "product": "Employee verification"
   },
   "common": {
@@ -508,7 +508,7 @@
   },
   "settings": {
     "title": "Company settings",
-    "subtitle": "Identity, branding, language, verification and retention.",
+    "subtitle": "Identity, branding, contact, verification and retention.",
     "identity": "Identity",
     "branding": "Branding",
     "contact": "Contact",
@@ -624,7 +624,7 @@
     "confirmRegenerateRecovery": "Regenerate recovery codes? Existing unused codes stop working.",
     "recoveryRegenerated": "New recovery codes generated.",
     "accountTitle": "My account",
-    "accountSubtitle": "Your profile, appearance and sessions.",
+    "accountSubtitle": "Your profile and sessions.",
     "profile": "Profile",
     "appearance": "Appearance",
     "appearanceHint": "Choose light, dark or follow the system.",
@@ -673,7 +673,8 @@
     "notProductionValid": "Not production-valid (public HTTPS required)",
     "notHttps": "Not HTTPS (local only)",
     "gbFree": "{value} GB free",
-    "backupOk": "Latest backup {days} days ago"
+    "backupOk": "Latest backup {days} days ago",
+    "twoFactor": "Two-step verification"
   },
   "errors": {
     "notFoundTitle": "Page not found",
@@ -748,41 +749,53 @@
   },
   "audit": {
     "actions": {
-      "auth.login_success": "Signed in",
-      "auth.password_verified": "Verified password",
-      "auth.2fa_failed": "Failed two-factor authentication",
-      "auth.2fa_rate_limited": "Hit the two-factor rate limit",
-      "auth.2fa_enabled": "Enabled two-factor authentication",
-      "auth.login_failed": "Failed sign-in",
-      "auth.login_blocked": "Blocked sign-in",
-      "auth.recovery_failed": "Failed a recovery code",
-      "auth.recovery_used": "Signed in with a recovery code",
-      "auth.logout": "Signed out",
-      "admin.password_changed": "Changed password",
-      "admin.created": "Created administrator",
-      "admin.role_changed": "Changed administrator role",
-      "admin.deactivated": "Deactivated administrator",
-      "admin.2fa_reset": "Reset two-factor authentication",
-      "company.settings_updated": "Updated company settings",
-      "company.logo_updated": "Updated company logo",
-      "company.logo_removed": "Removed company logo",
-      "employee.created": "Created employee",
-      "employee.updated": "Updated employee",
-      "employee.status_changed": "Changed employee status",
-      "employee.deleted": "Deleted employee",
-      "employee.restored": "Restored employee",
-      "employee.photo_removed": "Removed employee photo",
-      "card.revoked": "Revoked card",
-      "card.regenerated": "Regenerated card",
-      "card.bulk_reissued": "Re-issued all legacy cards",
-      "card.bulk_a4_download": "Downloaded A4 card sheets",
-      "card.bulk_zip_download": "Downloaded card ZIP",
-      "card.test_printed": "Printed a test card",
-      "import.previewed": "Previewed import",
-      "import.started": "Started import",
-      "import.completed": "Completed import",
-      "import.failed": "Import failed",
-      "import.rolled_back": "Rolled back import"
+      "auth": {
+        "login_success": "Signed in",
+        "password_verified": "Verified password",
+        "2fa_failed": "Failed two-factor authentication",
+        "2fa_rate_limited": "Hit the two-factor rate limit",
+        "2fa_enabled": "Enabled two-factor authentication",
+        "login_failed": "Failed sign-in",
+        "login_blocked": "Blocked sign-in",
+        "recovery_failed": "Failed a recovery code",
+        "recovery_used": "Signed in with a recovery code",
+        "logout": "Signed out"
+      },
+      "admin": {
+        "password_changed": "Changed password",
+        "created": "Created administrator",
+        "role_changed": "Changed administrator role",
+        "deactivated": "Deactivated administrator",
+        "2fa_reset": "Reset two-factor authentication"
+      },
+      "company": {
+        "settings_updated": "Updated company settings",
+        "logo_updated": "Updated company logo",
+        "logo_removed": "Removed company logo"
+      },
+      "employee": {
+        "created": "Created employee",
+        "updated": "Updated employee",
+        "status_changed": "Changed employee status",
+        "deleted": "Deleted employee",
+        "restored": "Restored employee",
+        "photo_removed": "Removed employee photo"
+      },
+      "card": {
+        "revoked": "Revoked card",
+        "regenerated": "Regenerated card",
+        "bulk_reissued": "Re-issued all legacy cards",
+        "bulk_a4_download": "Downloaded A4 card sheets",
+        "bulk_zip_download": "Downloaded card ZIP",
+        "test_printed": "Printed a test card"
+      },
+      "import": {
+        "previewed": "Previewed import",
+        "started": "Started import",
+        "completed": "Completed import",
+        "failed": "Import failed",
+        "rolled_back": "Rolled back import"
+      }
     },
     "entities": {
       "AdminUser": "Administrator",

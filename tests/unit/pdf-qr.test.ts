@@ -1,4 +1,6 @@
 import jsQR from "jsqr";
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { renderCardPdf, type RenderCardInput } from "@/lib/pdf/card";
 import { renderCardsSheet } from "@/lib/pdf/sheet";
@@ -8,8 +10,12 @@ const TOKEN = "Zx7Qp2Lm9Rt4Vw8Yb3Nc6Hd1Ks5Jf0Ga";
 function input(): RenderCardInput {
   return {
     company: {
-      name: "Northwind Demo",
+      name: "Bremer",
       logo_path: null,
+      logo_bg_dark: false,
+      website: "bremer.example",
+      tagline: "Established 1989",
+      show_verify_host_on_card: false,
       primary_color: "#0F766E",
       secondary_color: "#F59E0B",
       contact_phone: "+20 100 000 0000",
@@ -36,6 +42,10 @@ async function decodePage(pdfBytes: Uint8Array, pageIndex: number, scale = 5) {
   const page = doc.loadPage(pageIndex);
   const pixmap = page.toPixmap(mupdf.Matrix.scale(scale, scale), mupdf.ColorSpace.DeviceRGB, true);
   const width = pixmap.getWidth();
+  if (process.env.SAVE_CARD_PNGS === "1") {
+    mkdirSync(path.join(process.cwd(), "test-output", "cards"), { recursive: true });
+    writeFileSync(path.join(process.cwd(), "test-output", "cards", `qr-${pageIndex}-${scale}.png`), pixmap.asPNG());
+  }
   const height = pixmap.getHeight();
   const stride = pixmap.getStride();
   let pixels = pixmap.getPixels();

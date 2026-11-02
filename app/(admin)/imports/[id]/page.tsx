@@ -157,8 +157,7 @@ export default async function ImportBatchPage({
                         type="radio"
                         name="strategy"
                         value={value}
-                        defaultChecked={batch.duplicate_strategy === value}
-                        className="mt-1 h-4 w-4 text-brand focus:ring-brand"
+                        defaultChecked={batch.duplicate_strategy === value} className="mt-1 h-4 w-4 text-brand focus:ring-brand"
                       />
                       <span>
                         <span className="block text-sm font-semibold text-ink">{label}</span>

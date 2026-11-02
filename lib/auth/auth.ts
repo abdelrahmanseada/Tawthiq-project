@@ -2,7 +2,7 @@ import NextAuth, { CredentialsSignin } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import { env, isProduction } from "@/lib/env";
+import { env } from "@/lib/env";
 import { verifyMfaTicket } from "@/lib/security/crypto";
 
 class InvalidLoginError extends CredentialsSignin {
@@ -24,7 +24,7 @@ const credentialsSchema = z.object({
 export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: env.AUTH_SECRET,
   trustHost: true,
-  useSecureCookies: isProduction,
+  useSecureCookies: env.APP_URL.startsWith("https://"),
   session: {
     strategy: "jwt",
     maxAge: env.SESSION_MAX_AGE,

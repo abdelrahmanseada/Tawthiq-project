@@ -32,6 +32,7 @@ ENV ALLOWED_SCRIPTS="latin"
 ENV PLATFORM_ADMIN_NAME="Platform Operator"
 ENV PLATFORM_ADMIN_EMAIL="platform@tawthiq.example"
 ENV PUBLIC_VERIFY_URL="https://verify.example.com"
+ENV REQUIRE_2FA="true"
 ENV CARD_TOKEN_KEY="build-only-card-token-key-build-only-card-token-key"
 ENV TRUSTED_PROXY_HOPS="1"
 ENV BACKUP_PASSPHRASE="build-only-backup-passphrase-value"
@@ -45,6 +46,8 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV STORAGE_DIR=/app/storage
 COPY --from=builder /app/.next/standalone ./
+# Keep the full installed dependency tree; standalone tracing can miss transitive modules.
+COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/assets ./assets

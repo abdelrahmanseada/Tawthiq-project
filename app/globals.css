@@ -4,16 +4,16 @@
 
 @layer base {
   :root {
-    --surface: #f6f8fb;
+    --surface: #f6f6f7;
     --card: #ffffff;
-    --ink: #0b1220;
-    --border: #e3e8ef;
-    --muted: #475569;
-    --subtle: #526174;
+    --ink: #111111;
+    --border: #e5e7eb;
+    --muted: #5f6673;
+    --subtle: #5f6673;
     --success: #15803d;
     --success-tint: #dcfce7;
     --success-fg: #14532d;
-    --danger: #b91c1c;
+    --danger: #dc2626;
     --danger-tint: #fee2e2;
     --danger-fg: #7f1d1d;
     --warning: #b45309;
@@ -23,56 +23,6 @@
     --info-tint: #dbeafe;
     --info-fg: #1e3a8a;
     color-scheme: light;
-  }
-
-  html.dark {
-    --surface: #070d18;
-    --card: #0f172a;
-    --ink: #f8fafc;
-    --border: #1e293b;
-    --muted: #cbd5e1;
-    --subtle: #94a3b8;
-    --brand-tint: color-mix(in srgb, var(--brand) 22%, #0f172a) !important;
-    --brand-soft: color-mix(in srgb, var(--brand) 38%, #0f172a) !important;
-    --success: #4ade80;
-    --success-tint: #052e16;
-    --success-fg: #bbf7d0;
-    --danger: #f87171;
-    --danger-tint: #450a0a;
-    --danger-fg: #fecaca;
-    --warning: #fbbf24;
-    --warning-tint: #451a03;
-    --warning-fg: #fde68a;
-    --info: #60a5fa;
-    --info-tint: #172554;
-    --info-fg: #bfdbfe;
-    color-scheme: dark;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    html:not(.light) {
-      --surface: #070d18;
-      --card: #0f172a;
-      --ink: #f8fafc;
-      --border: #1e293b;
-      --muted: #cbd5e1;
-      --subtle: #94a3b8;
-      --brand-tint: color-mix(in srgb, var(--brand) 22%, #0f172a) !important;
-      --brand-soft: color-mix(in srgb, var(--brand) 38%, #0f172a) !important;
-      --success: #4ade80;
-      --success-tint: #052e16;
-      --success-fg: #bbf7d0;
-      --danger: #f87171;
-      --danger-tint: #450a0a;
-      --danger-fg: #fecaca;
-      --warning: #fbbf24;
-      --warning-tint: #451a03;
-      --warning-fg: #fde68a;
-      --info: #60a5fa;
-      --info-tint: #172554;
-      --info-fg: #bfdbfe;
-      color-scheme: dark;
-    }
   }
 
   html {
@@ -215,7 +165,7 @@
   }
 
   .link {
-    @apply font-semibold text-brand underline decoration-brand underline-offset-2 hover:decoration-2;
+    @apply font-semibold text-brand-active underline decoration-brand-active underline-offset-2 hover:decoration-2;
   }
 
   .divider {

@@ -1,7 +1,7 @@
 import { stat, statfs, readdir } from "node:fs/promises";
 import path from "node:path";
 import { prisma } from "@/lib/db";
-import { env, initialVerifyBaseUrl } from "@/lib/env";
+import { env, initialVerifyBaseUrl, twoFactorRequired } from "@/lib/env";
 import { getClientIpDetails } from "@/lib/http";
 import { getStorageRoot } from "@/lib/storage";
 import { validateVerifyBaseUrl } from "@/lib/qr";
@@ -124,6 +124,12 @@ async function checkBackup(): Promise<StatusCheck> {
   }
 }
 
+function checkTwoFactor(): StatusCheck {
+  return twoFactorRequired
+    ? { id: "twoFactor", state: "ok", detail: "required" }
+    : { id: "twoFactor", state: "warn", detail: "not required" };
+}
+
 export async function getSystemStatus(headers: Headers, company: { verify_base_url: string }): Promise<SystemStatus> {
   const details = getClientIpDetails(headers);
   const [database, redis, storage, verifyUrl, https, backup] = await Promise.all([
@@ -137,7 +143,7 @@ export async function getSystemStatus(headers: Headers, company: { verify_base_u
 
   const protocol = headers.get("x-forwarded-proto") ?? (env.APP_URL.startsWith("https") ? "https" : "http");
   return {
-    checks: [database, redis, storage, verifyUrl, https, backup],
+    checks: [database, redis, storage, verifyUrl, https, backup, checkTwoFactor()],
     ip: details.ip,
     ipSource: details.source,
     forwardedChain: details.chain,

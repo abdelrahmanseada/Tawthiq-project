@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
@@ -24,9 +23,7 @@ import {
   X,
 } from "lucide-react";
 import { logoutAction } from "@/app/(admin)/actions";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Alert, Badge, LogoMark, cn } from "@/components/ui";
-import type { Theme } from "@/lib/theme";
 
 const ICONS = {
   dashboard: LayoutDashboard,
@@ -63,8 +60,8 @@ export interface ShellNotification {
 }
 
 export interface AdminShellProps {
-  admin: { name: string; email: string; roleLabel: string; theme: Theme };
-  company: { name: string; logoUrl: string | null };
+  admin: { name: string; email: string; roleLabel: string };
+  copyright: string;
   nav: ShellNavGroup[];
   notifications: ShellNotification[];
   breadcrumbs: Array<{ href: string; label: string }>;
@@ -74,7 +71,7 @@ export interface AdminShellProps {
 
 export function AdminShell({
   admin,
-  company,
+  copyright,
   nav,
   notifications,
   breadcrumbs,
@@ -110,36 +107,13 @@ export function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col">
       <div className={cn("flex h-16 items-center gap-3 border-b border-border px-4", collapsed && "lg:justify-center lg:px-2")}>
-        <Link href="/dashboard" className="flex min-w-0 items-center gap-2.5" aria-label={t("brand.name")}>
+        <Link href="/dashboard" className="flex min-w-0 items-center gap-2.5">
           <LogoMark className="h-9 w-9 shrink-0" />
           <span className={cn("truncate text-sm font-bold text-ink", collapsed && "lg:hidden")}>{t("brand.name")}</span>
         </Link>
         <button type="button" className="btn btn-ghost btn-icon ms-auto lg:hidden" onClick={() => setMobileOpen(false)} aria-label={t("common.close")}>
           <X className="h-5 w-5" />
         </button>
-      </div>
-
-      <div className={cn("border-b border-border p-3", collapsed && "lg:px-2")}>
-        <div className={cn("flex items-center gap-2.5 rounded-control bg-surface p-2", collapsed && "lg:justify-center")}>
-          {company.logoUrl ? (
-            <Image
-              src={company.logoUrl}
-              alt=""
-              width={32}
-              height={32}
-              unoptimized
-              className="h-8 w-8 shrink-0 rounded-control bg-white object-contain p-0.5 ring-1 ring-border"
-            />
-          ) : (
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-control bg-brand-tint text-xs font-bold text-brand">
-              {company.name.split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("")}
-            </span>
-          )}
-          <div className={cn("min-w-0", collapsed && "lg:hidden")}>
-            <p className="truncate text-xs font-bold text-ink" title={company.name}>{company.name}</p>
-            <p className="truncate text-[11px] text-muted">{admin.roleLabel}</p>
-          </div>
-        </div>
       </div>
 
       <nav aria-label={t("nav.dashboard")} className="flex-1 overflow-y-auto px-2 py-3">
@@ -174,6 +148,7 @@ export function AdminShell({
           </div>
         ))}
       </nav>
+      <div className={cn("border-t border-border px-4 py-3 text-[11px] text-subtle", collapsed && "lg:hidden")}>{copyright}</div>
     </div>
   );
 
@@ -207,8 +182,7 @@ export function AdminShell({
               <Menu className="h-5 w-5" />
             </button>
             <button
-              type="button"
-              className="btn btn-ghost btn-icon hidden lg:inline-flex"
+              type="button" className="btn btn-ghost btn-icon hidden lg:inline-flex"
               onClick={toggleCollapsed}
               aria-label={collapsed ? t("nav.expand") : t("nav.collapse")}
               aria-expanded={!collapsed}
@@ -233,8 +207,7 @@ export function AdminShell({
               ))}
             </nav>
 
-            <form
-              className="relative ms-auto hidden w-full max-w-xs sm:block"
+            <form className="relative ms-auto hidden w-full max-w-xs sm:block"
               role="search"
               onSubmit={(event) => {
                 event.preventDefault();
@@ -245,8 +218,7 @@ export function AdminShell({
               <Search className="pointer-events-none absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-subtle" aria-hidden="true" />
               <input
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
-                className="input h-10 ps-9 text-sm"
+                onChange={(event) => setSearch(event.target.value)} className="input h-10 ps-9 text-sm"
                 placeholder={t("employees.searchPlaceholder")}
                 aria-label={t("common.search")}
               />
@@ -254,8 +226,7 @@ export function AdminShell({
 
             <div className="ms-auto flex items-center gap-1 sm:ms-2">
               <details className="group relative">
-                <summary
-                  className="btn btn-secondary btn-icon relative list-none cursor-pointer [&::-webkit-details-marker]:hidden"
+                <summary className="btn btn-secondary btn-icon relative list-none cursor-pointer [&::-webkit-details-marker]:hidden"
                   title={t("notifications.title")}
                 >
                   <span className="sr-only">{t("notifications.title")}</span>
@@ -292,8 +263,6 @@ export function AdminShell({
                   )}
                 </div>
               </details>
-
-              <ThemeToggle current={admin.theme} />
 
               <details className="group relative">
                 <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 rounded-control px-2 hover:bg-surface [&::-webkit-details-marker]:hidden">

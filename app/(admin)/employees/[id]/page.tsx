@@ -344,8 +344,7 @@ export default async function EmployeeDetailPage({
                   alt={t("photoAlt", { name: employee.full_name })}
                   width={240}
                   height={320}
-                  unoptimized
-                  className="aspect-[3/4] w-full max-w-[240px] rounded-card object-cover ring-1 ring-border"
+                  unoptimized className="aspect-[3/4] w-full max-w-[240px] rounded-card object-cover ring-1 ring-border"
                 />
               ) : (
                 <div className="flex aspect-[3/4] w-full max-w-[240px] flex-col items-center justify-center gap-2 rounded-card bg-surface text-subtle ring-1 ring-border">

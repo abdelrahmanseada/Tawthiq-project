@@ -16,9 +16,12 @@ function input(overrides: Partial<CardTextInput> = {}): CardTextInput {
     jobTitle: "Maintenance Technician",
     department: "Operations",
     employeeCode: "NW-0001",
-    companyName: "Northwind Demo",
+    companyName: "Bremer",
     validUntil: "21 Nov 2026",
     host: "verify.example.com",
+    website: "bremer.example",
+    tagline: "Established 1989",
+    showVerifyHostOnCard: false,
     phone: "+20 100 000 0000",
     email: "hr@example.com",
     hasPhoto: true,
@@ -39,12 +42,15 @@ const CASES: Array<[string, Partial<CardTextInput>]> = [
   ["normal", {}],
   ["60-character name", { fullName: "Abdelrahman Mohamed Abdelrahman Mohamed Abdelrahman Mohamed Ali" }],
   ["60-character job title", { jobTitle: "Senior International Maintenance and Reliability Technician Lead" }],
-  ["40-character company", { companyName: "Northwind International Facilities Group" }],
-  ["no logo", { companyName: "Contoso Demo" }],
+  ["40-character company", { companyName: "Bremer International Facilities Group" }],
+  ["no logo", { companyName: "Bremer" }],
   ["no photo", { hasPhoto: false }],
   ["identical department and title", { department: "Operations", jobTitle: "Operations" }],
   ["very long e-mail", { email: "people.operations.and.human.resources@very-long-company-domain.example" }],
-  ["long host", { host: "employee-verification.services.northwind-facilities.example.com" }],
+  ["long host", { host: "employee-verification.services.bremer-facilities.example.com", showVerifyHostOnCard: true }],
+  ["long website", { website: "https://people.operations.human-resources.bremer.example" }],
+  ["no tagline", { tagline: null }],
+  ["with verification address", { showVerifyHostOnCard: true }],
 ];
 
 describe("card layout single source", () => {
@@ -95,7 +101,7 @@ describe("card layout single source", () => {
     }
     expect(overlaps(layout.front.name, { x: FRONT.photo.x, y: FRONT.photo.y, w: FRONT.photo.w, h: FRONT.photo.h })).toBe(false);
 
-    const back = [layout.back.heading, layout.back.host, layout.back.phone, layout.back.email, layout.back.returns];
+    const back = [layout.back.heading, layout.back.host, layout.back.website, layout.back.phone, layout.back.email, layout.back.returns].filter((block): block is TextBlock => block !== null);
     for (let index = 1; index < back.length; index += 1) {
       expect(overlaps(back[index - 1]!, back[index]!)).toBe(false);
     }

@@ -11,7 +11,6 @@ datasource db {
 }
 
 enum AdminRole {
-  PLATFORM_ADMIN
   SUPER_ADMIN
   ADMIN
   VIEWER
@@ -41,6 +40,16 @@ enum ScanResult {
   SUSPENDED
 }
 
+enum ScanReason {
+  NOT_FOUND
+  REVOKED
+  EXPIRED
+  EMPLOYEE_SUSPENDED
+  EMPLOYEE_TERMINATED
+  EMPLOYEE_DELETED
+  COMPANY_SUSPENDED
+}
+
 enum ImportStatus {
   PENDING
   PROCESSING
@@ -62,12 +71,15 @@ model Company {
   status                     CompanyStatus @default(ACTIVE)
   max_employees              Int           @default(100)
   time_zone                  String        @default("Africa/Cairo") @db.VarChar(64)
-  custom_domain              String?       @unique @db.VarChar(255)
   onboarding_completed_at    DateTime?
   onboarding_test_print_at   DateTime?
+  tagline                    String        @default("") @db.VarChar(120)
+  website                    String?       @db.VarChar(255)
   logo_url                   String?       @db.VarChar(512)
-  primary_color              String        @default("#0F766E") @db.VarChar(7)
-  secondary_color            String        @default("#F59E0B") @db.VarChar(7)
+  logo_bg_dark               Boolean       @default(false)
+  show_verify_host_on_card   Boolean       @default(false)
+  primary_color              String        @default("#000000") @db.VarChar(7)
+  secondary_color            String        @default("#8F0015") @db.VarChar(7)
   contact_phone              String        @db.VarChar(40)
   contact_email              String        @db.VarChar(254)
   verify_base_url            String        @db.VarChar(500)
@@ -93,7 +105,6 @@ model AdminUser {
   totp_enabled         Boolean   @default(false)
   must_change_password Boolean   @default(true)
   is_active            Boolean   @default(true)
-  theme                String    @default("system") @db.VarChar(10)
   failed_logins        Int       @default(0)
   locked_until         DateTime?
   last_login_at        DateTime?
@@ -166,6 +177,7 @@ model ScanLog {
   card_id      String?    @db.Uuid
   token_prefix String     @db.VarChar(6)
   result       ScanResult
+  reason       ScanReason?
   ip_hash      String     @db.VarChar(64)
   user_agent   String?    @db.VarChar(400)
   reported     Boolean    @default(false)
@@ -241,23 +253,6 @@ model VerificationReport {
   @@index([company_id, created_at])
   @@index([created_at])
   @@index([token_prefix])
-}
-
-// Platform-operator audit trail (separate from tenant audit logs).
-model PlatformAuditLog {
-  id         String   @id @default(uuid()) @db.Uuid
-  actor_id   String?  @db.Uuid
-  action     String   @db.VarChar(80)
-  entity     String   @db.VarChar(80)
-  entity_id  String?  @db.VarChar(128)
-  company_id String?  @db.Uuid
-  metadata   Json?
-  ip_hash    String?  @db.VarChar(64)
-  created_at DateTime @default(now())
-
-  @@index([created_at])
-  @@index([actor_id, created_at])
-  @@index([entity, entity_id])
 }
 
 // Fixed-window counters used by the Postgres rate limiter (Redis is preferred in production).
