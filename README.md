@@ -1,6 +1,6 @@
 # Tawthiq — employee identity and verification
 
-Tawthiq is the system brand used across the website, login, dashboard, exports and public verification page. Bremer is the client company whose employees are managed here; only the printed card and its preview use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on an ID card. Anyone can scan the card with a normal phone camera. The public page shows a green **Verified employee of Bremer** with photo, name and job title, or a neutral amber/red invalid state.
+Tawthiq is the system brand used across the website, login, dashboard, exports and public verification page. Bremer is the client company whose employees are managed here; only the printed card and its preview use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on the front of an ID card; photos are optional and the card falls back to initials. Anyone can scan the card with a normal phone camera. The public page shows a green **Verified employee of Bremer** with photo, name and job title, or a neutral amber/red invalid state.
 
 ## What is in this build
 
@@ -9,7 +9,7 @@ Tawthiq is the system brand used across the website, login, dashboard, exports a
 - Light theme only, on every admin, auth and public verification page. `color-scheme: light`.
 - Bremer card logo upload with dark-background detection (`logo_bg_dark`); Tawthiq shield favicon/apple icon and system branding.
 - Owner/Admin/Viewer RBAC, forced first password change, TOTP 2FA with 10 single-use recovery codes, lockout, sessions, CSP nonces, rate limits, audit and scan logs.
-- CR80 85.6 × 54 mm cards from one millimetre layout source shared by PDF and web preview: exact CR80, 3 mm bleed print-shop, A4 8-up duplex sheet, ZIP, test print.
+- CR80 85.6 × 54 mm cards from one millimetre layout source shared by PDF and web preview: QR on the front; a full-brand logo/website panel on the back; exact CR80, 3 mm bleed print-shop, A4 8-up duplex sheet, ZIP, test print.
 - Vector QR, AES-256-GCM `token_enc`, SHA-256 lookup, short-lived encrypted photo URLs.
 - Excel import with row errors, duplicate strategies, photo ZIP, progress and rollback.
 - Public verification page with no-store/noindex/CSP, progressive rate limiting, hashed IPs, internal scan reasons, “Report a problem”.
@@ -52,6 +52,10 @@ docker compose up -d app worker scheduler
 
 Open `http://localhost:3000`. PostgreSQL, Redis and app run on the internal network; use `docker compose logs -f app` for errors.
 
+## Docker storage permissions
+
+The runner entrypoint repairs ownership of the mounted `/app/storage` volume (for restored or pre-existing volumes) and then drops from root to the unprivileged `node` user before starting Next.js. This keeps photo and logo uploads writable without running the application as root.
+
 ## Production with Cloudflare Tunnel
 
 The app needs PostgreSQL, Prisma, sharp, Argon2, local storage and PDF rendering; it cannot run on Cloudflare Pages or Workers. The supported model is a small Linux VPS running `docker-compose.prod.yml`, published through a Cloudflare Tunnel (no inbound ports). Read [`deploy/CLOUDFLARE.md`](deploy/CLOUDFLARE.md) for the exact beginner steps, cache rules, SSL mode and optional Cloudflare Access protection.
@@ -70,7 +74,7 @@ Production defaults: HTTPS-only verification URL, `AUTH_TRUST_HOST=true`, `TRUST
 
 ## Verification address and QR
 
-The QR payload is always `{base}/v/{token}`. The base comes from `PUBLIC_BASE_URL` initially and is stored per company in Company settings. Production validation rejects non-HTTPS, localhost, `127.x`, `.local`, private/LAN addresses and non-443 ports. The settings page has **Test this URL** (server health check), a LAN helper, and a persistent warning while the URL is not production-valid. Before changing the URL, the page warns how many active cards use the old one. Cards print the host only, and only when **Print the verification address on the card back** is enabled.
+The QR payload is always `{base}/v/{token}`. The base comes from `PUBLIC_BASE_URL` initially and is stored per company in Company settings. Production validation rejects non-HTTPS, localhost, `127.x`, `.local`, private/LAN addresses and non-443 ports. The settings page has **Test this URL** (server health check), a LAN helper, and a persistent warning while the URL is not production-valid. Before changing the URL, the page warns how many active cards use the old one. The QR is on the card front. The back is a brand panel with the company logo, name, tagline and website; the verification host is added there only when **Print the verification address on the card back** is enabled. Employee photos are optional.
 
 ## Backups
 
@@ -80,6 +84,12 @@ $env:RESTORE_CONFIRM="YES"; npm run restore -- backups/evs-YYYY-MM-DD.evsbak
 ```
 
 Backups contain a custom-format `pg_dump`, the storage directory and a manifest, zip-compressed then AES-256-GCM encrypted with `BACKUP_PASSPHRASE`. Store the passphrase separately. A daily cron/Task Scheduler entry can run `npm run backup`; verify a restore on a non-production copy first.
+
+## Profile changes and motion
+
+The signed-in administrator can edit their own name and e-mail on **My account**. A name change takes effect immediately. Changing the e-mail requires the current password and, when the account has two-factor authentication enabled, a current authenticator code. There is no mail provider: nothing is sent, and the new address is used the next time the user signs in. Other sessions are revoked; the current session stays signed in. E-mail uniqueness is case-insensitive, changes are rate-limited and failed password/code attempts follow the normal account lockout. Audit entries contain masked addresses only.
+
+The interface is light-only and English-only. Motion is CSS-first (transform/opacity, 120/180/280 ms, staggered reveals) and is disabled by `prefers-reduced-motion: reduce`; content is fully visible with JavaScript disabled on the public verification page.
 
 ## Tests
 
@@ -100,16 +110,16 @@ The E2E suite uses `E2E_BASE_URL` (default `http://127.0.0.1:3000`) and provisio
 
 - `npm run typecheck` — pass.
 - `npm run lint` — pass, zero warnings.
-- `npm run test:unit` — 132 tests / 17 files passed.
-- `npm run test:integration` — 19 tests / 4 files passed.
-- `npm run test:e2e` — 12 Playwright tests passed (light 1440/390, axe, English/brand purity, settings, 2FA challenge, verification, import rollback).
+- `npm run test:unit` — 146 tests / 19 files passed.
+- `npm run test:integration` — 21 tests / 5 files passed.
+- `npm run test:e2e` — 17 Playwright tests passed (light 1440/390, axe, English/brand purity, settings, 2FA challenge, verification, import rollback).
 - `npm run build` — pass.
 - Clean Docker `npm ci` and production `runner` image build — pass.
 - `npm audit --omit=dev` — 9 moderate, 0 high/critical.
 
 ## Security notes
 
-Hashed card lookups, AES-256-GCM token recovery/rendering, encrypted TOTP secrets, HMAC-hashed IPs, server-side RBAC on every page/action/route, lockout, audit logging, CSP nonces, origin checks, upload magic-byte validation and re-encoding, ZIP-slip/bomb protection, spreadsheet formula neutralisation and retention. Photo URLs are encrypted and short-lived. Production cookies are secure because `APP_URL` is HTTPS. The QR API never returns employee data for invalid tokens. 2FA is enforced by default; System status warns when it is disabled.
+Hashed card lookups, AES-256-GCM token recovery/rendering, encrypted TOTP secrets, HMAC-hashed IPs, server-side RBAC on every page/action/route, lockout, audit logging, CSP nonces, origin checks, upload magic-byte validation and re-encoding, ZIP-slip/bomb protection, spreadsheet formula neutralisation and retention. Photo URLs are encrypted and short-lived. Employee photos are optional for printing; existing photos are re-encoded and stripped of metadata. Production cookies are secure because `APP_URL` is HTTPS. The QR API never returns employee data for invalid tokens. 2FA is enforced by default; System status warns when it is disabled.
 
 ## Screenshots
 
@@ -122,7 +132,7 @@ Hashed card lookups, AES-256-GCM token recovery/rendering, encrypted TOTP secret
 
 ## Known limitations
 
-- The uploaded logo should be square or have enough padding; the card places it in a 9 × 9 mm contain box.
+- The uploaded logo should be square or have enough padding; the card places it in a contain box (8 mm on the front, 28 mm on the back).
 - The public page deliberately does not reveal whether a card was suspended, terminated or revoked. Admins see the internal reason in the scan log.
 - Cloudflare deployment files are provided but were not deployed from this environment; no claim of a live deployment is made.
 - `npm audit` reports moderate findings in development tooling; see the final report for the current runtime audit.

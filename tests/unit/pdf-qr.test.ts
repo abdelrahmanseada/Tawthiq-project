@@ -62,12 +62,12 @@ async function decodePage(pdfBytes: Uint8Array, pageIndex: number, scale = 5) {
 describe("card PDF QR", () => {
   it.each(["cr80", "print_shop", "test"] as const)("decodes the exact URL in %s mode", async (mode) => {
     const bytes = await renderCardPdf({ ...input(), mode });
-    expect(await decodePage(bytes, 1)).toBe(`https://verify.example.com/v/${TOKEN}`);
+    expect(await decodePage(bytes, 0)).toBe(`https://verify.example.com/v/${TOKEN}`);
   });
 
   it("decodes the QR on the mirrored A4 back sheet", async () => {
     const card = await renderCardPdf(input());
     const sheet = await renderCardsSheet([card]);
-    expect(await decodePage(sheet, 1, 3)).toBe(`https://verify.example.com/v/${TOKEN}`);
+    expect(await decodePage(sheet, 0, 3)).toBe(`https://verify.example.com/v/${TOKEN}`);
   });
 });

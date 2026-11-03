@@ -85,7 +85,10 @@ export function ImportWizard() {
           onChange={(event) => setSpreadsheetName(event.target.files?.[0]?.name ?? null)}
         />
         <label
-          htmlFor="spreadsheet" className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-7 text-center hover:border-brand"
+          htmlFor="spreadsheet" className="dropzone flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-7 text-center hover:border-brand"
+          onDragOver={(event) => { event.preventDefault(); event.currentTarget.dataset.drag = "true"; }}
+          onDragLeave={(event) => { delete event.currentTarget.dataset.drag; }}
+          onDrop={(event) => { delete event.currentTarget.dataset.drag; }}
         >
           <FileSpreadsheet className="h-8 w-8 text-brand" aria-hidden="true" />
           <span className="text-sm font-semibold text-ink">{t("dropSpreadsheet")}</span>
@@ -110,7 +113,10 @@ export function ImportWizard() {
           onChange={(event) => setZipName(event.target.files?.[0]?.name ?? null)}
         />
         <label
-          htmlFor="photo_zip" className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-6 text-center hover:border-brand"
+          htmlFor="photo_zip" className="dropzone flex cursor-pointer flex-col items-center justify-center gap-2 rounded-card border border-dashed border-border bg-surface px-4 py-6 text-center hover:border-brand"
+          onDragOver={(event) => { event.preventDefault(); event.currentTarget.dataset.drag = "true"; }}
+          onDragLeave={(event) => { delete event.currentTarget.dataset.drag; }}
+          onDrop={(event) => { delete event.currentTarget.dataset.drag; }}
         >
           <Images className="h-7 w-7 text-muted" aria-hidden="true" />
           <span className="text-sm font-semibold text-ink">{t("dropZip")}</span>

@@ -108,7 +108,9 @@ describe("English-only active build", () => {
     for (let index = 0; index < doc.countPages(); index += 1) {
       const text = doc.loadPage(index).toStructuredText("preserve-whitespace").asText();
       expect(ARABIC.test(text)).toBe(false);
-      expect(text).toContain(index === 0 ? "Amelia Hart" : "Scan to verify");
+      expect(text).toContain(index === 0 ? "Amelia Hart" : "Bremer");
+      if (index === 0) expect(text).toContain("Scan to verify");
+      if (index === 1) expect(text).toContain("bremer.example");
     }
   });
 

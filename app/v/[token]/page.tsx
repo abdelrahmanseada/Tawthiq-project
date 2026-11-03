@@ -115,15 +115,15 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
       </header>
 
       <section className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
-        <div className={`rounded-card border-s-8 p-5 sm:p-7 ${stateTone}`} role="status" aria-live="polite">
+        <div className={`verify-banner rounded-card border-s-8 p-5 sm:p-7 ${stateTone}`} role="status" aria-live="polite">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full motion-safe:animate-pulse ${iconTone}`}>
+            <span className={`verify-icon flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${iconTone}`}>
               <StateIcon state={result.state} />
             </span>
             <div className="min-w-0">
               <p className="text-xs font-bold uppercase tracking-[0.14em]">{tb("product")}</p>
               <h1 className="mt-1 text-2xl font-bold leading-tight sm:text-3xl">{title}</h1>
-              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed opacity-90">{subtitle}</p>
+              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed">{subtitle}</p>
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
                 ) : null}
               </div>
 
-              <div className="mt-6 rounded-control border border-border bg-surface px-4 py-3">
+              <div className="checked-pulse mt-6 rounded-control border border-border bg-surface px-4 py-3">
                 <p className="text-xs font-medium text-muted">{t("checkedNowLabel")}</p>
                 <p className="mt-0.5 font-mono text-sm font-semibold text-ink" data-live-clock>
                   {formatDateTime(now, "en", timeZone)}

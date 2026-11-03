@@ -38,6 +38,7 @@ export function PhotoCropper({
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [error, setError] = useState<string | null>(null);
+  const [removed, setRemoved] = useState(false);
   const dragRef = useRef<{ startX: number; startY: number; originX: number; originY: number } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -75,6 +76,7 @@ export function PhotoCropper({
   function handleFile(file: File | undefined) {
     if (!file) return;
     setError(null);
+    setRemoved(false);
     if (!ACCEPTED.includes(file.type)) {
       setError(labels.error);
       return;
@@ -100,6 +102,7 @@ export function PhotoCropper({
   }
 
   function removePhoto() {
+    setRemoved(true);
     setImage(null);
     setDataUrl(null);
     setZoom(1);
@@ -145,7 +148,7 @@ export function PhotoCropper({
               dragRef.current = null;
             }} className="h-48 w-48 cursor-move touch-none rounded-card border-2 border-brand object-cover"
           />
-        ) : initialUrl ? (
+        ) : initialUrl && !removed ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={initialUrl} alt={labels.upload} className="h-32 w-32 rounded-card border border-border object-cover" />
         ) : (
@@ -176,7 +179,7 @@ export function PhotoCropper({
               {labels.camera}
             </button>
           </div>
-          {image || initialUrl ? (
+          {image || (initialUrl && !removed) ? (
             <button type="button" className="btn btn-ghost btn-sm block" onClick={removePhoto}>
               {labels.remove}
             </button>
@@ -207,6 +210,7 @@ export function PhotoCropper({
         </p>
       ) : null}
       <input type="hidden" name={name} value={dataUrl ?? ""} />
+      <input type="hidden" name="remove_photo" value={removed ? "1" : ""} />
     </div>
   );
 }

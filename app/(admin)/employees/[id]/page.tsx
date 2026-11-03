@@ -91,7 +91,6 @@ export default async function EmployeeDetailPage({
   const printingAllowed = productionUrl.ok && productionUrl.productionValid;
   const cardExpired = activeCard ? cardIsExpired(activeCard) : false;
   const printBlockers: string[] = [];
-  if (!photoUrl) printBlockers.push(t("printBlockedPhoto"));
   if (!printingAllowed) printBlockers.push(t("printBlockedDomain"));
   if (!activeCard) printBlockers.push(t("noCard"));
   else if (activeCard.status !== "ACTIVE") printBlockers.push(t("printBlockedRevoked"));
@@ -266,6 +265,9 @@ export default async function EmployeeDetailPage({
                     photoUrl,
                     validUntil: activeCard ? formatDate(activeCard.expires_at, locale, admin.company.time_zone) : tc("dash"),
                     domain,
+                    website: admin.company.website,
+                    tagline: admin.company.tagline,
+                    showVerifyHostOnCard: admin.company.show_verify_host_on_card,
                     phone: admin.company.contact_phone,
                     email: admin.company.contact_email,
                   }}

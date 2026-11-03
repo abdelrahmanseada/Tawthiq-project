@@ -21,7 +21,7 @@ export async function AuthShell({
     <main className="min-h-screen bg-surface lg:grid lg:grid-cols-[1.05fr_0.95fr]">
       <section
         aria-hidden="true"
-        className="relative hidden overflow-hidden p-12 lg:flex lg:flex-col lg:justify-between"
+        className="auth-panel relative hidden overflow-hidden p-12 lg:flex lg:flex-col lg:justify-between"
         style={{ background: primary, color: onPrimary }}
       >
         <div className="absolute inset-0 opacity-[0.13] [background-image:linear-gradient(rgba(255,255,255,.55)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.55)_1px,transparent_1px)] [background-size:36px_36px]" />
@@ -46,7 +46,7 @@ export async function AuthShell({
             <LogoMark className="h-10 w-10" />
             <span className="text-lg font-bold text-ink">{PRODUCT_NAME}</span>
           </div>
-          <div className="rounded-card border border-border bg-card p-6 shadow-card sm:p-8">
+          <div className="auth-form-enter rounded-card border border-border bg-card p-6 shadow-card sm:p-8">
             <h1 className="text-2xl font-bold tracking-tight text-ink">{title}</h1>
             <p className="mt-2 text-sm leading-relaxed text-muted">{subtitle}</p>
             <div className="mt-7">{children}</div>

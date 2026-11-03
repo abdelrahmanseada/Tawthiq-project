@@ -104,10 +104,26 @@ export async function revokeOtherSessions(adminId: string, currentSessionId: str
   return result.count;
 }
 
-export async function listUserSessions(adminId: string) {
+export async function listUserSessions(adminId: string, now = new Date()) {
+  const activeSince = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
   return prisma.userSession.findMany({
-    where: { admin_id: adminId },
+    where: {
+      admin_id: adminId,
+      revoked_at: null,
+      expires_at: { gt: now },
+      last_seen_at: { gte: activeSince },
+    },
     orderBy: { last_seen_at: "desc" },
     take: 50,
   });
+}
+
+/** Revoke exactly one session belonging to this admin, never the current one. */
+export async function revokeUserSession(adminId: string, sessionId: string, currentSessionId: string): Promise<boolean> {
+  if (sessionId === currentSessionId) return false;
+  const result = await prisma.userSession.updateMany({
+    where: { id: sessionId, admin_id: adminId, revoked_at: null, NOT: { id: currentSessionId } },
+    data: { revoked_at: new Date() },
+  });
+  return result.count > 0;
 }

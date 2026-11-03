@@ -3,6 +3,8 @@ import { expect, test } from "@playwright/test";
 import { decryptCardToken } from "../../lib/security/crypto";
 import { ensureE2eAdmin, loginAsAdmin, prisma, type E2eAdmin } from "./helpers";
 
+test.use({ reducedMotion: "reduce" });
+
 let admin: E2eAdmin;
 
 test.beforeAll(async () => {

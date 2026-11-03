@@ -7,7 +7,6 @@ import { useTranslations } from "next-intl";
 import {
   BarChart3,
   Bell,
-  ChevronDown,
   ClipboardList,
   FileSpreadsheet,
   Fingerprint,
@@ -22,8 +21,9 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { logoutAction } from "@/app/(admin)/actions";
-import { Alert, Badge, LogoMark, cn } from "@/components/ui";
+import { Alert, LogoMark, cn } from "@/components/ui";
+import { UserMenu } from "@/components/UserMenu";
+import { breadcrumbsForPath } from "@/lib/navigation";
 
 const ICONS = {
   dashboard: LayoutDashboard,
@@ -64,7 +64,7 @@ export interface AdminShellProps {
   copyright: string;
   nav: ShellNavGroup[];
   notifications: ShellNotification[];
-  breadcrumbs: Array<{ href: string; label: string }>;
+  breadcrumbLabels: Record<string, string>;
   invalidDomain: boolean;
   children: React.ReactNode;
 }
@@ -74,12 +74,13 @@ export function AdminShell({
   copyright,
   nav,
   notifications,
-  breadcrumbs,
+  breadcrumbLabels,
   invalidDomain,
   children,
 }: AdminShellProps) {
   const t = useTranslations();
   const pathname = usePathname();
+  const breadcrumbs = breadcrumbsForPath(pathname, breadcrumbLabels);
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -107,8 +108,10 @@ export function AdminShell({
   const sidebar = (
     <div className="flex h-full flex-col">
       <div className={cn("flex h-16 items-center gap-3 border-b border-border px-4", collapsed && "lg:justify-center lg:px-2")}>
-        <Link href="/dashboard" className="flex min-w-0 items-center gap-2.5">
-          <LogoMark className="h-9 w-9 shrink-0" />
+        <Link href="/dashboard" title={collapsed ? t("brand.name") : undefined} className="flex min-w-0 items-center gap-2.5">
+          <span className={cn("flex h-9 w-9 shrink-0 items-center justify-center", collapsed && "lg:h-5 lg:w-5")}>
+            <LogoMark className="h-full w-full" />
+          </span>
           <span className={cn("truncate text-sm font-bold text-ink", collapsed && "lg:hidden")}>{t("brand.name")}</span>
         </Link>
         <button type="button" className="btn btn-ghost btn-icon ms-auto lg:hidden" onClick={() => setMobileOpen(false)} aria-label={t("common.close")}>
@@ -133,7 +136,7 @@ export function AdminShell({
                       title={collapsed ? item.label : undefined}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex min-h-10 items-center gap-3 rounded-control px-3 py-2 text-sm font-medium transition-colors duration-150",
+                        "nav-link flex min-h-10 items-center gap-3 rounded-control px-3 py-2 text-sm font-medium transition-colors duration-[180ms]",
                         active ? "bg-brand-tint text-brand" : "text-muted hover:bg-surface hover:text-ink",
                         collapsed && "lg:justify-center lg:px-2",
                       )}
@@ -264,35 +267,13 @@ export function AdminShell({
                 </div>
               </details>
 
-              <details className="group relative">
-                <summary className="flex min-h-10 cursor-pointer list-none items-center gap-2 rounded-control px-2 hover:bg-surface [&::-webkit-details-marker]:hidden">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand text-sm font-bold text-brand-fg">
-                    {admin.name.trim().charAt(0).toUpperCase()}
-                  </span>
-                  <span className="hidden max-w-[130px] truncate text-sm font-medium text-ink sm:block">{admin.name}</span>
-                  <ChevronDown className="hidden h-4 w-4 text-subtle sm:block" aria-hidden="true" />
-                </summary>
-                <div className="absolute end-0 z-50 mt-2 w-64 rounded-card border border-border bg-card p-2 shadow-raised">
-                  <div className="border-b border-border px-2 py-2">
-                    <p className="truncate text-sm font-semibold text-ink">{admin.name}</p>
-                    <p className="truncate text-xs text-muted">{admin.email}</p>
-                    <Badge tone="info">{admin.roleLabel}</Badge>
-                  </div>
-                  <Link href="/account" className="mt-1 flex rounded-control px-3 py-2 text-sm text-ink hover:bg-surface">
-                    {t("nav.account")}
-                  </Link>
-                  <form action={logoutAction}>
-                    <button type="submit" className="flex w-full rounded-control px-3 py-2 text-start text-sm text-danger-fg hover:bg-danger-tint">
-                      {t("common.logout")}
-                    </button>
-                  </form>
-                </div>
-              </details>
+              <UserMenu name={admin.name} email={admin.email} roleLabel={admin.roleLabel} />
             </div>
           </div>
         </header>
 
         <main id="main" className="mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8">
+          <div key={pathname} className="page-enter">
           {invalidDomain ? (
             <div className="mb-5">
               <Alert tone="danger" title={t("settings.domainWarning")}>
@@ -306,6 +287,7 @@ export function AdminShell({
             </div>
           ) : null}
           {children}
+          </div>
         </main>
       </div>
     </div>

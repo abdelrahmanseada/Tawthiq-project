@@ -36,6 +36,7 @@ export interface FormCompany {
   contact_email: string;
   time_zone: string;
   verify_base_url: string;
+  updated_at: Date;
 }
 
 export function EmployeeForm({
@@ -195,7 +196,7 @@ export function EmployeeForm({
           <CardPreview
             data={{
               companyName: company.name,
-              companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.logo_url)}` : null,
+              companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.updated_at.toISOString())}` : null,
               logoBgDark: company.logo_bg_dark,
               primaryColor: company.primary_color,
               secondaryColor: company.secondary_color,

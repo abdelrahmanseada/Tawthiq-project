@@ -453,7 +453,7 @@ export function SettingsForm({
           </Field>
         </SectionCard>
 
-        <div className="sticky bottom-0 z-10 flex flex-wrap items-center gap-3 border-t border-border bg-surface/95 py-3 backdrop-blur">
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-border bg-surface/95 py-3">
           <button type="submit" className="btn btn-primary" disabled={pending}>
             <Save className="h-4 w-4" aria-hidden="true" />
             {pending ? tc("saving") : t("saveSettings")}
@@ -479,6 +479,9 @@ export function SettingsForm({
               photoUrl: null,
               validUntil: "31 Oct 2027",
               domain: domainHost,
+              website,
+              tagline,
+              showVerifyHostOnCard: showHost,
               phone,
               email,
             }}

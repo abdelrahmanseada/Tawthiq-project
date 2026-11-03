@@ -275,6 +275,7 @@ export async function updateEmployee(
   input: EmployeeInput,
   context: MutationContext,
   photoBuffer?: Buffer | null,
+  removePhoto = false,
 ): Promise<EmployeeMutationResult> {
   const existing = await prisma.employee.findFirst({
     where: { id: employeeId, company_id: companyId },
@@ -295,6 +296,7 @@ export async function updateEmployee(
   let prepared: PreparedCard | null = null;
 
   const photoChanged = Boolean(photoBuffer && photoBuffer.length > 0);
+  const photoRemoved = removePhoto && !photoChanged && Boolean(existing.photo_path);
   const identityChanged =
     photoChanged ||
     existing.full_name !== fullName ||
@@ -320,7 +322,7 @@ export async function updateEmployee(
           department,
           job_title: jobTitle,
           status,
-          ...(newPhotoPath ? { photo_path: newPhotoPath } : {}),
+          ...(photoRemoved ? { photo_path: null } : newPhotoPath ? { photo_path: newPhotoPath } : {}),
         },
       });
 
@@ -341,7 +343,7 @@ export async function updateEmployee(
       return { employee, card };
     });
 
-    if (newPhotoPath && existing.photo_path) await removeStorageFile(existing.photo_path);
+    if ((newPhotoPath || photoRemoved) && existing.photo_path) await removeStorageFile(existing.photo_path);
 
     await writeAuditLog({
       adminId: context.adminId,
@@ -352,6 +354,7 @@ export async function updateEmployee(
         employee_code: existing.employee_code,
         status,
         card_rotated: Boolean(prepared),
+        photo_removed: photoRemoved,
       },
       ip: context.ip,
     });

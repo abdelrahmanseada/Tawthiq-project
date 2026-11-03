@@ -43,8 +43,12 @@ export function CardsSelector({
     secondary_color: string;
     contact_phone: string;
     contact_email: string;
+    website: string | null;
+    tagline: string;
+    show_verify_host_on_card: boolean;
     verify_base_url: string;
     time_zone: string;
+    updated_at: Date;
   };
   locale: Locale;
   printingAllowed: boolean;
@@ -76,10 +80,6 @@ export function CardsSelector({
       if (!row.card || row.card.status !== "ACTIVE") list.push(t("blockedExpired"));
       else if (!row.card.has_token) list.push(t("blockedReissue"));
       else if (row.card.expires_at.getTime() <= Date.now()) list.push(t("blockedExpired"));
-      if (!row.photoUrl && mode !== "test") list.push(t("blockedPhoto"));
-    }
-    if (!selectedRows.some((row) => !row.photoUrl && mode === "test") && selectedRows.some((row) => !row.photoUrl) && mode === "test") {
-      // test prints may omit photos; no blocker here
     }
     return [...new Set(list)];
   }, [mode, printingAllowed, selected, selectedRows, t]);
@@ -279,7 +279,7 @@ export function CardsSelector({
             <CardPreview
               data={{
                 companyName: company.name,
-                companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.logo_url)}` : null,
+                companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.updated_at.toISOString())}` : null,
                 logoBgDark: company.logo_bg_dark,
                 primaryColor: company.primary_color,
                 secondaryColor: company.secondary_color,
@@ -290,6 +290,9 @@ export function CardsSelector({
                 photoUrl: first.photoUrl,
                 validUntil: first.card ? formatDate(first.card.expires_at, "en") : "—",
                 domain,
+                website: company.website,
+                tagline: company.tagline,
+                showVerifyHostOnCard: company.show_verify_host_on_card,
                 phone: company.contact_phone,
                 email: company.contact_email,
               }}

@@ -26,28 +26,26 @@ export const CARD_COLORS = {
 export const FRONT = {
   header: { x: 0, y: 0, w: CARD_WIDTH_MM, h: 12 },
   accent: { x: 0, y: 12, w: CARD_WIDTH_MM, h: 1 },
-  logo: { x: 4, y: 1.5, w: 9, h: 9, radius: 1.5, padding: 0.8 },
-  company: { x: 15, y: 1.5, w: 66.6, h: 9, minPt: 7, maxPt: 9, maxLines: 2 },
-  photo: { x: 4, y: 16, w: 22, h: 29, radius: 2, borderPt: 0.4 },
-  text: { x: 30, y: 17, w: 51.6, bottom: 45 },
-  name: { minPt: 9, maxPt: 12, maxLines: 2, gapAfter: 1.5 },
-  title: { minPt: 7, maxPt: 8, maxLines: 2, gapAfter: 1 },
-  department: { pt: 7, maxLines: 1 },
+  logo: { x: 4, y: 1.5, w: 8, h: 8, radius: 1.4, padding: 0.7 },
+  company: { x: 13.5, y: 1.5, w: 68.1, h: 9, minPt: 7, maxPt: 9, maxLines: 2 },
+  photo: { x: 4, y: 16, w: 20, h: 27, radius: 2, borderPt: 0.4 },
+  text: { x: 27, y: 16.5, w: 27.8, bottom: 44 },
+  name: { minPt: 8.5, maxPt: 11.5, maxLines: 2, gapAfter: 1.2 },
+  title: { minPt: 6.5, maxPt: 7.8, maxLines: 2, gapAfter: 0.8 },
+  department: { pt: 6.5, maxLines: 1 },
+  qrPanel: { x: 55.0, y: 15.3, w: 26.6, h: 26.6, radius: 1.6 },
+  qr: { x: 55.8, y: 16.1, w: 25.7, h: 25.7, quietModules: 4, minModuleMm: 0.45 },
+  scanLabel: { x: 55.0, y: 42.2, w: 26.6, h: 2.2, pt: 5.2 },
   footer: { x: 4, right: 81.6, y: 47.5, h: 2.5, pt: 6.5 },
 } as const;
 
 export const BACK = {
-  header: { x: 0, y: 0, w: CARD_WIDTH_MM, h: 8 },
-  accent: { x: 0, y: 8, w: CARD_WIDTH_MM, h: 0.8 },
-  panel: { x: 4, y: 12, w: 30, h: 30, radius: 2 },
-  qr: { x: 6, y: 14, w: 26, h: 26, quietModules: 4, minModuleMm: 0.45 },
-  column: { x: 38, y: 13, w: 43.6, bottom: 44, gap: 2 },
-  heading: { pt: 10, maxLines: 1 },
-  host: { minPt: 6.5, maxPt: 7.5, maxLines: 2 },
-  phone: { minPt: 6.5, maxPt: 7, maxLines: 1 },
-  email: { minPt: 6, maxPt: 7, maxLines: 1 },
-  returns: { pt: 6, maxLines: 3 },
-  footer: { x: 4, y: 47.5, h: 2.5, pt: 6 },
+  logo: { x: 28.8, y: 7, w: 28, h: 28, radius: 3, padding: 2.8 },
+  accent: { x: 35, y: 41.3, w: 15.6, h: 0.6 },
+  company: { x: 8, y: 35.8, w: 69.6, h: 4.2, minPt: 7, maxPt: 12, maxLines: 1 },
+  tagline: { x: 8, y: 42.0, w: 69.6, h: 2.7, minPt: 5.5, maxPt: 6.8, maxLines: 1 },
+  website: { x: 8, y: 44.95, w: 69.6, h: 2.7, minPt: 5, maxPt: 6.5, maxLines: 1 },
+  host: { x: 8, y: 47.9, w: 69.6, h: 2.1, minPt: 4.6, maxPt: 4.9, maxLines: 1 },
   testBand: { x: 0, y: 51, w: CARD_WIDTH_MM, h: 3 },
 } as const;
 
@@ -90,16 +88,13 @@ export interface CardLayout {
     department: TextBlock | null;
     code: TextBlock;
     validUntil: TextBlock;
+    scanLabel: TextBlock;
   };
   back: {
     company: TextBlock;
-    heading: TextBlock;
-    host: TextBlock | null;
+    tagline: TextBlock | null;
     website: TextBlock | null;
-    phone: TextBlock;
-    email: TextBlock;
-    returns: TextBlock;
-    footer: TextBlock;
+    host: TextBlock | null;
   };
 }
 
@@ -273,69 +268,58 @@ export function layoutCard(input: CardTextInput): CardLayout {
 
   let cursor = FRONT.text.y + nameBlock.h + FRONT.name.gapAfter;
   const { title, department } = titleAndDepartment(input.jobTitle, input.department);
-  const titleFit = title ? fitText(title, FRONT.text.w, 2, 8, 7, "regular") : null;
+  const titleFit = title ? fitText(title, FRONT.text.w, 2, FRONT.title.maxPt, FRONT.title.minPt, "regular") : null;
   const titleBlock = titleFit
     ? block(title, FRONT.text.x, cursor, FRONT.text.w, titleFit.fontSizePt, titleFit.fontSizePt * 1.2, "regular", CARD_COLORS.ink, 2, titleFit.lines)
     : null;
-  if (titleBlock) cursor += titleBlock.h + 1;
+  if (titleBlock) cursor += titleBlock.h + FRONT.title.gapAfter;
 
-  const deptFit = department ? fitText(department, FRONT.text.w, 1, 7, 7, "regular") : null;
+  const deptFit = department ? fitText(department, FRONT.text.w, 1, FRONT.department.pt, FRONT.department.pt, "regular") : null;
   const departmentBlock = deptFit
-    ? block(department, FRONT.text.x, cursor, FRONT.text.w, 7, 8.2, "regular", CARD_COLORS.muted, 1, deptFit.lines)
+    ? block(department, FRONT.text.x, cursor, FRONT.text.w, FRONT.department.pt, 8.2, "regular", CARD_COLORS.muted, 1, deptFit.lines)
     : null;
+
+  const scanLabelBlock = block("Scan to verify", FRONT.scanLabel.x, FRONT.scanLabel.y, FRONT.scanLabel.w, FRONT.scanLabel.pt, 6.2, "bold", CARD_COLORS.muted, 1, ["Scan to verify"], "center");
 
   const footerY = FRONT.footer.y;
   const codeBlock = block(`ID ${input.employeeCode}`, FRONT.footer.x, footerY, 34, 6.5, 7.0, "regular", CARD_COLORS.ink, 1);
   const validText = `Valid until ${input.validUntil}`;
   const validBlock = block(validText, 40, footerY, 41.6, 6.5, 7.0, "regular", CARD_COLORS.ink, 1, [validText], "right");
 
-  // â”€â”€ Back â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  const backCompany = fitText(input.companyName, BACK.column.w, 1, 7, 6, "bold");
+  // ── Back: a quiet brand panel. ─────────────────────────────────────────────
+  const backCompany = fitText(input.companyName, BACK.company.w, BACK.company.maxLines, BACK.company.maxPt, BACK.company.minPt, "bold");
   const backCompanyBlock = block(
     input.companyName,
-    4,
-    2.4,
-    CARD_WIDTH_MM - 8,
+    BACK.company.x,
+    BACK.company.y + (BACK.company.h - backCompany.lines.length * backCompany.fontSizePt * 1.2 * 0.352778) / 2,
+    BACK.company.w,
     backCompany.fontSizePt,
     backCompany.fontSizePt * 1.2,
     "bold",
     CARD_COLORS.white,
     1,
     backCompany.lines,
+    "center",
   );
 
-  let by = BACK.column.y;
-  const headingBlock = block("Scan to verify", BACK.column.x, by, BACK.column.w, 10, 11.8, "bold", "primary", 1);
-  by += headingBlock.h + BACK.column.gap;
+  const taglineText = input.tagline?.trim() ?? "";
+  const taglineFit = taglineText ? fitText(taglineText, BACK.tagline.w, 1, BACK.tagline.maxPt, BACK.tagline.minPt, "regular") : null;
+  const taglineBlock = taglineFit
+    ? block(taglineText, BACK.tagline.x, BACK.tagline.y, BACK.tagline.w, taglineFit.fontSizePt, taglineFit.fontSizePt * 1.2, "regular", CARD_COLORS.white, 1, taglineFit.lines, "center")
+    : null;
 
   const websiteText = input.website ? input.website.replace(/^https?:\/\//i, "").replace(/\/$/, "") : "";
-  const websiteFit = websiteText ? fitText(websiteText, BACK.column.w, 2, 7.5, 6.5, "bold", false) : null;
-  const websiteLines = websiteFit ? wrapHost(websiteText, BACK.column.w, websiteFit.fontSizePt) : [];
+  const websiteFit = websiteText ? fitText(websiteText, BACK.website.w, 1, BACK.website.maxPt, BACK.website.minPt, "regular") : null;
   const websiteBlock = websiteFit
-    ? block(websiteText, BACK.column.x, by, BACK.column.w, websiteFit.fontSizePt, websiteFit.fontSizePt * 1.2, "bold", CARD_COLORS.ink, 2, websiteLines)
+    ? block(websiteText, BACK.website.x, BACK.website.y, BACK.website.w, websiteFit.fontSizePt, websiteFit.fontSizePt * 1.2, "regular", CARD_COLORS.white, 1, websiteFit.lines, "center")
     : null;
-  if (websiteBlock) by += websiteBlock.h + BACK.column.gap;
 
-  const phoneFit = fitText(input.phone, BACK.column.w, 1, 7, 6.5, "regular");
-  const phoneBlock = block(input.phone, BACK.column.x, by, BACK.column.w, phoneFit.fontSizePt, phoneFit.fontSizePt * 1.25, "regular", CARD_COLORS.ink, 1, phoneFit.lines);
-  by += phoneBlock.h + BACK.column.gap;
-
-  const emailFit = fitText(input.email, BACK.column.w, 1, 7, 6, "regular");
-  const emailBlock = block(input.email, BACK.column.x, by, BACK.column.w, emailFit.fontSizePt, emailFit.fontSizePt * 1.25, "regular", CARD_COLORS.ink, 1, emailFit.lines);
-  by += emailBlock.h + BACK.column.gap;
-
-  const returnText = `If found, please return to ${input.companyName}.`;
-  const returnFit = fitText(returnText, BACK.column.w, 3, 6, 6, "regular");
-  const returnBlock = block(returnText, BACK.column.x, by, BACK.column.w, 6, 7.2, "regular", CARD_COLORS.muted, 3, returnFit.lines);
-  by += returnBlock.h + BACK.column.gap;
-
-  let hostBlock: TextBlock | null = null;
-  if (input.showVerifyHostOnCard && input.host) {
-    const hostLines = wrapHost(input.host, BACK.column.w, 6.2);
-    hostBlock = block(input.host, BACK.column.x, by, BACK.column.w, 6.2, 7.0, "bold", CARD_COLORS.muted, 2, hostLines);
-  }
-
-  const backFooter = block(input.tagline ?? "", BACK.footer.x, BACK.footer.y, 72, 6, 7, "regular", CARD_COLORS.muted, 1);
+  const hostFit = input.showVerifyHostOnCard && input.host
+    ? fitText(input.host, BACK.host.w, 1, BACK.host.maxPt, BACK.host.minPt, "regular")
+    : null;
+  const hostBlock = hostFit
+    ? block(input.host!, BACK.host.x, BACK.host.y, BACK.host.w, hostFit.fontSizePt, hostFit.fontSizePt * 1.2, "regular", CARD_COLORS.white, 1, hostFit.lines, "center")
+    : null;
 
   return {
     front: {
@@ -345,16 +329,13 @@ export function layoutCard(input: CardTextInput): CardLayout {
       department: departmentBlock,
       code: codeBlock,
       validUntil: validBlock,
+      scanLabel: scanLabelBlock,
     },
     back: {
       company: backCompanyBlock,
-      heading: headingBlock,
-      host: hostBlock,
+      tagline: taglineBlock,
       website: websiteBlock,
-      phone: phoneBlock,
-      email: emailBlock,
-      returns: returnBlock,
-      footer: backFooter,
+      host: hostBlock,
     },
   };
 }

@@ -6,7 +6,6 @@ import { ShieldCheck } from "lucide-react";
 import { cn } from "@/components/ui";
 import {
   BACK,
-  CARD_COLORS,
   CARD_WIDTH_MM,
   FRONT,
   layoutCard,
@@ -92,6 +91,7 @@ export function CardPreview({
   initialSide?: "front" | "back";
 }) {
   const [side, setSide] = useState<"front" | "back">(initialSide);
+  const [animateFlip, setAnimateFlip] = useState(false);
   const primaryColor = normalizeHexColor(data.primaryColor, DEFAULT_PRIMARY_COLOR);
   const secondaryColor = normalizeHexColor(data.secondaryColor, DEFAULT_SECONDARY_COLOR);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
@@ -111,7 +111,11 @@ export function CardPreview({
     hasPhoto: Boolean(data.photoUrl),
   });
   layout.front.company.color = readableTextOn(primaryColor);
-  layout.back.company.color = readableTextOn(primaryColor);
+  const onPrimary = readableTextOn(primaryColor);
+  layout.back.company.color = onPrimary;
+  if (layout.back.tagline) layout.back.tagline.color = onPrimary;
+  if (layout.back.website) layout.back.website.color = onPrimary;
+  if (layout.back.host) layout.back.host.color = onPrimary;
 
   useEffect(() => {
     let cancelled = false;
@@ -129,6 +133,7 @@ export function CardPreview({
   }, [data.qrValue, data.domain]);
 
   const toggle = () => {
+    setAnimateFlip(true);
     const next = side === "front" ? "back" : "front";
     setSide(next);
     onSideChange?.(next);
@@ -141,6 +146,7 @@ export function CardPreview({
           <button
             type="button"
             onClick={() => {
+              setAnimateFlip(true);
               setSide("front");
               onSideChange?.("front");
             }}
@@ -152,6 +158,7 @@ export function CardPreview({
           <button
             type="button"
             onClick={() => {
+              setAnimateFlip(true);
               setSide("back");
               onSideChange?.("back");
             }}
@@ -166,7 +173,7 @@ export function CardPreview({
         </button>
       </div>
 
-      <div className="relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] bg-white shadow-raised ring-1 ring-black/10 [container-type:inline-size]"
+      <div key={side} className={cn("relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] bg-white shadow-raised ring-1 ring-black/10 [container-type:inline-size]", animateFlip && "card-flip")}
         style={
           {
             "--card-primary": primaryColor,
@@ -190,7 +197,7 @@ export function CardPreview({
               )}
             </div>
             <TextBox block={layout.front.company} />
-            <div className="absolute overflow-hidden bg-slate-200"
+            <div className="absolute overflow-hidden bg-slate-100"
               style={{
                 ...boxStyle(FRONT.photo),
                 border: `${mm(FRONT.photo.borderPt / 2.834645669)} solid ${secondaryColor}`,
@@ -201,46 +208,51 @@ export function CardPreview({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={data.photoUrl} alt={data.employeeName} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full w-full flex-col items-center justify-center text-slate-400" aria-label="No photo">
-                  <span className="block rounded-full bg-slate-300" style={{ width: mm(8), height: mm(8) }} />
-                  <span className="block rounded-t-full bg-slate-300" style={{ width: mm(14), height: mm(9), marginTop: mm(2) }} />
+                <div className="flex h-full w-full items-center justify-center" aria-label="No photo">
+                  <span style={{ color: primaryColor, fontSize: pt(20), fontWeight: 700 }}>{initials(data.employeeName)}</span>
                 </div>
               )}
             </div>
             <TextBox block={layout.front.name} />
             {layout.front.title ? <TextBox block={layout.front.title} /> : null}
             {layout.front.department ? <TextBox block={layout.front.department} /> : null}
+            <div className="absolute overflow-hidden rounded-[3px] border bg-white"
+              style={{ ...boxStyle(FRONT.qrPanel), borderColor: "var(--border)", padding: mm(0.8) }}
+            >
+              {qrUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={qrUrl} alt="QR code to verify this employee card" className="h-full w-full object-contain" />
+              ) : (
+                <div className="h-full w-full bg-slate-100" aria-hidden="true" />
+              )}
+            </div>
+            <TextBox block={layout.front.scanLabel} />
             <TextBox block={layout.front.code} />
             <TextBox block={layout.front.validUntil} />
             <ShieldCheck
               aria-hidden="true" className="absolute"
-              style={{ left: mm(37.5), top: mm(FRONT.footer.y + 0.1), width: mm(2.2), height: mm(2.2), color: primaryColor }}
+              style={{ left: mm(35.8), top: mm(FRONT.footer.y + 0.1), width: mm(2.1), height: mm(2.1), color: primaryColor }}
             />
           </>
         ) : (
           <>
-            <div className="absolute inset-x-0 top-0" style={{ height: mm(BACK.header.h), background: primaryColor }} />
-            <div className="absolute inset-x-0" style={{ top: mm(BACK.accent.y), height: mm(BACK.accent.h), background: secondaryColor }} />
+            <div className="absolute inset-0" style={{ background: primaryColor }} />
+            <div className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(circle at 92% 8%, ${secondaryColor} 0, transparent 42%), radial-gradient(circle at 3% 100%, ${secondaryColor} 0, transparent 32%)`, opacity: 0.18 }} />
             <TextBox block={layout.back.company} />
-            <div className="absolute rounded-[4px] border bg-white p-0"
-              style={{ ...boxStyle(BACK.panel), borderColor: CARD_COLORS.border }}
+            <div className={`absolute flex items-center justify-center overflow-hidden rounded-[4px] ${!data.companyLogoUrl || data.logoBgDark ? "bg-transparent" : "bg-white"}`}
+              style={{ ...boxStyle(BACK.logo), padding: mm(BACK.logo.padding) }}
             >
-              <div className="h-full w-full p-[6.666%]">
-                {qrUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={qrUrl} alt="QR code to verify this employee card" className="h-full w-full object-contain" />
-                ) : (
-                  <div className="h-full w-full bg-slate-100" aria-hidden="true" />
-                )}
-              </div>
+              {data.companyLogoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={data.companyLogoUrl} alt="" className="h-full w-full object-contain" />
+              ) : (
+                <span style={{ color: onPrimary, fontSize: pt(28), fontWeight: 700 }}>{initials(data.companyName)}</span>
+              )}
             </div>
-            <TextBox block={layout.back.heading} />
-            {layout.back.host ? <TextBox block={layout.back.host} /> : null}
+            <div className="absolute" style={{ ...boxStyle(BACK.accent), background: secondaryColor, borderRadius: "999px" }} />
+            {layout.back.tagline ? <TextBox block={layout.back.tagline} /> : null}
             {layout.back.website ? <TextBox block={layout.back.website} /> : null}
-            <TextBox block={layout.back.phone} />
-            <TextBox block={layout.back.email} />
-            <TextBox block={layout.back.returns} />
-            {layout.back.footer.text ? <TextBox block={layout.back.footer} /> : null}
+            {layout.back.host ? <TextBox block={layout.back.host} /> : null}
           </>
         )}
       </div>

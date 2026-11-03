@@ -33,8 +33,10 @@ export interface DashboardData {
   activeCards: number;
   expiringSoon: number;
   scans24h: number;
+  scans24hPrevious: number;
   scans7d: number;
   invalid24h: number;
+  invalid24hPrevious: number;
   scans24hTrend: number;
   scans7dTrend: number;
   invalid24hTrend: number;
@@ -179,8 +181,10 @@ export async function getDashboardData(companyId: string, now: Date = new Date()
     activeCards,
     expiringSoon,
     scans24h,
+    scans24hPrevious: scansPrevious24h,
     scans7d,
     invalid24h,
+    invalid24hPrevious: invalidPrevious24h,
     scans24hTrend: trend(scans24h, scansPrevious24h),
     scans7dTrend: trend(scans7d, scansPrevious7d),
     invalid24hTrend: trend(invalid24h, invalidPrevious24h),

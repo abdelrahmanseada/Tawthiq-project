@@ -46,14 +46,21 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV STORAGE_DIR=/app/storage
 COPY --from=builder /app/.next/standalone ./
-# Keep the full installed dependency tree; standalone tracing can miss transitive modules.
+# Standalone tracing can miss transitive runtime packages (for example exceljs
+# helper modules). Keep the installed dependency tree available to the runtime.
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/prisma ./prisma
-RUN mkdir -p /app/storage && chown -R node:node /app
-USER node
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gosu \
+    && rm -rf /var/lib/apt/lists/* \
+    && chmod 755 /usr/local/bin/docker-entrypoint.sh \
+    && mkdir -p /app/storage && chown -R node:node /app
+USER root
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"

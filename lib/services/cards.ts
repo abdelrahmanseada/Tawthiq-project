@@ -214,9 +214,9 @@ export interface PrintCheck {
 }
 
 /**
- * Printing rules: revoked/expired cards are never printable. Normal prints require a
- * photo and a production-valid verification URL; "test print" allows a missing photo
- * and the current dev URL, adds a watermark, and still refuses dead cards.
+ * Printing rules: revoked/expired cards are never printable. Photos are optional;
+ * normal prints require a production-valid verification URL. "test print" allows a
+ * development URL, adds a watermark, and still refuses dead cards.
  */
 export function checkCardPrintability(input: PrintCheckInput, now = new Date()): PrintCheck {
   const errors: string[] = [];
@@ -229,7 +229,6 @@ export function checkCardPrintability(input: PrintCheckInput, now = new Date()):
 
   const productionCheck = validateVerifyBaseUrl(input.company.verify_base_url, true);
   if (!productionCheck.ok || !productionCheck.productionValid) errors.push("verify_domain_invalid");
-  if (input.mode !== "test" && !input.employee.photo_path) errors.push("photo_missing");
 
   if (input.mode === "test") {
     const parseable = validateVerifyBaseUrl(input.company.verify_base_url, false);

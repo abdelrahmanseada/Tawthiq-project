@@ -16,7 +16,7 @@ function mark(size: number): Buffer {
 
 export async function GET(request: Request) {
   const requested = Number(new URL(request.url).searchParams.get("size") ?? "64");
-  const size = [32, 48, 180, 192, 512].includes(requested) ? requested : 64;
+  const size = [16, 32, 48, 180, 192, 512].includes(requested) ? requested : 64;
   const image = await sharp(mark(size)).resize(size, size).png().toBuffer();
   return new NextResponse(new Uint8Array(image), {
     headers: { "Content-Type": "image/png", "Cache-Control": "public, max-age=300, must-revalidate" },

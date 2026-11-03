@@ -25,6 +25,20 @@ const optionalText = (max: number) =>
 
 export const emailSchema = z.string().trim().toLowerCase().email().max(254);
 
+export const profileNameSchema = z
+  .string()
+  .trim()
+  .min(2, "too_short")
+  .max(80, "too_long")
+  .refine((value) => LATIN_TEXT_PATTERN.test(value), "latin_only");
+
+export const profileSchema = z.object({
+  name: profileNameSchema,
+  email: emailSchema,
+  current_password: z.string().max(PASSWORD_MAX_LENGTH).optional().default(""),
+  code: z.string().trim().regex(/^\d{6}$/, "invalid_code").optional().or(z.literal("")).default(""),
+});
+
 export const loginSchema = z.object({
   email: emailSchema,
   password: z.string().min(1, "required").max(PASSWORD_MAX_LENGTH),

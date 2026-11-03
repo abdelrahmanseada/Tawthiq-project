@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { requireAdmin } from "@/lib/auth/session";
 import { roleLabel } from "@/lib/auth/rbac";
@@ -13,8 +12,6 @@ import { copyrightText } from "@/lib/brand";
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const admin = await requireAdmin();
   const t = await getTranslations();
-  const headerStore = await headers();
-  const pathname = headerStore.get("x-pathname") ?? "/dashboard";
   if (twoFactorRequired && !admin.totpEnabled) redirect("/2fa/setup");
 
   const nav: ShellNavGroup[] = [
@@ -60,26 +57,19 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       : []),
   ];
 
-  const sectionMap: Array<{ prefix: string; label: string }> = [
-    { prefix: "/dashboard", label: t("nav.dashboard") },
-    { prefix: "/analytics", label: t("nav.analytics") },
-    { prefix: "/employees", label: t("nav.employees") },
-    { prefix: "/cards", label: t("nav.cards") },
-    { prefix: "/imports", label: t("nav.imports") },
-    { prefix: "/logs/scans", label: t("nav.scanLogs") },
-    { prefix: "/logs/audit", label: t("nav.auditLog") },
-    { prefix: "/settings", label: t("nav.settings") },
-    { prefix: "/admins", label: t("nav.admins") },
-    { prefix: "/status", label: t("nav.system") },
-    { prefix: "/account", label: t("nav.account") },
-  ];
-  const section = sectionMap
-    .filter((entry) => pathname === entry.prefix || pathname.startsWith(`${entry.prefix}/`))
-    .sort((a, b) => b.prefix.length - a.prefix.length)[0];
-  const breadcrumbs = [{ href: "/dashboard", label: t("nav.dashboard") }];
-  if (section && section.prefix !== "/dashboard") {
-    breadcrumbs.push({ href: section.prefix, label: section.label });
-  }
+  const breadcrumbLabels = {
+    dashboard: t("nav.dashboard"),
+    analytics: t("nav.analytics"),
+    employees: t("nav.employees"),
+    cards: t("nav.cards"),
+    imports: t("nav.imports"),
+    scanLogs: t("nav.scanLogs"),
+    auditLog: t("nav.auditLog"),
+    settings: t("nav.settings"),
+    admins: t("nav.admins"),
+    system: t("nav.system"),
+    account: t("nav.account"),
+  };
 
   const notifications = await getNotifications(admin.company);
   const notificationViews = notifications.items.map((item) => ({
@@ -103,7 +93,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       copyright={copyrightText()}
       nav={nav}
       notifications={notificationViews}
-      breadcrumbs={breadcrumbs}
+      breadcrumbLabels={breadcrumbLabels}
       invalidDomain={invalidDomain}
     >
       {children}

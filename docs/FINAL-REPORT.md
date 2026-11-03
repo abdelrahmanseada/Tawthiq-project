@@ -23,7 +23,7 @@ HR adds employees and cards; a phone camera scans the QR; `/v/[token]` shows a g
 
 ## 3. Light theme
 
-`app/globals.css` has only light tokens and `color-scheme: light`; dark mode, toggle and theme cookie removed. `tests/unit/light-theme.test.ts` fails on any `prefers-color-scheme: dark` or `dark:` utility. Verified by 12 Playwright tests including mobile verification and CSV export.
+`app/globals.css` has only light tokens and `color-scheme: light`; dark mode, toggle and theme cookie removed. `tests/unit/light-theme.test.ts` fails on any `prefers-color-scheme: dark` or `dark:` utility. Verified by 17 Playwright tests including mobile verification and CSV export.
 
 ## 4. English/Latin only
 
@@ -41,11 +41,11 @@ Login, forced password change, 2FA challenge/enrolment/recovery, shell, dashboar
 
 `lib/card/layout.ts` is the single source used by `lib/pdf/card.ts` and `components/CardPreview.tsx`. Front/back geometry, safe area, colours, website/phone/e-mail/return/tagline, optional verification host, logo plate rules, QR panel/quiet zone and test-print band are implemented. `Card.token_enc` is stored for all new/seed/import cards; PDFs render on demand. Outputs: CR80, print-shop bleed+crop marks, A4 sheet, ZIP. Tests cover 27 layout cases, QR decode in all modes and A4, PDF metadata and token lifecycle. PDF front/back were rendered to `test-output/bremer/page-0.png`/`page-1.png` and reviewed.
 
-Known limitation: the website/verification host may legitimately exceed two lines; the PDF throws a clear render error instead of truncating, preserving the â€œnever truncatedâ€ rule.
+Known limitation: the website/verification host may legitimately exceed two lines; the PDF throws a clear render error instead of truncating, preserving the “never truncated” rule.
 
 ## 8. Verification page
 
-Light mobile-first, Bremer logo/name, green/amber/red banner with icon+text, large photo, name/job title/department/expiry, â€œCompare the photoâ€¦â€ and live server clock with CSP nonce, report link, copyright footer. No code/phone/e-mail/address/national ID. Scan reasons (`NOT_FOUND`, `REVOKED`, `EXPIRED`, `EMPLOYEE_SUSPENDED`, `EMPLOYEE_TERMINATED`, `EMPLOYEE_DELETED`, `COMPANY_SUSPENDED`) are stored and shown in the admin scan detail only.
+Light mobile-first, Bremer logo/name, green/amber/red banner with icon+text, large photo, name/job title/department/expiry, “Compare the photoâ€¦” and live server clock with CSP nonce, report link, copyright footer. No code/phone/e-mail/address/national ID. Scan reasons (`NOT_FOUND`, `REVOKED`, `EXPIRED`, `EMPLOYEE_SUSPENDED`, `EMPLOYEE_TERMINATED`, `EMPLOYEE_DELETED`, `COMPANY_SUSPENDED`) are stored and shown in the admin scan detail only.
 
 ## 9. Public URL
 
@@ -72,13 +72,13 @@ Kept hashed token lookup, AES-256-GCM secrets, CSP nonces, rate limits, RBAC, TO
 
 Six migrations apply from empty and from the old schema. `20261102130000_single_company_consolidation` moves employees/admins/batches/scans/reports to the oldest (Bremer) company, avoids employee-code collisions and deletes the now-empty extra companies; `20261102140000_consolidate_audit_company` repoints non-FK audit rows; platform audit table and `PLATFORM_ADMIN` enum value are removed. Existing cards retain token hashes/encrypted tokens.
 
-## 14. Gates â€” real output
+## 14. Gates — real output
 
 - Typecheck: pass.
 - Lint: pass, zero warnings.
-- Unit: **132 passed / 17 files**.
-- Integration: **19 passed / 4 files**.
-- Playwright: **12 passed** (light/axe, English/brand, settings, 2FA, verification lifecycle, import rollback, first password change).
+- Unit: **146 passed / 19 files**.
+- Integration: **21 passed / 5 files**.
+- Playwright: **17 passed** (light/axe, English/brand, settings, 2FA, verification lifecycle, import rollback, first password change).
 - Build: pass.
 - Clean Docker deps `npm ci` and production runner image: pass.
 - `npm audit --omit=dev --audit-level=high`: **9 moderate, 0 high/critical**.

@@ -52,21 +52,41 @@ async function createEmployeeThroughUi(page: Page, code: string, fullName: strin
   return employeeId;
 }
 
-test("admin signs in, adds an employee and a photo-less card is print-blocked but test-printable", async ({ page }) => {
+test("admin signs in, adds an employee and a photo-less card is still test-printable", async ({ page }) => {
   await loginAsAdmin(page, admin);
   const suffix = uniqueSuffix();
   const code = `E2E-CARD-${suffix}`;
 
   const employeeId = await createEmployeeThroughUi(page, code, `E2E Employee ${suffix}`);
   await expect(page.getByText("Employee created and card issued.")).toBeVisible();
-  await expect(page.getByRole("link", { name: "Print card", exact: true })).toHaveCount(0);
-  await expect(page.getByText("This employee has no photo. Printing is blocked until a photo is added.")).toBeVisible();
+  await expect(page.getByText("This employee has no photo. Printing is blocked until a photo is added.")).toHaveCount(0);
+  await expect(page.getByText("Photo missing")).toHaveCount(0);
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Test print" }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toMatch(/\.pdf$/);
   expect(employeeId).toMatch(/^[0-9a-f-]{36}$/);
+});
+
+test("editing an employee can remove a saved photo", async ({ page }) => {
+  await loginAsAdmin(page, admin);
+  const suffix = uniqueSuffix();
+  const code = `E2E-PHOTO-${suffix}`;
+  const employeeId = await createEmployeeThroughUi(page, code, `Photo Employee ${suffix}`);
+  await page.goto(`/employees/${employeeId}/edit`);
+  const chooser = page.waitForEvent("filechooser");
+  await page.getByRole("button", { name: "Upload photo" }).click();
+  await (await chooser).setFiles("screenshots/polish/login-390.png");
+  await page.locator('main form button[type="submit"]').first().click();
+  await page.waitForURL(new RegExp(`/employees/${employeeId}\\?saved=1`));
+  expect((await prisma.employee.findUniqueOrThrow({ where: { id: employeeId } })).photo_path).toBeTruthy();
+
+  await page.goto(`/employees/${employeeId}/edit`);
+  await page.getByRole("button", { name: "Remove photo" }).click();
+  await page.locator('main form button[type="submit"]').first().click();
+  await page.waitForURL(new RegExp(`/employees/${employeeId}\\?saved=1`));
+  expect((await prisma.employee.findUniqueOrThrow({ where: { id: employeeId } })).photo_path).toBeNull();
 });
 
 test("verify page shows valid, revoked and unknown card states without leaking employee data", async ({ page }) => {

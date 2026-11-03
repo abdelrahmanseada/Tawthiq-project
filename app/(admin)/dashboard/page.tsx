@@ -15,11 +15,13 @@ import {
 } from "lucide-react";
 import { Badge, EmptyState, PageHeader, SectionCard, StatCard, cn } from "@/components/ui";
 import { ScanChart } from "@/components/ScanChart";
+import { KpiNumber } from "@/components/KpiNumber";
 import { requirePermission } from "@/lib/auth/session";
 import { env } from "@/lib/env";
 import { formatDate, formatDateTime, formatNumber } from "@/lib/format";
 import { validateVerifyBaseUrl } from "@/lib/qr";
 import { getDashboardData } from "@/lib/services/dashboard";
+import { kpiDelta } from "@/lib/kpi";
 
 export const dynamic = "force-dynamic";
 
@@ -28,13 +30,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title") };
 }
 
-function Trend({ value, labels }: { value: number; labels: { up: string; down: string; flat: string } }) {
-  if (value === 0) return <span className="text-xs text-muted">{labels.flat}</span>;
-  const Icon = value > 0 ? TrendingUp : TrendingDown;
+function Trend({ current, previous, labels }: { current: number; previous: number; labels: { up: string; down: string; absolute: string; fresh: string } }) {
+  const delta = kpiDelta(current, previous);
+  if (delta.kind === "none") return null;
+  if (delta.kind === "new") return <span className="text-xs font-semibold text-success">{labels.fresh}</span>;
+  if (delta.kind === "absolute") {
+    const value = delta.change > 0 ? `+${delta.change}` : String(delta.change);
+    return <span className={cn("inline-flex items-center gap-1 text-xs font-semibold", delta.change > 0 ? "text-success" : delta.change < 0 ? "text-danger" : "text-muted")}>{labels.absolute.replace("{value}", value)}</span>;
+  }
+  const Icon = delta.change > 0 ? TrendingUp : TrendingDown;
   return (
-    <span className={cn("inline-flex items-center gap-1 text-xs font-semibold", value > 0 ? "text-success" : "text-danger")}>
+    <span className={cn("inline-flex items-center gap-1 text-xs font-semibold", delta.change > 0 ? "text-success" : delta.change < 0 ? "text-danger" : "text-muted")}>
       <Icon className="h-3.5 w-3.5" aria-hidden="true" />
-      {value > 0 ? labels.up.replace("{value}", String(value)) : labels.down.replace("{value}", String(Math.abs(value)))}
+      {delta.change > 0 ? labels.up.replace("{value}", String(delta.change)) : labels.down.replace("{value}", String(Math.abs(delta.change)))}
     </span>
   );
 }
@@ -78,6 +86,8 @@ export default async function DashboardPage({
     up: t("trendUp", { value: "{value}" }),
     down: t("trendDown", { value: "{value}" }),
     flat: t("trendFlat"),
+    absolute: t("trendAbsolute", { value: "{value}" }),
+    fresh: t("trendNew"),
   };
 
   return (
@@ -111,36 +121,36 @@ export default async function DashboardPage({
         }
       />
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="stagger grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label={t("activeEmployees")}
-          value={formatNumber(data.activeEmployees, locale)}
+          value={<KpiNumber value={data.activeEmployees} />}
           hint={`${formatNumber(data.totalEmployees, locale)} ${tc("results")}`}
           icon={<Users className="h-5 w-5" />}
           tone="info"
         />
         <StatCard
           label={t("activeCards")}
-          value={formatNumber(data.activeCards, locale)}
+          value={<KpiNumber value={data.activeCards} />}
           hint={`${formatNumber(data.expiringSoon, locale)} ${t("expiringSoon")}`}
           icon={<IdCard className="h-5 w-5" />}
           tone="neutral"
         />
         <StatCard
           label={t("scans24h")}
-          value={formatNumber(data.scans24h, locale)}
+          value={<KpiNumber value={data.scans24h} />}
           icon={<ScanLine className="h-5 w-5" />}
           tone="success"
-          trend={<Trend value={data.scans24hTrend} labels={trendLabels} />}
-          hint={t("vsPrevious")}
+          trend={<Trend current={data.scans24h} previous={data.scans24hPrevious} labels={trendLabels} />}
+          hint={data.scans24hPrevious >= 10 ? t("vsPrevious") : undefined}
         />
         <StatCard
           label={t("invalidScans24h")}
-          value={formatNumber(data.invalid24h, locale)}
+          value={<KpiNumber value={data.invalid24h} />}
           icon={<AlertTriangle className="h-5 w-5" />}
           tone={data.invalid24h > 0 ? "danger" : "success"}
-          trend={<Trend value={data.invalid24hTrend} labels={trendLabels} />}
-          hint={t("vsPrevious")}
+          trend={<Trend current={data.invalid24h} previous={data.invalid24hPrevious} labels={trendLabels} />}
+          hint={data.invalid24hPrevious >= 10 ? t("vsPrevious") : undefined}
         />
       </div>
 

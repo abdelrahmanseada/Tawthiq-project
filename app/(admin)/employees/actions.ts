@@ -72,6 +72,7 @@ export async function saveEmployeeAction(
   }
 
   let photoBuffer: Buffer | null = null;
+  const removePhoto = formValue(formData, "remove_photo") === "1";
   try {
     photoBuffer = readPhotoData(formData);
   } catch {
@@ -81,7 +82,7 @@ export async function saveEmployeeAction(
   try {
     const isUpdate = Boolean(employeeId);
     const result = isUpdate
-      ? await updateEmployee(admin.companyId, employeeId, input, { adminId: admin.id, ip }, photoBuffer)
+      ? await updateEmployee(admin.companyId, employeeId, input, { adminId: admin.id, ip }, photoBuffer, removePhoto && !photoBuffer)
       : await createEmployee(admin.companyId, input, { adminId: admin.id, ip }, photoBuffer);
 
     revalidatePath("/employees");

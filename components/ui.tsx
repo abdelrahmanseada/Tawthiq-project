@@ -134,7 +134,7 @@ export function StatCard({
   trend,
 }: {
   label: string;
-  value: string | number;
+  value: ReactNode;
   hint?: string;
   tone?: Tone;
   icon?: ReactNode;
@@ -185,7 +185,7 @@ export function Field({
       {children}
       {hint ? <p className="hint">{hint}</p> : null}
       {error ? (
-        <p className="mt-1 text-xs font-semibold text-danger-fg" role="alert">
+        <p className="field-error" role="alert">
           {error}
         </p>
       ) : null}
@@ -242,19 +242,4 @@ export function Pagination({
   );
 }
 
-export function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" className={cn("h-9 w-9", className)}>
-      <defs>
-        <linearGradient id="ui-shield" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#0F766E" />
-          <stop offset="1" stopColor="#115E59" />
-        </linearGradient>
-      </defs>
-      <path d="M32 4 54 12v17c0 13.8-9 24.4-22 30C19 53.4 10 42.8 10 29V12L32 4Z" fill="url(#ui-shield)" />
-      <path d="M21 32.5 28.5 40 41 25" fill="none" stroke="#fff" strokeWidth="4.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M42 12h8v8h-8z" fill="none" stroke="#fff" strokeWidth="2" opacity=".9" />
-      <rect x="44.7" y="14.7" width="2.6" height="2.6" fill="#F59E0B" />
-    </svg>
-  );
-}
+export { LogoMark } from "@/components/LogoMark";

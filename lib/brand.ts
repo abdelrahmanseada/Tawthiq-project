@@ -1,9 +1,11 @@
 /** Single-company identity. The Company row is the source of truth at runtime. */
-export const PRODUCT_NAME = "Tawthiq";
+import en from "@/messages/en.json";
+
+export const PRODUCT_NAME = en.brand.name;
 export const COMPANY_NAME = PRODUCT_NAME;
-export const TAGLINE = "Verified identity for every workforce.";
-export const COMPANY_DESCRIPTION = "Employee identity and verification.";
-export const DEFAULT_COPYRIGHT_TEMPLATE = "© {year} Tawthiq";
+export const TAGLINE = en.brand.tagline;
+export const COMPANY_DESCRIPTION = en.brand.description;
+export const DEFAULT_COPYRIGHT_TEMPLATE = `© {year} ${PRODUCT_NAME}`;
 
 export function copyrightText(year = new Date().getFullYear()): string {
   const template = process.env.COPYRIGHT_TEXT?.trim() || DEFAULT_COPYRIGHT_TEMPLATE;

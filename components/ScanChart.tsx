@@ -71,7 +71,7 @@ export function ScanChart({ data, locale, labels, title }: ScanChartProps) {
           </g>
         ))}
         <path d={area} fill="var(--brand)" opacity="0.1" />
-        <path d={line("valid")} fill="none" stroke="var(--brand)" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" />
+        <path className="chart-line" pathLength={1} d={line("valid")} fill="none" stroke="var(--brand)" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" />
         <path d={line("invalid")} fill="none" stroke="var(--danger)" strokeWidth="2" strokeDasharray="5 4" strokeLinejoin="round" strokeLinecap="round" />
         {data.map((point, index) => (
           <g key={point.date}>
