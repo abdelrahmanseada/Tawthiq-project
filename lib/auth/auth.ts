@@ -18,8 +18,9 @@ const credentialsSchema = z.object({
  * issues a short-lived HMAC-signed ticket. This provider only accepts
  * `password_only` tickets, so a client cannot mint a session directly.
  *
- * TOTP / recovery-code UI and enforcement were removed at the product owner's
- * request. The database fields remain for a future reintroduction.
+ * Sign-in is password-only up to this provider: accounts with TOTP enrolled are
+ * routed to /2fa for a code before the ticket is issued, and accounts without it
+ * are sent to /2fa/setup by the admin layout.
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: env.AUTH_SECRET,

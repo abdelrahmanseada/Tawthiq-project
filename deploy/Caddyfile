@@ -1,0 +1,6 @@
+# The verification hostname is the one printed inside every card QR, so it must
+# stay short (31 characters or fewer) and never change after cards are printed.
+verify.bremer-eg.com {
+	encode zstd gzip
+	reverse_proxy app:3000
+}

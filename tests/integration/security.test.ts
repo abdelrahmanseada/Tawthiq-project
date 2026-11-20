@@ -110,12 +110,12 @@ describe.skipIf(!hasDatabase)("sessions, recovery codes and 2FA reset", () => {
     expect(audit).toBeTruthy();
   });
 
-  it("notifications report domain and missing-photo issues", async () => {
+  it("notifications report domain issues", async () => {
     const { getNotifications } = await import("@/lib/services/notifications");
     await prisma.employee.create({
       data: { company_id: companyId, employee_code: "SEC-001", full_name: "No Photo" },
     });
     const result = await getNotifications({ id: companyId, verify_base_url: "http://localhost:3000" });
-    expect(result.items.map((item) => item.id)).toEqual(expect.arrayContaining(["verifyDomain", "missingPhotos"]));
+    expect(result.items.map((item) => item.id)).toEqual(expect.arrayContaining(["verifyDomain"]));
   });
 });

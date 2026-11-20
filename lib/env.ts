@@ -49,7 +49,8 @@ const envSchema = z.object({
   BULLMQ_ENABLED: booleanish,
   CRON_SECRET: z.string().min(16),
   TRUSTED_PROXY_HOPS: z.coerce.number().int().min(0).max(10).default(1),
-  TRUSTED_PROXY: z.enum(["none", "cloudflare"]).default("none"),
+  /** none: no proxy headers are trusted. proxy: trust X-Forwarded-For/X-Real-IP. cloudflare: trust CF-Connecting-IP. */
+  TRUSTED_PROXY: z.enum(["none", "proxy", "cloudflare"]).default("none"),
   TUNNEL_TOKEN: z.string().optional(),
 
   BACKUP_PASSPHRASE: z.string().min(12).optional(),

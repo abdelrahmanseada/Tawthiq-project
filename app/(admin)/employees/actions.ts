@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireActionPermission } from "@/lib/auth/session";
+import { prisma } from "@/lib/db";
 import { getClientIp } from "@/lib/http";
 import { ValidationError } from "@/lib/http";
 import { parseImageDataUrl } from "@/lib/images";
@@ -147,6 +148,9 @@ export async function revokeCardAction(formData: FormData): Promise<void> {
   if (cardId) {
     const employee = await findEmployee(admin.companyId, employeeId);
     if (!employee) throw new Error("Employee not found");
+    // Card ids come from the form, so scope the card to this (company-owned) employee.
+    const card = await prisma.card.findFirst({ where: { id: cardId, employee_id: employee.id }, select: { id: true } });
+    if (!card) throw new Error("Card not found");
     await revokeCard(cardId, "Revoked by administrator", admin.id, ip);
   }
   revalidatePath(`/employees/${employeeId}`);
@@ -157,6 +161,8 @@ export async function regenerateCardAction(formData: FormData): Promise<void> {
   const admin = await requireActionPermission("cards.write");
   const ip = getClientIp(await headers());
   const { employeeId, next } = await employeeIdsFromForm(formData);
+  const employee = await findEmployee(admin.companyId, employeeId);
+  if (!employee) throw new Error("Employee not found");
   await regenerateEmployeeCard(employeeId, admin.id, ip);
   revalidatePath(`/employees/${employeeId}`);
   redirect(`${next}${next.includes("?") ? "&" : "?"}regenerated=1`);
@@ -175,6 +181,8 @@ export async function generateCardForEmployeeAction(formData: FormData): Promise
   const admin = await requireActionPermission("cards.write");
   const ip = getClientIp(await headers());
   const { employeeId, next } = await employeeIdsFromForm(formData);
+  const employee = await findEmployee(admin.companyId, employeeId);
+  if (!employee) throw new Error("Employee not found");
   const active = await getActiveCard(employeeId);
   if (!active) {
     await regenerateEmployeeCard(employeeId, admin.id, ip, { reason: "Issued by administrator" });

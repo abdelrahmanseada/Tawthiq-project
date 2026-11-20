@@ -23,7 +23,7 @@ export async function getNotifications(company: {
   const in7 = addDays(now, 7);
   const in30 = addDays(now, 30);
 
-  const [expiring30, expiring7, missingPhotos, failedImports, pendingPreviews, legacyCards] = await Promise.all([
+  const [expiring30, expiring7, failedImports, pendingPreviews, legacyCards] = await Promise.all([
     prisma.card.count({
       where: {
         status: "ACTIVE",
@@ -38,7 +38,6 @@ export async function getNotifications(company: {
         employee: { company_id: company.id, deleted_at: null, status: "ACTIVE" },
       },
     }),
-    prisma.employee.count({ where: { company_id: company.id, deleted_at: null, photo_path: null } }),
     prisma.importBatch.count({ where: { company_id: company.id, status: "FAILED" } }),
     prisma.importBatch.count({ where: { company_id: company.id, status: "PENDING" } }),
     prisma.card.count({
@@ -54,7 +53,6 @@ export async function getNotifications(company: {
   }
   if (expiring7 > 0) items.push({ id: "expiring7", count: expiring7, href: "/dashboard?chart=30", tone: "danger" });
   else if (expiring30 > 0) items.push({ id: "expiring30", count: expiring30, href: "/dashboard?chart=30", tone: "warning" });
-  if (missingPhotos > 0) items.push({ id: "missingPhotos", count: missingPhotos, href: "/employees?photo=missing", tone: "warning" });
   if (failedImports > 0) items.push({ id: "failedImports", count: failedImports, href: "/imports", tone: "danger" });
   if (pendingPreviews > 0) items.push({ id: "pendingPreviews", count: pendingPreviews, href: "/imports", tone: "info" });
   if (legacyCards > 0) items.push({ id: "legacyCards", count: legacyCards, href: "/cards", tone: "warning" });

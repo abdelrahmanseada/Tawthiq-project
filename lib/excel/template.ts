@@ -27,7 +27,7 @@ export async function buildEmployeeTemplate(locale: Locale): Promise<Buffer> {
   sheet.columns = TEMPLATE_HEADERS.map((header) => ({
     header: HEADER_LABELS[locale][header],
     key: header,
-    width: header === "full_name" ? 32 : header === "photo_filename" ? 26 : 22,
+    width: header === "full_name" ? 32 : 22,
   }));
 
   const headerRow = sheet.getRow(1);
@@ -43,11 +43,10 @@ export async function buildEmployeeTemplate(locale: Locale): Promise<Buffer> {
     department: "Operations",
     job_title: "Maintenance Technician",
     expires_at: sampleExpiry,
-    photo_filename: "employee-photo.jpg",
   });
   sheet.getRow(2).font = { italic: true, color: { argb: "FF64748B" } };
 
-  sheet.autoFilter = { from: "A1", to: `F${Math.max(2, MAX_IMPORT_ROWS + 1)}` };
+  sheet.autoFilter = { from: "A1", to: `E${Math.max(2, MAX_IMPORT_ROWS + 1)}` };
 
   for (let row = 2; row <= MAX_IMPORT_ROWS + 1; row += 1) {
     sheet.getCell(`A${row}`).dataValidation = {
@@ -99,9 +98,8 @@ export async function buildEmployeeTemplate(locale: Locale): Promise<Buffer> {
     [labels.department, translate(locale, "imports.columns.department")],
     [labels.job_title, translate(locale, "imports.columns.job_title")],
     [labels.expires_at, translate(locale, "employees.expiresHint")],
-    [labels.photo_filename, translate(locale, "imports.photoZipHint")],
     [translate(locale, "imports.requiredHeadersNote"), translate(locale, "imports.maxRowsNote")],
-    [translate(locale, "imports.photoZipNote"), translate(locale, "imports.previewInvalidNotice")],
+    [translate(locale, "imports.rollback"), translate(locale, "imports.confirmRollback")],
     [translate(locale, "imports.rollback"), translate(locale, "imports.confirmRollback")],
   ];
 

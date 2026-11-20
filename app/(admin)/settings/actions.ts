@@ -25,8 +25,10 @@ export interface SettingsState {
     | "unknown"
     | "no_company"
     | "domain_confirmation_required"
-    | "invalid_verify_url";
+    | "invalid_verify_url"
+    | "verify_url_too_long";
   affectedCards?: number;
+  maxHostLength?: number;
   fieldErrors?: Record<string, string>;
 }
 
@@ -82,6 +84,14 @@ export async function saveCompanySettingsAction(
       return { error: "domain_confirmation_required", affectedCards: error.affectedCards };
     }
     if (error instanceof CompanySettingsError) {
+      if (error.code === "verify_url_too_long") {
+        const maxHostLength = Number(error.details?.[0]);
+        return {
+          error: "verify_url_too_long",
+          maxHostLength: Number.isFinite(maxHostLength) ? maxHostLength : undefined,
+          fieldErrors: { verify_base_url: "verify_url_too_long" },
+        };
+      }
       return {
         error: "invalid_verify_url",
         fieldErrors: { verify_base_url: error.details?.[0] ?? "invalid_url" },
@@ -117,11 +127,15 @@ export async function saveCompanySettingsAction(
 
 export async function testVerifyUrlAction(url: string): Promise<{ ok: boolean; detail: string }> {
   await requireActionPermission("settings.manage");
-  const check = validateVerifyBaseUrl(url, false);
+  // Production rules reject localhost/LAN hosts; in development they stay usable.
+  const check = validateVerifyBaseUrl(url);
   if (!check.ok || !check.normalized) return { ok: false, detail: check.errors[0] ?? "invalid_url" };
   try {
+    // No redirect following: a public URL must not bounce the server into an internal one.
+    // shortcut: a hostname that resolves to a private IP is still reachable; add a DNS check if untrusted admins are ever allowed.
     const response = await fetch(`${check.normalized}/api/health`, {
       cache: "no-store",
+      redirect: "manual",
       signal: AbortSignal.timeout(5000),
       headers: { "user-agent": "Bremer-URL-Test/1.0" },
     });

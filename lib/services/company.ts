@@ -5,7 +5,7 @@ import { normalizeUnicode } from "@/lib/text";
 import { normalizeCompanyLogo, ImageValidationError, logoBackgroundIsDark } from "@/lib/images";
 import { removeStorageFile, storageKey, writeStorageFile } from "@/lib/storage";
 import { env } from "@/lib/env";
-import { validateVerifyBaseUrl } from "@/lib/qr";
+import { measureVerifyBaseUrl, validateVerifyBaseUrl } from "@/lib/qr";
 import type { CompanySettingsInput } from "@/lib/validation/schemas";
 
 export class CompanySettingsError extends Error {
@@ -58,6 +58,13 @@ export async function updateCompanySettings(
     throw new CompanySettingsError("invalid_verify_url", check.errors);
   }
   const normalizedUrl = check.normalized;
+
+  // A host too long for the card QR would only fail later, at print time.
+  // Refuse it here while the operator is still looking at the field.
+  const qrFit = await measureVerifyBaseUrl(normalizedUrl);
+  if (!qrFit.ok) {
+    throw new CompanySettingsError("verify_url_too_long", [String(qrFit.maxHostLength)]);
+  }
 
   const existing = await prisma.company.findUnique({ where: { id: companyId } });
   if (!existing) throw new CompanySettingsError("company_not_found");

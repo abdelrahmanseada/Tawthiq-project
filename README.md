@@ -70,7 +70,7 @@ docker compose -f docker-compose.prod.yml run --rm migrate npx prisma migrate de
 docker compose -f docker-compose.prod.yml --profile seed run --rm seed npm run db:seed
 ```
 
-Production defaults: HTTPS-only verification URL, `AUTH_TRUST_HOST=true`, `TRUSTED_PROXY=cloudflare` (uses `CF-Connecting-IP`), 90 MB ZIP cap for Cloudflare's free request limit, secure cookies when `APP_URL` is HTTPS, and mandatory 2FA. Set `TUNNEL_TOKEN` after creating the tunnel. Do not open the app, Postgres or Redis ports in production.
+Production defaults: HTTPS-only verification URL, `AUTH_TRUST_HOST=true`, 90 MB ZIP cap, secure cookies when `APP_URL` is HTTPS, and mandatory 2FA. Client IP resolution is chosen by `TRUSTED_PROXY`: `proxy` for a normal reverse proxy (trusts `X-Forwarded-For`/`X-Real-IP`, with `TRUSTED_PROXY_HOPS` counted from the right), `cloudflare` for a Cloudflare tunnel (trusts `CF-Connecting-IP`), `none` to trust no header at all. Set the mode that matches the deployment — any other value lets clients forge their own IP and bypass rate limits. Do not open the app, Postgres or Redis ports in production.
 
 ## Verification address and QR
 

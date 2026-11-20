@@ -1,17 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
-  AlertTriangle,
   CalendarClock,
   Download,
   IdCard,
   Pencil,
   RefreshCw,
   ShieldCheck,
-  UserRound,
   XCircle,
 } from "lucide-react";
 import { Alert, Badge, EmptyState, PageHeader, SectionCard, cn } from "@/components/ui";
@@ -25,12 +22,11 @@ import { hasMessage, translate } from "@/lib/i18n";
 import type { Locale } from "@/lib/locale";
 import { validateVerifyBaseUrl } from "@/lib/qr";
 import { cardIsExpired } from "@/lib/services/cards";
-import { employeePhotoUrl, getEmployeeDetail } from "@/lib/services/employees";
+import { getEmployeeDetail } from "@/lib/services/employees";
 import {
   changeEmployeeStatusAction,
   deleteEmployeeAction,
   regenerateCardAction,
-  removePhotoAction,
   restoreEmployeeAction,
   revokeCardAction,
 } from "../actions";
@@ -67,7 +63,6 @@ export default async function EmployeeDetailPage({
   const canManageCards = can(admin.role, "cards.write");
   const { employee, cards, scans, activity } = detail;
   const activeCard = cards.find((card) => card.status === "ACTIVE") ?? null;
-  const photoUrl = employeePhotoUrl(employee);
   const next = `/employees/${employee.id}`;
   const tab = query.tab === "card" || query.tab === "scans" || query.tab === "activity" ? query.tab : "overview";
   const statusTone = employee.deleted_at
@@ -255,21 +250,13 @@ export default async function EmployeeDetailPage({
                 <CardPreview
                   data={{
                     companyName: admin.company.name,
-                    companyLogoUrl: admin.company.logo_url ? `/api/media/logo?company=${admin.company.id}&v=${encodeURIComponent(admin.company.updated_at.toISOString())}` : null,
-                    primaryColor: admin.company.primary_color,
                     secondaryColor: admin.company.secondary_color,
                     employeeName: employee.full_name,
                     jobTitle: employee.job_title,
-                    department: employee.department,
                     employeeCode: employee.employee_code,
-                    photoUrl,
                     validUntil: activeCard ? formatDate(activeCard.expires_at, locale, admin.company.time_zone) : tc("dash"),
                     domain,
-                    website: admin.company.website,
-                    tagline: admin.company.tagline,
                     showVerifyHostOnCard: admin.company.show_verify_host_on_card,
-                    phone: admin.company.contact_phone,
-                    email: admin.company.contact_email,
                   }}
                 />
                 </div>
@@ -340,20 +327,6 @@ export default async function EmployeeDetailPage({
         <aside className="space-y-4 xl:sticky xl:top-20 xl:self-start">
           <SectionCard>
             <div className="flex flex-col items-center gap-3 text-center">
-              {photoUrl ? (
-                <Image
-                  src={photoUrl}
-                  alt={t("photoAlt", { name: employee.full_name })}
-                  width={240}
-                  height={320}
-                  unoptimized className="aspect-[3/4] w-full max-w-[240px] rounded-card object-cover ring-1 ring-border"
-                />
-              ) : (
-                <div className="flex aspect-[3/4] w-full max-w-[240px] flex-col items-center justify-center gap-2 rounded-card bg-surface text-subtle ring-1 ring-border">
-                  <UserRound className="h-12 w-12" aria-hidden="true" />
-                  <span className="text-xs">{t("photoMissing")}</span>
-                </div>
-              )}
               <div>
                 <p className="text-base font-bold text-ink">{employee.full_name}</p>
                 <p className="text-sm text-muted">{employee.job_title ?? tc("dash")}</p>
@@ -436,13 +409,6 @@ export default async function EmployeeDetailPage({
                       <input type="hidden" name="next" value={next} />
                       <button type="submit" className="btn btn-secondary btn-sm w-full">{t("terminate")}</button>
                     </ConfirmForm>
-                    {photoUrl ? (
-                      <ConfirmForm action={removePhotoAction} message={t("removePhoto")}>
-                        <input type="hidden" name="employee_id" value={employee.id} />
-                        <input type="hidden" name="next" value={next} />
-                        <button type="submit" className="btn btn-ghost btn-sm w-full">{t("removePhoto")}</button>
-                      </ConfirmForm>
-                    ) : null}
                     <ConfirmForm action={deleteEmployeeAction} message={t("confirmDelete")}>
                       <input type="hidden" name="employee_id" value={employee.id} />
                       <input type="hidden" name="next" value={next} />
@@ -451,12 +417,6 @@ export default async function EmployeeDetailPage({
                   </>
                 )}
               </div>
-              {!employee.deleted_at && !photoUrl ? (
-                <p className="mt-3 flex items-start gap-1.5 text-xs text-warning">
-                  <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                  {t("missingPhotoNotice")}
-                </p>
-              ) : null}
             </SectionCard>
           ) : null}
 

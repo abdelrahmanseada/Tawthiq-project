@@ -63,6 +63,8 @@ export async function requireAdmin(): Promise<SessionAdmin & { companyId: string
   const admin = await getCurrentAdmin();
   if (!admin) redirect("/login");
   if (!admin.company || !admin.companyId) redirect("/login");
+  // Redirect alone is not enough: server actions are guarded in requireActionAdmin.
+  if (admin.mustChangePassword) redirect("/change-password");
   return admin as SessionAdmin & { companyId: string; company: Company };
 }
 
@@ -79,6 +81,9 @@ export async function requireActionAdmin(): Promise<SessionAdmin & { companyId: 
   if (!admin) throw new ApiError(401, "UNAUTHENTICATED", "You must sign in first");
   if (!admin.company || !admin.companyId) {
     throw new ApiError(403, "FORBIDDEN", "Company context is required");
+  }
+  if (admin.mustChangePassword) {
+    throw new ApiError(403, "PASSWORD_CHANGE_REQUIRED", "Change your password before continuing");
   }
   return admin as SessionAdmin & { companyId: string; company: Company };
 }

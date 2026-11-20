@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ChevronDown, IdCard, Rows3, UserRound } from "lucide-react";
+import { ChevronDown, IdCard, Rows3 } from "lucide-react";
 import { Badge, EmptyState, cn } from "@/components/ui";
 import { bulkSuspendEmployeesAction } from "@/app/(admin)/employees/bulk-actions";
 import type { EmployeeListItem } from "@/lib/services/employees";
@@ -17,7 +16,7 @@ export function EmployeesTable({
   locale,
   printingAllowed,
 }: {
-  rows: Array<EmployeeListItem & { photoUrl: string | null }>;
+  rows: EmployeeListItem[];
   canWrite: boolean;
   locale: Locale;
   printingAllowed: boolean;
@@ -121,19 +120,6 @@ export function EmployeesTable({
                   ) : null}
                   <td className="td">
                     <div className="flex min-w-0 items-center gap-3">
-                      {row.photoUrl ? (
-                        <Image
-                          src={row.photoUrl}
-                          alt={t("photoAlt", { name: row.full_name })}
-                          width={40}
-                          height={40}
-                          unoptimized className="h-10 w-10 shrink-0 rounded-full object-cover ring-1 ring-border"
-                        />
-                      ) : (
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface text-subtle ring-1 ring-border">
-                          <UserRound className="h-5 w-5" aria-hidden="true" />
-                        </span>
-                      )}
                       <div className="min-w-0">
                         <Link href={`/employees/${row.id}`} className="block truncate font-semibold text-ink hover:text-brand">
                           {row.full_name}
@@ -163,7 +149,6 @@ export function EmployeesTable({
                               : "employeeTerminated",
                         )}
                       </Badge>
-                      {!row.photoUrl ? <Badge tone="warning">{t("noPhoto")}</Badge> : null}
                     </div>
                   </td>
                   <td className="td hidden lg:table-cell">
@@ -198,7 +183,7 @@ export function EmployeesTable({
                           </Link>
                         ) : null}
                         {row.card?.status === "ACTIVE" ? (
-                          printingAllowed && row.photoUrl && row.card.has_token ? (
+                          printingAllowed && row.card.has_token ? (
                             <a
                               href={`/api/admin/cards/${row.card.id}/pdf`} className="block rounded-control px-3 py-2 text-sm hover:bg-surface"
                             >

@@ -54,7 +54,7 @@ describe.skipIf(!hasDatabase)("bulk import integration", () => {
   async function buildWorkbook(rows: Array<Record<string, string>>): Promise<Buffer> {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("Employees");
-    sheet.addRow(["employee_code", "full_name", "department", "job_title", "expires_at", "photo_filename"]);
+    sheet.addRow(["employee_code", "full_name", "department", "job_title", "expires_at"]);
     for (const row of rows) {
       sheet.addRow([
         row.employee_code ?? "",
@@ -62,7 +62,6 @@ describe.skipIf(!hasDatabase)("bulk import integration", () => {
         row.department ?? "",
         row.job_title ?? "",
         row.expires_at ?? "",
-        row.photo_filename ?? "",
       ]);
     }
     const buffer = await workbook.xlsx.writeBuffer();
@@ -83,7 +82,6 @@ describe.skipIf(!hasDatabase)("bulk import integration", () => {
       adminId,
       filename: "integration.xlsx",
       spreadsheet: workbook,
-      photoZip: null,
       ip: null,
     });
     batchId = batch.id;
@@ -125,7 +123,6 @@ describe.skipIf(!hasDatabase)("bulk import integration", () => {
       adminId,
       filename: "duplicate.xlsx",
       spreadsheet: duplicateWorkbook,
-      photoZip: null,
       ip: null,
     });
     expect(duplicatePreview.preview.duplicateCount).toBe(1);
@@ -159,7 +156,6 @@ describe.skipIf(!hasDatabase)("bulk import integration", () => {
         adminId,
         filename: "too-many.xlsx",
         spreadsheet: workbook,
-        photoZip: null,
         ip: null,
       }),
     ).rejects.toMatchObject({ code: "row_limit" });

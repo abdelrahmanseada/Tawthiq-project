@@ -9,8 +9,8 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 /**
- * Upload + validate a spreadsheet and optional photo ZIP. Nothing is persisted as
- * employee data: a PENDING ImportBatch and an encrypted preview snapshot are stored.
+ * Upload + validate a spreadsheet. Nothing is persisted as employee data: a
+ * PENDING ImportBatch and an encrypted preview snapshot are stored.
  */
 export async function POST(request: Request) {
   try {
@@ -29,7 +29,6 @@ export async function POST(request: Request) {
 
     const formData = await request.formData();
     const spreadsheet = formData.get("spreadsheet");
-    const photoZip = formData.get("photo_zip");
 
     if (!(spreadsheet instanceof File) || spreadsheet.size === 0) {
       throw new ApiError(422, "NO_SPREADSHEET", "Choose an Excel or CSV file");
@@ -37,20 +36,14 @@ export async function POST(request: Request) {
     if (spreadsheet.size > env.MAX_SPREADSHEET_BYTES) {
       throw new ImportFileError("file_too_large", "Spreadsheet exceeds the 10 MB limit");
     }
-    if (photoZip instanceof File && photoZip.size > 0 && photoZip.size > env.MAX_ZIP_BYTES) {
-      throw new ImportFileError("file_too_large", "Photo ZIP exceeds the 200 MB limit");
-    }
 
     const spreadsheetBuffer = Buffer.from(await spreadsheet.arrayBuffer());
-    const zipBuffer =
-      photoZip instanceof File && photoZip.size > 0 ? Buffer.from(await photoZip.arrayBuffer()) : null;
 
     const { batch, preview } = await previewImport({
       companyId: admin.companyId,
       adminId: admin.id,
       filename: spreadsheet.name,
       spreadsheet: spreadsheetBuffer,
-      photoZip: zipBuffer,
       ip,
     });
 

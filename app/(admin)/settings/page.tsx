@@ -53,7 +53,6 @@ export default async function SettingsPage({
           default_card_validity_days: company.default_card_validity_days,
           scan_log_retention_days: company.scan_log_retention_days,
           logoUrl,
-          logoBgDark: company.logo_bg_dark,
         }}
         activeCardCount={activeCards}
         domainWarning={domainWarning}

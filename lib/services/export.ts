@@ -62,7 +62,6 @@ export async function exportEmployees(
     translate(locale, "export.employees.status"),
     translate(locale, "export.employees.cardStatus"),
     translate(locale, "export.employees.validUntil"),
-    translate(locale, "export.employees.photo"),
     translate(locale, "export.employees.created"),
   ];
 
@@ -78,7 +77,6 @@ export async function exportEmployees(
         ? translate(locale, card.status === "ACTIVE" ? "statuses.cardActive" : "statuses.cardRevoked")
         : translate(locale, "common.none"),
       card ? formatDate(card.expires_at, locale) : "",
-      employee.photo_path ? translate(locale, "common.yes") : translate(locale, "common.no"),
       formatDate(employee.created_at, locale),
     ];
   });
@@ -103,10 +101,10 @@ export async function exportEmployees(
   header.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF0F766E" } };
   header.height = 22;
   sheet.columns.forEach((column, index) => {
-    column.width = [18, 30, 22, 26, 14, 14, 18, 10, 16][index] ?? 18;
+    column.width = [18, 30, 22, 26, 14, 14, 18, 16][index] ?? 18;
     column.alignment = { vertical: "middle", horizontal: false ? "right" : "left" };
   });
-  sheet.autoFilter = { from: "A1", to: `I${Math.max(1, rows.length + 1)}` };
+  sheet.autoFilter = { from: "A1", to: `H${Math.max(1, rows.length + 1)}` };
   const buffer = await workbook.xlsx.writeBuffer();
   return {
     buffer: Buffer.from(buffer),

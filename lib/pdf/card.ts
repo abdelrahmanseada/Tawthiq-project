@@ -1,15 +1,10 @@
-import {
-  PDFDocument,
-  PDFFont,
-  PDFImage,
-  rgb,
-  type RGB,
-} from "pdf-lib";
-import { CARD_HEIGHT_MM, CARD_WIDTH_MM, FRONT, BACK, CARD_COLORS, MM_TO_PT, layoutCard, type TextBlock } from "@/lib/card/layout";
-import { buildVerifyUrl, displayVerifyDomain, qrModules } from "@/lib/qr";
+import { PDFDocument, PDFFont, rgb, type RGB } from "pdf-lib";
+import { CARD_HEIGHT_MM, CARD_WIDTH_MM, FRONT, BACK, CARD_COLORS, MM_TO_PT, accentTop, layoutCard, type TextBlock } from "@/lib/card/layout";
+// MM_TO_PT keeps the exported point dimensions below in sync with the layout.
+import { buildVerifyUrl, cardQrFit, displayVerifyDomain, QrCapacityError, qrModules } from "@/lib/qr";
 import { formatDate } from "@/lib/format";
-import { embedPdfFonts, embedStoredImage, loadRoundedPortrait, pdfColor, type FontFamily } from "@/lib/pdf/assets";
-import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor, readableTextOn } from "@/lib/colors";
+import { embedPdfFonts, pdfColor, type FontFamily } from "@/lib/pdf/assets";
+import { DEFAULT_SECONDARY_COLOR, normalizeHexColor } from "@/lib/colors";
 
 export const CARD_WIDTH = CARD_WIDTH_MM * MM_TO_PT;
 export const CARD_HEIGHT = CARD_HEIGHT_MM * MM_TO_PT;
@@ -18,8 +13,6 @@ export type CardPrintMode = "cr80" | "print_shop" | "test";
 
 export interface CardCompanyData {
   name: string;
-  logo_path: string | null;
-  logo_bg_dark: boolean;
   primary_color: string;
   secondary_color: string;
   contact_phone: string;
@@ -35,8 +28,6 @@ export interface CardCompanyData {
 export interface CardEmployeeData {
   full_name: string;
   job_title: string | null;
-  department: string | null;
-  photo_path: string | null;
   employee_code: string;
 }
 
@@ -110,145 +101,6 @@ function drawBlock(
   }
 }
 
-async function drawLogo(
-  pdf: PDFDocument,
-  page: import("pdf-lib").PDFPage,
-  g: PageGeometry,
-  input: RenderCardInput,
-  logo: PDFImage | null,
-  fonts: FontFamily,
-  primary: RGB,
-) {
-  const box = FRONT.logo;
-  if (!input.company.logo_bg_dark) page.drawRectangle({
-    x: x(g, box.x),
-    y: y(g, box.y + box.h),
-    width: MM(box.w),
-    height: MM(box.h),
-    color: rgb(1, 1, 1),
-  });
-  if (logo) {
-    const maxW = MM(box.w - box.padding * 2);
-    const maxH = MM(box.h - box.padding * 2);
-    const scale = Math.min(maxW / logo.width, maxH / logo.height);
-    const width = logo.width * scale;
-    const height = logo.height * scale;
-    page.drawImage(logo, {
-      x: x(g, box.x + box.w / 2) - width / 2,
-      y: y(g, box.y + box.h / 2) - height / 2,
-      width,
-      height,
-    });
-  } else {
-    const initials = input.company.name
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase() ?? "")
-      .join("");
-    const size = 14;
-    const width = fonts.bold.widthOfTextAtSize(initials || "C", size);
-    page.drawText(initials || "C", {
-      x: x(g, box.x + box.w / 2) - width / 2,
-      y: y(g, box.y + box.h / 2 + 2.2),
-      size,
-      font: fonts.bold,
-      color: primary,
-    });
-  }
-}
-
-function drawBackLogo(
-  page: import("pdf-lib").PDFPage,
-  g: PageGeometry,
-  input: RenderCardInput,
-  logo: PDFImage | null,
-  fonts: FontFamily,
-  onPrimary: RGB,
-) {
-  const box = BACK.logo;
-  if (logo && !input.company.logo_bg_dark) {
-    page.drawRectangle({
-      x: x(g, box.x),
-      y: y(g, box.y + box.h),
-      width: MM(box.w),
-      height: MM(box.h),
-      color: rgb(1, 1, 1),
-    });
-  }
-  if (logo) {
-    const maxW = MM(box.w - box.padding * 2);
-    const maxH = MM(box.h - box.padding * 2);
-    const scale = Math.min(maxW / logo.width, maxH / logo.height);
-    const width = logo.width * scale;
-    const height = logo.height * scale;
-    page.drawImage(logo, {
-      x: x(g, box.x + box.w / 2) - width / 2,
-      y: y(g, box.y + box.h / 2) - height / 2,
-      width,
-      height,
-    });
-  } else {
-    const initials = input.company.name
-      .split(/\s+/)
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase() ?? "")
-      .join("");
-    const size = 30;
-    const width = fonts.bold.widthOfTextAtSize(initials || "C", size);
-    page.drawText(initials || "C", {
-      x: x(g, box.x + box.w / 2) - width / 2,
-      y: y(g, box.y + box.h / 2 + 3.6),
-      size,
-      font: fonts.bold,
-      color: onPrimary,
-    });
-  }
-}
-
-
-function drawSilhouette(
-  page: import("pdf-lib").PDFPage,
-  g: PageGeometry,
-  fonts: FontFamily,
-  primary: RGB,
-  secondary: RGB,
-  fullName: string,
-) {
-  const box = FRONT.photo;
-  const initials = fullName
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-  page.drawRectangle({
-    x: x(g, box.x),
-    y: y(g, box.y + box.h),
-    width: MM(box.w),
-    height: MM(box.h),
-    color: pdfColor("#EEF2F7"),
-  });
-  page.drawRectangle({
-    x: x(g, box.x),
-    y: y(g, box.y + box.h),
-    width: MM(box.w),
-    height: MM(box.h),
-    borderColor: secondary,
-    borderWidth: box.borderPt,
-  });
-  const size = 24;
-  const textWidth = fonts.bold.widthOfTextAtSize(initials || "ID", size);
-  page.drawText(initials || "ID", {
-    x: x(g, box.x + box.w / 2) - textWidth / 2,
-    y: y(g, box.y + box.h / 2 + 2.8),
-    size,
-    font: fonts.bold,
-    color: primary,
-  });
-}
-
 function drawTestPattern(
   page: import("pdf-lib").PDFPage,
   g: PageGeometry,
@@ -262,7 +114,7 @@ function drawTestPattern(
         y: y(g, 9 + row * 7),
         size,
         font,
-        color: rgb(0.04, 0.07, 0.12),
+        color: rgb(1, 1, 1),
         opacity: 0.06,
       });
     }
@@ -294,9 +146,6 @@ async function drawFront(
   g: PageGeometry,
   input: RenderCardInput,
   fonts: FontFamily,
-  logo: PDFImage | null,
-  photo: PDFImage | null,
-  primary: RGB,
   secondary: RGB,
   test: boolean,
   watermarkFont: PDFFont | null,
@@ -305,78 +154,23 @@ async function drawFront(
   const layout = layoutCard({
     fullName: input.employee.full_name,
     jobTitle: input.employee.job_title,
-    department: input.employee.department,
     employeeCode: input.employee.employee_code,
     companyName: input.company.name,
     validUntil: formatDate(input.expiresAt, "en", input.company.time_zone),
     host: input.company.show_verify_host_on_card ? displayVerifyDomain(input.company.verify_base_url) : null,
-    website: input.company.website,
-    tagline: input.company.tagline,
     showVerifyHostOnCard: input.company.show_verify_host_on_card,
-    phone: input.company.contact_phone,
-    email: input.company.contact_email,
-    hasPhoto: Boolean(photo),
   });
-  layout.front.company.color = readableTextOn(normalizeHexColor(input.company.primary_color, DEFAULT_PRIMARY_COLOR));
   const verifyUrl = buildVerifyUrl(input.company.verify_base_url, input.token);
   const qr = await qrModules(verifyUrl);
-  const totalModules = qr.size + FRONT.qr.quietModules * 2;
-  const moduleMm = FRONT.qr.w / totalModules;
-  if (moduleMm < FRONT.qr.minModuleMm) {
-    throw new Error("Verification URL is too long for a printable QR");
-  }
+  const fit = cardQrFit(qr.size, verifyUrl.length);
+  if (!fit.ok) throw new QrCapacityError(verifyUrl, fit);
+  const moduleMm = fit.moduleMm;
 
-  page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: rgb(1, 1, 1) });
-  // Header and accent extend into the bleed for print-shop output.
-  page.drawRectangle({
-    x: 0,
-    y: g.pageHeight - (MM(FRONT.header.h) + g.bleed),
-    width: g.pageWidth,
-    height: MM(FRONT.header.h) + g.bleed,
-    color: primary,
-  });
-  page.drawRectangle({
-    x: 0,
-    y: g.pageHeight - (MM(FRONT.accent.y + FRONT.accent.h) + g.bleed),
-    width: g.pageWidth,
-    height: MM(FRONT.accent.h),
-    color: secondary,
-  });
+  page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: pdfColor(CARD_COLORS.front) });
 
   if (test && watermarkFont) drawTestPattern(page, g, watermarkFont);
 
-  await drawLogo(pdf, page, g, input, logo, fonts, primary);
-
-  if (photo) {
-    const box = FRONT.photo;
-    page.drawImage(photo, {
-      x: x(g, box.x),
-      y: y(g, box.y + box.h),
-      width: MM(box.w),
-      height: MM(box.h),
-    });
-    page.drawRectangle({
-      x: x(g, box.x),
-      y: y(g, box.y + box.h),
-      width: MM(box.w),
-      height: MM(box.h),
-      borderColor: secondary,
-      borderWidth: box.borderPt,
-    });
-  } else {
-    drawSilhouette(page, g, fonts, primary, secondary, input.employee.full_name);
-  }
-
-  // QR lives on the front, inside a white quiet panel.
-  page.drawRectangle({
-    x: x(g, FRONT.qrPanel.x),
-    y: y(g, FRONT.qrPanel.y + FRONT.qrPanel.h),
-    width: MM(FRONT.qrPanel.w),
-    height: MM(FRONT.qrPanel.h),
-    color: rgb(1, 1, 1),
-    borderColor: pdfColor(CARD_COLORS.border),
-    borderWidth: 0.3,
-  });
+  // White modules on the dark card, matching the reference artwork.
   const moduleSize = MM(moduleMm);
   const qrOriginX = x(g, FRONT.qr.x + FRONT.qr.quietModules * moduleMm);
   const qrTopY = y(g, FRONT.qr.y + FRONT.qr.quietModules * moduleMm);
@@ -388,24 +182,38 @@ async function drawFront(
         y: qrTopY - (row + 1) * moduleSize,
         width: moduleSize,
         height: moduleSize,
-        color: rgb(0, 0, 0),
+        color: rgb(1, 1, 1),
       });
     }
   }
-  drawBlock(page, g, layout.front.scanLabel, fonts, primary);
 
-  drawBlock(page, g, layout.front.company, fonts, primary);
-  drawBlock(page, g, layout.front.name, fonts, primary);
-  if (layout.front.title) drawBlock(page, g, layout.front.title, fonts, primary);
-  if (layout.front.department) drawBlock(page, g, layout.front.department, fonts, primary);
-  drawBlock(page, g, layout.front.code, fonts, primary);
-  const validWidth = fonts.regular.widthOfTextAtSize(layout.front.validUntil.lines[0] ?? "", 6.5);
-  const validStartMm = 81.6 - validWidth / MM_TO_PT;
-  const iconCenterMm = validStartMm - 2.1;
-  page.drawCircle({ x: x(g, iconCenterMm), y: y(g, 48.55), size: MM(1.15), color: primary });
-  page.drawLine({ start: { x: x(g, iconCenterMm - 0.55), y: y(g, 48.55) }, end: { x: x(g, iconCenterMm - 0.1), y: y(g, 48.95) }, thickness: 0.65, color: rgb(1, 1, 1) });
-  page.drawLine({ start: { x: x(g, iconCenterMm - 0.1), y: y(g, 48.95) }, end: { x: x(g, iconCenterMm + 0.6), y: y(g, 48.0) }, thickness: 0.65, color: rgb(1, 1, 1) });
-  drawBlock(page, g, layout.front.validUntil, fonts, primary);
+  // Decorated corners: three small brackets around the QR finder patterns.
+  const qx = FRONT.qr.x;
+  const qy = FRONT.qr.y;
+  const qrEdge = qx + FRONT.qr.w;
+  const qrBottom = qy + FRONT.qr.h;
+  const arm = 3.2;
+  const thick = 0.6;
+  const line = (x1: number, y1: number, x2: number, y2: number) =>
+    page.drawLine({ start: { x: x(g, x1), y: y(g, y1) }, end: { x: x(g, x2), y: y(g, y2) }, thickness: thick, color: secondary });
+  line(qx, qy, qx + arm, qy);
+  line(qx, qy, qx, qy + arm);
+  line(qrEdge - arm, qy, qrEdge, qy);
+  line(qrEdge, qy, qrEdge, qy + arm);
+  line(qx, qrBottom - arm, qx, qrBottom);
+  line(qx, qrBottom, qx + arm, qrBottom);
+
+  page.drawRectangle({
+    x: x(g, FRONT.accent.x),
+    y: y(g, accentTop(layout) + FRONT.accent.h),
+    width: MM(FRONT.accent.w),
+    height: MM(FRONT.accent.h),
+    color: secondary,
+  });
+
+  drawBlock(page, g, layout.front.name, fonts, secondary);
+  if (layout.front.title) drawBlock(page, g, layout.front.title, fonts, secondary);
+  drawBlock(page, g, layout.front.code, fonts, secondary);
 
   if (test) drawTestBand(page, g, fonts);
 
@@ -417,8 +225,6 @@ async function drawBack(
   g: PageGeometry,
   input: RenderCardInput,
   fonts: FontFamily,
-  logo: PDFImage | null,
-  primary: RGB,
   secondary: RGB,
   test: boolean,
   watermarkFont: PDFFont | null,
@@ -427,55 +233,19 @@ async function drawBack(
   const layout = layoutCard({
     fullName: input.employee.full_name,
     jobTitle: input.employee.job_title,
-    department: input.employee.department,
     employeeCode: input.employee.employee_code,
     companyName: input.company.name,
     validUntil: formatDate(input.expiresAt, "en", input.company.time_zone),
     host: input.company.show_verify_host_on_card ? displayVerifyDomain(input.company.verify_base_url) : null,
-    website: input.company.website,
-    tagline: input.company.tagline,
     showVerifyHostOnCard: input.company.show_verify_host_on_card,
-    phone: input.company.contact_phone,
-    email: input.company.contact_email,
-    hasPhoto: false,
   });
-  const onPrimary = readableTextOn(normalizeHexColor(input.company.primary_color, DEFAULT_PRIMARY_COLOR));
-  layout.back.company.color = onPrimary;
-  if (layout.back.tagline) layout.back.tagline.color = onPrimary;
-  if (layout.back.website) layout.back.website.color = onPrimary;
-  if (layout.back.host) layout.back.host.color = onPrimary;
 
-  page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: primary });
-  // Soft secondary brand shapes, still safe for print and the preview.
-  page.drawCircle({
-    x: x(g, 79),
-    y: y(g, 9),
-    size: MM(24),
-    color: secondary,
-    opacity: 0.18,
-  });
-  page.drawCircle({
-    x: x(g, 4),
-    y: y(g, 54),
-    size: MM(18),
-    color: secondary,
-    opacity: 0.1,
-  });
+  page.drawRectangle({ x: 0, y: 0, width: g.pageWidth, height: g.pageHeight, color: pdfColor(CARD_COLORS.back) });
 
   if (test && watermarkFont) drawTestPattern(page, g, watermarkFont);
 
-  drawBackLogo(page, g, input, logo, fonts, pdfColor(onPrimary));
-  page.drawRectangle({
-    x: x(g, BACK.accent.x),
-    y: y(g, BACK.accent.y + BACK.accent.h),
-    width: MM(BACK.accent.w),
-    height: MM(BACK.accent.h),
-    color: secondary,
-  });
-  drawBlock(page, g, layout.back.company, fonts, primary);
-  if (layout.back.tagline) drawBlock(page, g, layout.back.tagline, fonts, primary);
-  if (layout.back.website) drawBlock(page, g, layout.back.website, fonts, primary);
-  if (layout.back.host) drawBlock(page, g, layout.back.host, fonts, primary);
+  drawBlock(page, g, layout.back.brand, fonts, secondary);
+  drawBlock(page, g, layout.back.meta, fonts, secondary);
 
   if (test) drawTestBand(page, g, fonts);
   if (g.bleed > 0) drawCropMarks(page, g);
@@ -512,18 +282,12 @@ export async function renderCardPdf(input: RenderCardInput): Promise<Uint8Array>
   pdf.setModificationDate(new Date());
 
   const fonts = await embedPdfFonts(pdf);
-  const storedLogo = input.company.logo_path
-    ? await (await import("@/lib/pdf/assets")).loadStorageBuffer(input.company.logo_path)
-    : null;
-  const embeddedLogo = await embedStoredImage(pdf, storedLogo);
-  const photo = await loadRoundedPortrait(pdf, input.employee.photo_path, 660, 870, 30);
   const watermarkFont = mode === "test" ? await (await import("@/lib/pdf/assets")).embedWatermarkFont(pdf) : null;
 
-  const primary = pdfColor(normalizeHexColor(input.company.primary_color, DEFAULT_PRIMARY_COLOR));
   const secondary = pdfColor(normalizeHexColor(input.company.secondary_color, DEFAULT_SECONDARY_COLOR));
   const test = mode === "test";
-  await drawFront(pdf, g, input, fonts.primary, embeddedLogo, photo, primary, secondary, test, watermarkFont);
-  await drawBack(pdf, g, input, fonts.primary, embeddedLogo, primary, secondary, test, watermarkFont);
+  await drawFront(pdf, g, input, fonts.primary, secondary, test, watermarkFont);
+  await drawBack(pdf, g, input, fonts.primary, secondary, test, watermarkFont);
 
   return pdf.save();
 }

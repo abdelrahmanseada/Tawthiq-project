@@ -8,17 +8,16 @@ function csvFile(content: string): Buffer {
   return Buffer.from(content, "utf8");
 }
 
-const HEADER = "employee_code,full_name,department,job_title,expires_at,photo_filename\n";
+const HEADER = "employee_code,full_name,department,job_title,expires_at\n";
 
 describe("spreadsheet parsing", () => {
   it("parses CSV with quoted fields and Arabic text", async () => {
     const buffer = csvFile(
-      `${HEADER}EMP-1,"أحمد, محمد",العمليات,فني,2027-01-31,\nEMP-2,Sara Ali,HR,Recruiter,,\n`,
+      `${HEADER}EMP-1,"أحمد, محمد",العمليات,فني,2027-01-31\nEMP-2,Sara Ali,HR,Recruiter,\n`,
     );
     const parsed = await parseSpreadsheet(buffer, "employees.csv");
     expect(parsed.rows).toHaveLength(2);
     expect(parsed.rows[0]?.values.full_name).toBe("أحمد, محمد");
-    expect(parsed.rows[1]?.values.photo_filename).toBe("");
     expect(parsed.headers).toContain("employee_code");
   });
 
@@ -54,7 +53,7 @@ describe("spreadsheet parsing", () => {
     expect(template.length).toBeGreaterThan(5_000);
     const parsed = await parseSpreadsheet(template, "employee-import-template.xlsx");
     expect(parsed.headers).toEqual(
-      expect.arrayContaining(["employee_code", "full_name", "department", "job_title", "expires_at", "photo_filename"]),
+      expect.arrayContaining(["employee_code", "full_name", "department", "job_title", "expires_at"]),
     );
     expect(parsed.rows[0]?.values.employee_code).toBe("EMP-0001");
 

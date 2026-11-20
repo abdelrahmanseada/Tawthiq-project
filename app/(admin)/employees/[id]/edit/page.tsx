@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/ui";
 import { requirePermission } from "@/lib/auth/session";
 import { addDays, formatIsoDate } from "@/lib/format";
 import { getActiveCard } from "@/lib/services/cards";
-import { employeePhotoUrl, findEmployee } from "@/lib/services/employees";
+import { findEmployee } from "@/lib/services/employees";
 import { EmployeeForm } from "../../employee-form";
 
 export const dynamic = "force-dynamic";
@@ -39,7 +39,6 @@ export default async function EditEmployeePage({ params }: { params: Promise<{ i
           job_title: employee.job_title,
           status: employee.status,
           expires_at: expiry,
-          photo_url: employeePhotoUrl(employee),
         }}
         company={admin.company}
       />

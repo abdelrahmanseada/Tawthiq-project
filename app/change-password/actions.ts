@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db";
-import { requireActionAdmin } from "@/lib/auth/session";
+import { getCurrentAdmin } from "@/lib/auth/session";
 import { hashPassword, verifyPassword } from "@/lib/security/password";
 import { getClientIp } from "@/lib/http";
 import { writeAuditLog } from "@/lib/audit";
@@ -19,7 +19,9 @@ export async function changePasswordAction(
   _previous: ChangePasswordState | undefined,
   formData: FormData,
 ): Promise<ChangePasswordState> {
-  const admin = await requireActionAdmin();
+  // Must run while must_change_password is still set, so it bypasses requireActionAdmin.
+  const admin = await getCurrentAdmin();
+  if (!admin || !admin.company || !admin.companyId) redirect("/login");
   const parsed = changePasswordSchema.safeParse({
     current_password: formValue(formData, "current_password"),
     new_password: formValue(formData, "new_password"),

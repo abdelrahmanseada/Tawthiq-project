@@ -11,8 +11,6 @@ function input(): RenderCardInput {
   return {
     company: {
       name: "Bremer",
-      logo_path: null,
-      logo_bg_dark: false,
       website: "bremer.example",
       tagline: "Established 1989",
       show_verify_host_on_card: false,
@@ -27,8 +25,6 @@ function input(): RenderCardInput {
     employee: {
       full_name: "Amelia Hart",
       job_title: "Maintenance Technician",
-      department: "Operations",
-      photo_path: null,
       employee_code: "NW-0001",
     },
     expiresAt: new Date("2027-12-31T23:59:59.999Z"),

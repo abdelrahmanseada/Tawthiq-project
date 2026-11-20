@@ -44,7 +44,7 @@ Verified with the live tunnel URL:
 decoded https://interpretation-reveal-standing-circus.trycloudflare.com/v/Zx7Q...
 ```
 
-The QR uses a 4-module quiet zone and at least 0.45 mm modules for the current 98-character verification URL.
+The QR uses a 4-module quiet zone and at least 0.40 mm modules for the current 98-character verification URL.
 
 ## Tests
 

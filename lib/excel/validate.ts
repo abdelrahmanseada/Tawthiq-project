@@ -1,7 +1,7 @@
 import type { EmployeeStatus } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { addDays, parseIsoDateOnly, utcToday } from "@/lib/format";
-import { normalizeUnicode, sanitizeSpreadsheetCell, truncate } from "@/lib/text";
+import { sanitizeSpreadsheetCell, truncate } from "@/lib/text";
 import { LATIN_TEXT_PATTERN } from "@/lib/config";
 import { EMPLOYEE_CODE_PATTERN, ISO_DATE_PATTERN } from "./constants";
 import type { ParsedImportRow } from "./parse";
@@ -28,7 +28,6 @@ export interface ValidatedImportRow {
   department: string | null;
   job_title: string | null;
   expires_at: string | null;
-  photo_filename: string | null;
   issues: RowIssue[];
   duplicate: boolean;
   existing: ExistingEmployeeSnapshot | null;
@@ -54,8 +53,6 @@ export interface ExistingEmployeeRecord {
 
 export interface ValidateImportOptions {
   companyId: string;
-  photoFilenames: Set<string>;
-  hasPhotoZip: boolean;
   now?: Date;
   /** Test hook: supply existing DB rows instead of querying. */
   existingRows?: ExistingEmployeeRecord[];
@@ -104,7 +101,6 @@ export async function validateImportRows(
     const departmentRaw = sanitizeSpreadsheetCell(parsed.values.department ?? "");
     const jobTitleRaw = sanitizeSpreadsheetCell(parsed.values.job_title ?? "");
     const expiresRaw = sanitizeSpreadsheetCell(parsed.values.expires_at ?? "");
-    const photoRaw = sanitizeSpreadsheetCell(parsed.values.photo_filename ?? "");
 
     if (!employeeCode) {
       issues.push({ column: "employee_code", message: "required" });
@@ -149,20 +145,6 @@ export async function validateImportRows(
       }
     }
 
-    let photoFilename: string | null = null;
-    if (photoRaw) {
-      const baseName = normalizeUnicode(photoRaw.replace(/\\/g, "/").split("/").pop() ?? "");
-      if (!baseName || baseName.length > 255) {
-        issues.push({ column: "photo_filename", message: "too_long" });
-      } else if (!options.hasPhotoZip) {
-        issues.push({ column: "photo_filename", message: "photo_not_found" });
-      } else if (!options.photoFilenames.has(baseName.toLowerCase())) {
-        issues.push({ column: "photo_filename", message: "photo_not_found" });
-      } else {
-        photoFilename = baseName;
-      }
-    }
-
     if (employeeCode) {
       const sheetKey = employeeCode.toLowerCase();
       const firstRow = seenCodes.get(sheetKey);
@@ -182,7 +164,6 @@ export async function validateImportRows(
       department,
       job_title: jobTitle,
       expires_at: expiresAt,
-      photo_filename: photoFilename,
       issues,
       duplicate: Boolean(existing),
       existing: existing

@@ -11,7 +11,7 @@ import { env } from "@/lib/env";
 import type { Locale } from "@/lib/locale";
 import { validateVerifyBaseUrl } from "@/lib/qr";
 import { prisma } from "@/lib/db";
-import { employeePhotoUrl, listEmployees } from "@/lib/services/employees";
+import { listEmployees } from "@/lib/services/employees";
 import { employeeListQuerySchema, searchParamsToObject } from "@/lib/validation/schemas";
 import { reissueAllCardsAction } from "./actions";
 
@@ -41,7 +41,7 @@ export default async function CardsPage({
   const parsed = employeeListQuerySchema.safeParse({ ...searchParamsToObject(params), deleted: "0" });
   const query = parsed.success ? parsed.data : employeeListQuerySchema.parse({});
   const data = await listEmployees(admin.companyId, query);
-  const rows = data.rows.map((row) => ({ ...row, photoUrl: employeePhotoUrl(row) }));
+  const rows = data.rows;
   const selected = Array.isArray(params.ids) ? params.ids : typeof params.ids === "string" ? [params.ids] : [];
 
   const legacyCount = await prisma.card.count({

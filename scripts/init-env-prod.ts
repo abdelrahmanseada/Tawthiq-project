@@ -41,7 +41,7 @@ async function main() {
     PUBLIC_BASE_URL: appUrl,
     AUTH_SECRET: secret(),
     AUTH_TRUST_HOST: "true",
-    TRUSTED_PROXY: "cloudflare",
+    TRUSTED_PROXY: "proxy",
     TRUSTED_PROXY_HOPS: "1",
     DATABASE_URL: `postgresql://evs:${postgresPassword}@postgres:5432/evs?schema=public`,
     POSTGRES_PASSWORD: postgresPassword,

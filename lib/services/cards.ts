@@ -2,9 +2,9 @@ import type { Card, Company, Employee, Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { writeAuditLog } from "@/lib/audit";
 import { addDays, cairoEndOfDay, formatIsoDate, parseIsoDateOnly } from "@/lib/format";
-import { renderCardPdf, type CardCompanyData, type CardEmployeeData, type CardPrintMode } from "@/lib/pdf/card";
+import { renderCardPdf, type CardCompanyData, type CardEmployeeData, type CardPrintMode, type RenderCardInput } from "@/lib/pdf/card";
 import { renderCardsSheet } from "@/lib/pdf/sheet";
-import { validateVerifyBaseUrl } from "@/lib/qr";
+import { QrCapacityError, validateVerifyBaseUrl } from "@/lib/qr";
 import {
   cardTokenPrefix,
   decryptCardToken,
@@ -31,8 +31,6 @@ export class CardOperationError extends Error {
 export function companyCardData(company: Company): CardCompanyData {
   return {
     name: company.name,
-    logo_path: company.logo_url,
-    logo_bg_dark: company.logo_bg_dark,
     primary_color: company.primary_color,
     secondary_color: company.secondary_color,
     contact_phone: company.contact_phone,
@@ -50,8 +48,6 @@ export function employeeCardData(employee: Employee): CardEmployeeData {
   return {
     full_name: employee.full_name,
     job_title: employee.job_title,
-    department: employee.department,
-    photo_path: employee.photo_path,
     employee_code: employee.employee_code,
   };
 }
@@ -202,7 +198,7 @@ export function cardIsExpired(card: Pick<Card, "expires_at">, now = new Date()):
 }
 
 export interface PrintCheckInput {
-  employee: Pick<Employee, "photo_path" | "deleted_at" | "status">;
+  employee: Pick<Employee, "deleted_at" | "status">;
   card: Pick<Card, "status" | "expires_at" | "token_enc">;
   company: Pick<Company, "verify_base_url" | "status">;
   mode: CardPrintMode;
@@ -214,9 +210,9 @@ export interface PrintCheck {
 }
 
 /**
- * Printing rules: revoked/expired cards are never printable. Photos are optional;
- * normal prints require a production-valid verification URL. "test print" allows a
- * development URL, adds a watermark, and still refuses dead cards.
+ * Printing rules: revoked/expired cards are never printable; normal prints require
+ * a production-valid verification URL. "test print" allows a development URL, adds
+ * a watermark, and still refuses dead cards.
  */
 export function checkCardPrintability(input: PrintCheckInput, now = new Date()): PrintCheck {
   const errors: string[] = [];
@@ -338,6 +334,21 @@ export interface PrintableCard {
   bytes: Uint8Array;
 }
 
+/**
+ * A verification host that is too long for the card QR is a configuration
+ * problem, not a crash: report it as 409 with the fix instead of a bare 500.
+ */
+async function renderCardOrExplain(input: RenderCardInput): Promise<Uint8Array> {
+  try {
+    return await renderCardPdf(input);
+  } catch (error) {
+    if (error instanceof QrCapacityError) {
+      throw new CardOperationError("verify_url_too_long", error.message, 409);
+    }
+    throw error;
+  }
+}
+
 /** Render printable cards on demand (no PDF artefacts are stored). */
 export async function buildPrintableCards(
   companyId: string,
@@ -366,7 +377,7 @@ export async function buildPrintableCards(
     }
     const token = await ensureCardToken(card);
     if (!token) throw new CardOperationError("card_needs_reissue", "Card must be re-issued", 409);
-    const bytes = await renderCardPdf({
+    const bytes = await renderCardOrExplain({
       company: companyCardData(employee.company),
       employee: employeeCardData(employee),
       expiresAt: card.expires_at,
@@ -423,7 +434,7 @@ export async function loadPrintableCard(
   if (!check.ok) throw new CardOperationError(check.errors[0] ?? "print_blocked", "Card cannot be printed", 409);
   const token = await ensureCardToken(card);
   if (!token) throw new CardOperationError("card_needs_reissue", "Card must be re-issued", 409);
-  const bytes = await renderCardPdf({
+  const bytes = await renderCardOrExplain({
     company: companyCardData(card.employee.company),
     employee: employeeCardData(card.employee),
     expiresAt: card.expires_at,

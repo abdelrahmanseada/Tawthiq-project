@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
-import { BadgeCheck, CalendarClock, ShieldX, TriangleAlert, UserRound } from "lucide-react";
+import { BadgeCheck, CalendarClock, ShieldX, TriangleAlert } from "lucide-react";
 import { LogoMark } from "@/components/ui";
 import { PRODUCT_PRIMARY_COLOR, PRODUCT_SECONDARY_COLOR } from "@/lib/colors";
 import { formatDate, formatDateTime } from "@/lib/format";
@@ -129,24 +129,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
         </div>
 
         {valid && result.employee ? (
-          <div className="mt-5 grid items-start gap-5 lg:grid-cols-[320px_minmax(0,1fr)]">
-            <div className="card overflow-hidden">
-              {result.employee.photo_url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={result.employee.photo_url}
-                  alt={t("employeePhotoAlt")}
-                  width={480}
-                  height={640} className="aspect-[3/4] w-full object-cover"
-                />
-              ) : (
-                <div className="flex aspect-[3/4] w-full items-center justify-center bg-surface text-subtle">
-                  <UserRound className="h-12 w-12" aria-hidden="true" />
-                </div>
-              )}
-              <p className="px-4 py-3 text-center text-xs font-medium text-muted">{t("comparePhoto")}</p>
-            </div>
-
+          <div className="mt-5">
             <div className="card p-5 sm:p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{t("validBadge")}</p>
               <h2 className="mt-1 text-2xl font-bold tracking-tight text-ink">{result.employee.full_name}</h2>

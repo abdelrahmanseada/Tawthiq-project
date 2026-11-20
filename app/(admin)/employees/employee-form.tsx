@@ -6,7 +6,6 @@ import { useActionState } from "react";
 import { useTranslations } from "next-intl";
 import { Save, X } from "lucide-react";
 import { saveEmployeeAction, type EmployeeFormState } from "./actions";
-import { PhotoCropper } from "@/components/PhotoCropper";
 import { CardPreview } from "@/components/CardPreview";
 import { Alert, Field } from "@/components/ui";
 import { formatDate } from "@/lib/format";
@@ -19,24 +18,15 @@ export interface EmployeeFormValues {
   job_title: string | null;
   status: "ACTIVE" | "SUSPENDED" | "TERMINATED";
   expires_at: string;
-  photo_url: string | null;
 }
 
 export interface FormCompany {
   id: string;
   name: string;
-  logo_url: string | null;
-  logo_bg_dark: boolean;
-  website: string | null;
-  tagline: string;
   show_verify_host_on_card: boolean;
-  primary_color: string;
   secondary_color: string;
-  contact_phone: string;
-  contact_email: string;
   time_zone: string;
   verify_base_url: string;
-  updated_at: Date;
 }
 
 export function EmployeeForm({
@@ -58,7 +48,6 @@ export function EmployeeForm({
   const [jobTitle, setJobTitle] = useState(initial.job_title ?? "");
   const [employeeCode, setEmployeeCode] = useState(initial.employee_code);
   const [expiresAt, setExpiresAt] = useState(initial.expires_at);
-  const [photoUrl, setPhotoUrl] = useState(initial.photo_url);
 
   const fieldError = (field: string) => {
     const code = state.fieldErrors?.[field];
@@ -79,7 +68,6 @@ export function EmployeeForm({
 
       <div className="space-y-5">
         {state.error === "employee_code_taken" ? <Alert tone="danger">{t("employeeCodeTaken")}</Alert> : null}
-        {state.error === "invalid_photo" ? <Alert tone="danger">{t("invalidPhoto")}</Alert> : null}
         {state.error === "validation" ? <Alert tone="danger">{te("invalidInput")}</Alert> : null}
         {state.error === "not_found" ? <Alert tone="danger">{te("notFoundTitle")}</Alert> : null}
         {state.error === "unknown" ? <Alert tone="danger">{te("serverBody")}</Alert> : null}
@@ -161,24 +149,6 @@ export function EmployeeForm({
           </div>
         </section>
 
-        <section className="panel">
-          <h2 className="mb-3 text-base font-semibold text-ink">{t("photo")}</h2>
-          <PhotoCropper
-            name="photo"
-            initialUrl={initial.photo_url}
-            labels={{
-              upload: t("photoUpload"),
-              camera: t("photoCamera"),
-              remove: t("removePhoto"),
-              zoom: t("zoom"),
-              hint: t("photoHint"),
-              error: t("invalidPhoto"),
-              noPhoto: t("noPhoto"),
-            }}
-            onPreview={setPhotoUrl}
-          />
-        </section>
-
         <div className="flex flex-wrap items-center gap-2">
           <button type="submit" className="btn btn-primary" disabled={pending}>
             <Save className="h-4 w-4" aria-hidden="true" />
@@ -196,22 +166,13 @@ export function EmployeeForm({
           <CardPreview
             data={{
               companyName: company.name,
-              companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.updated_at.toISOString())}` : null,
-              logoBgDark: company.logo_bg_dark,
-              primaryColor: company.primary_color,
               secondaryColor: company.secondary_color,
               employeeName: fullName || t("sampleName"),
               jobTitle: jobTitle || null,
-              department: department || null,
               employeeCode: employeeCode || "—",
-              photoUrl,
               validUntil: expiresAt ? formatDate(new Date(`${expiresAt}T12:00:00.000Z`), "en", company.time_zone) : "—",
               domain,
-              website: company.website,
-              tagline: company.tagline,
               showVerifyHostOnCard: company.show_verify_host_on_card,
-              phone: company.contact_phone,
-              email: company.contact_email,
             }}
           />
           <p className="mt-3 text-xs leading-relaxed text-muted">{t("previewHint")}</p>

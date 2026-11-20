@@ -2,37 +2,27 @@
 
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
-import { ShieldCheck } from "lucide-react";
 import { cn } from "@/components/ui";
 import {
-  BACK,
+  CARD_COLORS,
   CARD_WIDTH_MM,
   FRONT,
+  accentTop,
   layoutCard,
   type TextBlock,
 } from "@/lib/card/layout";
-import { DEFAULT_PRIMARY_COLOR, DEFAULT_SECONDARY_COLOR, normalizeHexColor, readableTextOn } from "@/lib/colors";
+import { DEFAULT_SECONDARY_COLOR, normalizeHexColor } from "@/lib/colors";
 
 export interface CardPreviewData {
   companyName: string;
-  companyLogoUrl: string | null;
-  logoBgDark?: boolean;
-  primaryColor: string;
   secondaryColor: string;
   employeeName: string;
   jobTitle: string | null;
-  department: string | null;
   employeeCode: string;
-  photoUrl: string | null;
   validUntil: string;
   domain: string;
-  website?: string | null;
-  tagline?: string | null;
   showVerifyHostOnCard?: boolean;
-  phone: string;
-  email: string;
   qrValue?: string;
-  hasPhoto?: boolean;
 }
 
 const mm = (value: number) => `${(value / CARD_WIDTH_MM) * 100}cqw`;
@@ -52,7 +42,7 @@ function TextBox({ block, title }: { block: TextBlock; title?: string }) {
     <div className="absolute overflow-hidden"
       style={{
         ...boxStyle(block),
-        color: block.color === "primary" ? "var(--card-primary)" : block.color,
+        color: block.color,
         fontFamily: "var(--font-latin)",
         fontSize: pt(block.fontSizePt),
         lineHeight: `${block.lineHeightPt * 0.352778 / 85.6 * 100}cqw`,
@@ -70,15 +60,6 @@ function TextBox({ block, title }: { block: TextBlock; title?: string }) {
   );
 }
 
-function initials(name: string): string {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
 export function CardPreview({
   data,
   className,
@@ -92,35 +73,27 @@ export function CardPreview({
 }) {
   const [side, setSide] = useState<"front" | "back">(initialSide);
   const [animateFlip, setAnimateFlip] = useState(false);
-  const primaryColor = normalizeHexColor(data.primaryColor, DEFAULT_PRIMARY_COLOR);
   const secondaryColor = normalizeHexColor(data.secondaryColor, DEFAULT_SECONDARY_COLOR);
   const [qrUrl, setQrUrl] = useState<string | null>(null);
   const layout = layoutCard({
     fullName: data.employeeName,
     jobTitle: data.jobTitle,
-    department: data.department,
     employeeCode: data.employeeCode,
     companyName: data.companyName,
     validUntil: data.validUntil,
     host: data.showVerifyHostOnCard ? data.domain : null,
-    website: data.website ?? null,
-    tagline: data.tagline ?? null,
     showVerifyHostOnCard: data.showVerifyHostOnCard ?? false,
-    phone: data.phone,
-    email: data.email,
-    hasPhoto: Boolean(data.photoUrl),
   });
-  layout.front.company.color = readableTextOn(primaryColor);
-  const onPrimary = readableTextOn(primaryColor);
-  layout.back.company.color = onPrimary;
-  if (layout.back.tagline) layout.back.tagline.color = onPrimary;
-  if (layout.back.website) layout.back.website.color = onPrimary;
-  if (layout.back.host) layout.back.host.color = onPrimary;
 
   useEffect(() => {
     let cancelled = false;
     const value = data.qrValue ?? data.domain;
-    QRCode.toDataURL(value, { errorCorrectionLevel: "Q", margin: 4, width: 520 })
+    QRCode.toDataURL(value, {
+      errorCorrectionLevel: "Q",
+      margin: 4,
+      width: 520,
+      color: { dark: "#FFFFFF", light: "#00000000" },
+    })
       .then((url) => {
         if (!cancelled) setQrUrl(url);
       })
@@ -138,6 +111,12 @@ export function CardPreview({
     setSide(next);
     onSideChange?.(next);
   };
+
+  const bracket = {
+    borderColor: secondaryColor,
+    width: mm(3.2),
+    height: mm(3.2),
+  } as const;
 
   return (
     <div className={cn("w-full", className)}>
@@ -173,86 +152,34 @@ export function CardPreview({
         </button>
       </div>
 
-      <div key={side} className={cn("relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] bg-white shadow-raised ring-1 ring-black/10 [container-type:inline-size]", animateFlip && "card-flip")}
+      <div key={side} className={cn("relative aspect-[85.6/54] w-full overflow-hidden rounded-[12px] shadow-raised ring-1 ring-black/20 [container-type:inline-size]", animateFlip && "card-flip")}
         style={
-          {
-            "--card-primary": primaryColor,
-            "--card-secondary": secondaryColor,
-          } as React.CSSProperties
+          { background: side === "front" ? CARD_COLORS.front : CARD_COLORS.back } as React.CSSProperties
         }
         data-card-side={side}
       >
         {side === "front" ? (
           <>
-            <div className="absolute inset-x-0 top-0" style={{ height: mm(FRONT.header.h), background: primaryColor }} />
-            <div className="absolute inset-x-0" style={{ top: mm(FRONT.accent.y), height: mm(FRONT.accent.h), background: secondaryColor }} />
-            <div className={`absolute flex items-center justify-center overflow-hidden rounded-[3px] ${data.logoBgDark ? "bg-transparent" : "bg-white"}`}
-              style={{ ...boxStyle(FRONT.logo), padding: mm(FRONT.logo.padding) }}
-            >
-              {data.companyLogoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.companyLogoUrl} alt="" className="h-full w-full object-contain" />
-              ) : (
-                <span style={{ color: primaryColor, fontSize: pt(14), fontWeight: 700 }}>{initials(data.companyName)}</span>
-              )}
-            </div>
-            <TextBox block={layout.front.company} />
-            <div className="absolute overflow-hidden bg-slate-100"
-              style={{
-                ...boxStyle(FRONT.photo),
-                border: `${mm(FRONT.photo.borderPt / 2.834645669)} solid ${secondaryColor}`,
-                borderRadius: mm(FRONT.photo.radius),
-              }}
-            >
-              {data.photoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.photoUrl} alt={data.employeeName} className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center" aria-label="No photo">
-                  <span style={{ color: primaryColor, fontSize: pt(20), fontWeight: 700 }}>{initials(data.employeeName)}</span>
-                </div>
-              )}
-            </div>
             <TextBox block={layout.front.name} />
             {layout.front.title ? <TextBox block={layout.front.title} /> : null}
-            {layout.front.department ? <TextBox block={layout.front.department} /> : null}
-            <div className="absolute overflow-hidden rounded-[3px] border bg-white"
-              style={{ ...boxStyle(FRONT.qrPanel), borderColor: "var(--border)", padding: mm(0.8) }}
-            >
+            <div className="absolute" style={{ ...boxStyle({ x: FRONT.accent.x, y: accentTop(layout), w: FRONT.accent.w, h: FRONT.accent.h }), background: secondaryColor }} />
+            <div className="absolute" style={boxStyle(FRONT.qr)}>
               {qrUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={qrUrl} alt="QR code to verify this employee card" className="h-full w-full object-contain" />
               ) : (
-                <div className="h-full w-full bg-slate-100" aria-hidden="true" />
+                <div className="h-full w-full" aria-hidden="true" />
               )}
+              <span className="absolute left-0 top-0 rounded-tl-[3px] border-l-2 border-t-2" style={bracket} aria-hidden="true" />
+              <span className="absolute right-0 top-0 rounded-tr-[3px] border-r-2 border-t-2" style={bracket} aria-hidden="true" />
+              <span className="absolute bottom-0 left-0 rounded-bl-[3px] border-b-2 border-l-2" style={bracket} aria-hidden="true" />
             </div>
-            <TextBox block={layout.front.scanLabel} />
             <TextBox block={layout.front.code} />
-            <TextBox block={layout.front.validUntil} />
-            <ShieldCheck
-              aria-hidden="true" className="absolute"
-              style={{ left: mm(35.8), top: mm(FRONT.footer.y + 0.1), width: mm(2.1), height: mm(2.1), color: primaryColor }}
-            />
           </>
         ) : (
           <>
-            <div className="absolute inset-0" style={{ background: primaryColor }} />
-            <div className="pointer-events-none absolute inset-0" style={{ background: `radial-gradient(circle at 92% 8%, ${secondaryColor} 0, transparent 42%), radial-gradient(circle at 3% 100%, ${secondaryColor} 0, transparent 32%)`, opacity: 0.18 }} />
-            <TextBox block={layout.back.company} />
-            <div className={`absolute flex items-center justify-center overflow-hidden rounded-[4px] ${!data.companyLogoUrl || data.logoBgDark ? "bg-transparent" : "bg-white"}`}
-              style={{ ...boxStyle(BACK.logo), padding: mm(BACK.logo.padding) }}
-            >
-              {data.companyLogoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={data.companyLogoUrl} alt="" className="h-full w-full object-contain" />
-              ) : (
-                <span style={{ color: onPrimary, fontSize: pt(28), fontWeight: 700 }}>{initials(data.companyName)}</span>
-              )}
-            </div>
-            <div className="absolute" style={{ ...boxStyle(BACK.accent), background: secondaryColor, borderRadius: "999px" }} />
-            {layout.back.tagline ? <TextBox block={layout.back.tagline} /> : null}
-            {layout.back.website ? <TextBox block={layout.back.website} /> : null}
-            {layout.back.host ? <TextBox block={layout.back.host} /> : null}
+            <TextBox block={layout.back.brand} />
+            <TextBox block={layout.back.meta} />
           </>
         )}
       </div>

@@ -31,16 +31,24 @@ export interface ClientIpDetails {
 }
 
 /**
- * Resolve the client IP from proxy headers using TRUSTED_PROXY_HOPS.
- * A value of 1 (default) means one trusted reverse proxy appends the real client
- * address to X-Forwarded-For; the entry `hops` positions from the right is used.
- * Raw addresses are only hashed downstream and never stored/logged.
+ * Resolve the client IP from proxy headers according to TRUSTED_PROXY.
+ * Header values are attacker-controlled unless a proxy overwrites them, so a
+ * mode that does not match the deployment must never trust them.
+ * `TRUSTED_PROXY_HOPS` counts from the right of X-Forwarded-For: 1 means one
+ * reverse proxy appended the real client address. Raw addresses are only hashed
+ * downstream and never stored/logged.
  */
 export function getClientIpDetails(headers: Headers): ClientIpDetails {
+  if (env.TRUSTED_PROXY === "none") {
+    return { ip: "unknown", chain: [], source: "unknown" };
+  }
+
   if (env.TRUSTED_PROXY === "cloudflare") {
     const cf = headers.get("cf-connecting-ip");
-    if (cf) return { ip: normalizeIp(cf), chain: [normalizeIp(cf)], source: "cf-connecting-ip" };
+    if (!cf) return { ip: "unknown", chain: [], source: "unknown" };
+    return { ip: normalizeIp(cf), chain: [normalizeIp(cf)], source: "cf-connecting-ip" };
   }
+
   const forwarded = headers.get("x-forwarded-for");
   if (forwarded) {
     const chain = forwarded
@@ -55,8 +63,6 @@ export function getClientIpDetails(headers: Headers): ClientIpDetails {
   }
   const realIp = headers.get("x-real-ip");
   if (realIp) return { ip: normalizeIp(realIp), chain: [normalizeIp(realIp)], source: "x-real-ip" };
-  const cfIp = headers.get("cf-connecting-ip");
-  if (cfIp) return { ip: normalizeIp(cfIp), chain: [normalizeIp(cfIp)], source: "cf-connecting-ip" };
   return { ip: "unknown", chain: [], source: "unknown" };
 }
 

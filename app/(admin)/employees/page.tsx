@@ -10,7 +10,7 @@ import { env } from "@/lib/env";
 import { formatNumber } from "@/lib/format";
 import type { Locale } from "@/lib/locale";
 import { validateVerifyBaseUrl } from "@/lib/qr";
-import { employeePhotoUrl, listEmployees } from "@/lib/services/employees";
+import { listEmployees } from "@/lib/services/employees";
 import { employeeListQuerySchema, searchParamsToObject } from "@/lib/validation/schemas";
 
 export const dynamic = "force-dynamic";
@@ -38,7 +38,7 @@ export default async function EmployeesPage({
   const query = parsed.success ? parsed.data : employeeListQuerySchema.parse({});
   const data = await listEmployees(admin.companyId, query);
   const canWrite = can(admin.role, "employees.write");
-  const rows = data.rows.map((row) => ({ ...row, photoUrl: employeePhotoUrl(row) }));
+  const rows = data.rows;
   const urlCheck = validateVerifyBaseUrl(admin.company.verify_base_url, env.NODE_ENV === "production");
   const printingAllowed = urlCheck.ok && urlCheck.productionValid;
 
@@ -123,16 +123,7 @@ export default async function EmployeesPage({
               ))}
             </select>
           </div>
-          <div className="md:col-span-2">
-            <label className="label" htmlFor="photo-filter">
-              {t("photo")}
-            </label>
-            <select id="photo-filter" name="photo" defaultValue={query.photo} className="input">
-              <option value="all">{tc("all")}</option>
-              <option value="missing">{t("filterMissingPhoto")}</option>
-            </select>
-          </div>
-          <div className="flex items-end gap-2 md:col-span-2">
+          <div className="flex items-end gap-2 md:col-span-4">
             <button type="submit" className="btn btn-primary flex-1">
               <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
               {tc("apply")}
@@ -180,7 +171,6 @@ export default async function EmployeesPage({
           q: query.q,
           status: query.status,
           department: query.department,
-          photo: query.photo,
           deleted: query.deleted,
         }}
         page={data.page}

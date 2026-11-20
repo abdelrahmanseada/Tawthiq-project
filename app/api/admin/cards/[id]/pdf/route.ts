@@ -44,7 +44,7 @@ export async function GET(request: Request, context: { params: Promise<{ id: str
     if (error instanceof Error && "code" in error) {
       const code = String((error as { code?: unknown }).code);
       if (
-        ["photo_missing", "card_revoked", "card_expired", "verify_domain_invalid", "card_needs_reissue"].includes(
+        ["card_revoked", "card_expired", "verify_domain_invalid", "card_needs_reissue"].includes(
           code,
         )
       ) {

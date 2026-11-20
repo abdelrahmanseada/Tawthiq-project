@@ -4,7 +4,7 @@ import { decryptCardToken, encryptCardToken } from "@/lib/security/crypto";
 
 function base(overrides: Partial<PrintCheckInput> = {}): PrintCheckInput {
   const input: PrintCheckInput = {
-    employee: { status: "ACTIVE", photo_path: "photos/a.jpg", deleted_at: null },
+    employee: { status: "ACTIVE", deleted_at: null },
     card: {
       status: "ACTIVE",
       expires_at: new Date(Date.now() + 86400000),
@@ -45,15 +45,15 @@ describe("printing rules", () => {
     expect(checkCardPrintability(base()).ok).toBe(true);
   });
 
-  it("allows a missing photo and blocks an invalid verification domain", () => {
-    expect(checkCardPrintability(base({ employee: { status: "ACTIVE", photo_path: null, deleted_at: null } })).ok).toBe(true);
+  it("allows a valid card and blocks an invalid verification domain", () => {
+    expect(checkCardPrintability(base({ employee: { status: "ACTIVE", deleted_at: null } })).ok).toBe(true);
     const invalid = checkCardPrintability(base({ company: { status: "ACTIVE", verify_base_url: "http://localhost:3000" } }));
     expect(invalid.ok).toBe(false);
     expect(invalid.errors).toContain("verify_domain_invalid");
   });
 
-  it("allows a test print without a photo but never for dead cards", () => {
-    expect(checkCardPrintability(base({ mode: "test", employee: { status: "ACTIVE", photo_path: null, deleted_at: null }, company: { status: "ACTIVE", verify_base_url: "http://localhost:3000" } })).ok).toBe(true);
+  it("allows a test print but never for dead cards", () => {
+    expect(checkCardPrintability(base({ mode: "test", employee: { status: "ACTIVE", deleted_at: null }, company: { status: "ACTIVE", verify_base_url: "http://localhost:3000" } })).ok).toBe(true);
     expect(checkCardPrintability(base({ mode: "test", card: { status: "REVOKED", expires_at: new Date(Date.now() + 86400000), token_enc: "x" } })).ok).toBe(false);
     expect(checkCardPrintability(base({ mode: "test", card: { status: "ACTIVE", expires_at: new Date(Date.now() - 86400000), token_enc: "x" } })).ok).toBe(false);
   });

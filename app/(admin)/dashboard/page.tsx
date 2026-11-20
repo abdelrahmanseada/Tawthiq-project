@@ -71,9 +71,6 @@ export default async function DashboardPage({
     data.expiringSoon > 0
       ? { key: "expiring", label: t("expiringSoon"), href: "/cards?expiring=1", tone: "warning" as const, count: data.expiringSoon }
       : null,
-    data.missingPhotos > 0
-      ? { key: "photos", label: t("missingPhotos", { count: data.missingPhotos }), href: "/employees?photo=missing", tone: "warning" as const, count: data.missingPhotos }
-      : null,
     data.failedImports > 0
       ? { key: "imports", label: t("failedImports", { count: data.failedImports }), href: "/imports", tone: "danger" as const, count: data.failedImports }
       : null,

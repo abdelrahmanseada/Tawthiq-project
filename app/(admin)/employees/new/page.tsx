@@ -28,7 +28,6 @@ export default async function NewEmployeePage() {
           job_title: null,
           status: "ACTIVE",
           expires_at: defaultExpiry,
-          photo_url: null,
         }}
         company={admin.company}
       />

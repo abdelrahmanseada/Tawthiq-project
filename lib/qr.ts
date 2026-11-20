@@ -1,5 +1,6 @@
 import { env } from "@/lib/env";
-import { isValidCardTokenFormat } from "@/lib/security/crypto";
+import { FRONT } from "@/lib/card/layout";
+import { CARD_TOKEN_LENGTH, isValidCardTokenFormat } from "@/lib/security/crypto";
 
 /** Error correction level Q is used for printed cards. */
 export const QR_ERROR_CORRECTION_LEVEL = "Q" as const;
@@ -92,6 +93,90 @@ export function displayVerifyDomain(baseUrl: string): string {
   } catch {
     return "invalid-domain";
   }
+}
+
+/** Card QR geometry, taken from the single layout source so the limits cannot drift. */
+export const CARD_QR_WIDTH_MM = FRONT.qr.w;
+export const CARD_QR_QUIET_MODULES = FRONT.qr.quietModules;
+export const CARD_QR_MIN_MODULE_MM = FRONT.qr.minModuleMm;
+
+export interface CardQrFit {
+  ok: boolean;
+  urlLength: number;
+  modules: number;
+  totalModules: number;
+  moduleMm: number;
+  minModuleMm: number;
+}
+
+/** Density check shared by the PDF renderer and the settings form. */
+export function cardQrFit(modules: number, urlLength: number): CardQrFit {
+  const totalModules = modules + CARD_QR_QUIET_MODULES * 2;
+  const moduleMm = CARD_QR_WIDTH_MM / totalModules;
+  return {
+    ok: moduleMm >= CARD_QR_MIN_MODULE_MM,
+    urlLength,
+    modules,
+    totalModules,
+    moduleMm,
+    minModuleMm: CARD_QR_MIN_MODULE_MM,
+  };
+}
+
+/** Raised when the encoded URL would print QR modules below the readable minimum. */
+export class QrCapacityError extends Error {
+  readonly fit: CardQrFit;
+  readonly host: string;
+
+  constructor(url: string, fit: CardQrFit) {
+    let host = url;
+    try {
+      host = new URL(url).host;
+    } catch {
+      // Keep the raw value when the URL cannot be parsed.
+    }
+    super(
+      `Verification URL is too long for a printable QR: the ${host.length}-character host ` +
+        `"${host}" produces a ${fit.modules}x${fit.modules} module code at ${fit.moduleMm.toFixed(3)} mm, ` +
+        `below the ${fit.minModuleMm} mm print minimum. Use a shorter verification domain.`,
+    );
+    this.name = "QrCapacityError";
+    this.fit = fit;
+    this.host = host;
+  }
+}
+
+export interface VerifyBaseUrlFit extends CardQrFit {
+  hostLength: number;
+  maxHostLength: number;
+}
+
+/**
+ * Would this base URL still print, and how long may its host be? Uses a
+ * token-shaped placeholder so the answer matches a real card QR.
+ */
+export async function measureVerifyBaseUrl(baseUrl: string): Promise<VerifyBaseUrlFit> {
+  const url = new URL(normalizeVerifyBaseUrl(baseUrl));
+  const scheme = `${url.protocol}//`;
+  // Lowercase forces byte mode: a real token mixes case, digits and "-"/"_",
+  // so an uppercase placeholder would understate the matrix by a version.
+  const suffix = `/v/${"a".repeat(CARD_TOKEN_LENGTH)}`;
+
+  const measure = async (host: string): Promise<CardQrFit> => {
+    const text = `${scheme}${host}${suffix}`;
+    const qr = await qrModules(text);
+    return cardQrFit(qr.size, text.length);
+  };
+
+  let maxHostLength = 0;
+  for (let length = 1; length <= url.host.length + 32; length += 1) {
+    const fit = await measure("a".repeat(length));
+    if (!fit.ok) break;
+    maxHostLength = length;
+  }
+
+  const actual = await measure(url.host);
+  return { ...actual, hostLength: url.host.length, maxHostLength };
 }
 
 export interface QrModules {

@@ -7,7 +7,7 @@ set -eu
 if [ "$(id -u)" = "0" ]; then
   mkdir -p /app/storage
   chown -R node:node /app/storage
-  exec gosu node "$@"
+  exec setpriv --reuid=node --regid=node --init-groups "$@"
 fi
 
 exec "$@"

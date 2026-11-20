@@ -30,9 +30,9 @@ const MAX_FAILED_LOGINS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
 /**
- * Password-only sign-in (2FA removed at the product owner's request).
- * The password never reaches Auth.js; this action verifies it, issues a
- * short-lived HMAC ticket and only then creates the Auth.js session.
+ * Sign-in. The password never reaches Auth.js; this action verifies it, then
+ * routes TOTP-enrolled accounts to /2fa or issues a short-lived HMAC ticket that
+ * creates the Auth.js session.
  */
 export async function startLoginAction(_previous: LoginState | undefined, formData: FormData): Promise<LoginState> {
   const email = formValue(formData, "email");

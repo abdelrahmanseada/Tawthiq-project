@@ -58,7 +58,7 @@ services:
       STORAGE_DIR: /app/storage
       PORT: "3000"
       AUTH_TRUST_HOST: "true"
-      TRUSTED_PROXY: cloudflare
+      TRUSTED_PROXY: proxy
       MAX_ZIP_BYTES: "94371840"
     volumes:
       - storage:/app/storage
@@ -132,12 +132,16 @@ services:
         condition: service_completed_successfully
     networks: [internal]
 
-  cloudflared:
-    image: cloudflare/cloudflared:latest
+  web:
+    image: caddy:2-alpine
     restart: unless-stopped
-    command: ["tunnel", "--no-autoupdate", "run"]
-    environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?TUNNEL_TOKEN is required}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddydata:/data
+      - caddyconfig:/config
     depends_on:
       app:
         condition: service_healthy
@@ -147,6 +151,8 @@ volumes:
   pgdata:
   redisdata:
   storage:
+  caddydata:
+  caddyconfig:
 
 networks:
   internal:

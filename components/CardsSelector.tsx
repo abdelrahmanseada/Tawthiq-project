@@ -14,7 +14,6 @@ export interface CardPickerRow {
   full_name: string;
   department: string | null;
   job_title: string | null;
-  photoUrl: string | null;
   card: {
     status: string;
     expires_at: Date;
@@ -37,8 +36,6 @@ export function CardsSelector({
   company: {
     id: string;
     name: string;
-    logo_url: string | null;
-    logo_bg_dark: boolean;
     primary_color: string;
     secondary_color: string;
     contact_phone: string;
@@ -48,7 +45,6 @@ export function CardsSelector({
     show_verify_host_on_card: boolean;
     verify_base_url: string;
     time_zone: string;
-    updated_at: Date;
   };
   locale: Locale;
   printingAllowed: boolean;
@@ -190,9 +186,8 @@ export function CardsSelector({
                             {row.card.status === "ACTIVE" ? ts("cardActive") : ts("cardRevoked")}
                           </Badge>
                         ) : (
-                          <Badge tone="neutral">{t("photoMissing")}</Badge>
+                          <Badge tone="neutral">{t("noCard")}</Badge>
                         )}
-                        {!row.photoUrl ? <Badge tone="warning">{t("photoMissing")}</Badge> : null}
                         {!row.card?.has_token && row.card ? <Badge tone="warning">{t("blockedReissue")}</Badge> : null}
                       </div>
                       {row.card ? <p className="mt-1 text-xs text-muted">{formatDate(row.card.expires_at, locale)}</p> : null}
@@ -279,22 +274,13 @@ export function CardsSelector({
             <CardPreview
               data={{
                 companyName: company.name,
-                companyLogoUrl: company.logo_url ? `/api/media/logo?company=${company.id}&v=${encodeURIComponent(company.updated_at.toISOString())}` : null,
-                logoBgDark: company.logo_bg_dark,
-                primaryColor: company.primary_color,
                 secondaryColor: company.secondary_color,
                 employeeName: first.full_name,
                 jobTitle: first.job_title,
-                department: first.department,
                 employeeCode: first.employee_code,
-                photoUrl: first.photoUrl,
                 validUntil: first.card ? formatDate(first.card.expires_at, "en") : "—",
                 domain,
-                website: company.website,
-                tagline: company.tagline,
                 showVerifyHostOnCard: company.show_verify_host_on_card,
-                phone: company.contact_phone,
-                email: company.contact_email,
               }}
             />
           ) : (

@@ -26,7 +26,6 @@ export interface SettingsFormValues {
   default_card_validity_days: number;
   scan_log_retention_days: number;
   logoUrl: string | null;
-  logoBgDark: boolean;
 }
 
 export function SettingsForm({
@@ -145,6 +144,11 @@ export function SettingsForm({
         {state.error === "invalid_verify_url" ? (
           <Alert tone="danger" title={t("invalidUrlTitle")}>
             {fieldError("verify_base_url")}
+          </Alert>
+        ) : null}
+        {state.error === "verify_url_too_long" ? (
+          <Alert tone="danger" title={t("verifyUrlTooLongTitle")}>
+            {t("verifyUrlTooLong", { max: state.maxHostLength ?? 31 })}
           </Alert>
         ) : null}
 
@@ -468,22 +472,13 @@ export function SettingsForm({
           <CardPreview
             data={{
               companyName: name || t("sampleName"),
-              companyLogoUrl: logoPreview && !removeLogo ? logoPreview : null,
-              logoBgDark: initial.logoBgDark,
-              primaryColor: primaryPreview,
               secondaryColor: secondaryPreview,
               employeeName: t("sampleName"),
               jobTitle: t("sampleJob"),
-              department: t("sampleDepartment"),
               employeeCode: "BRM-0001",
-              photoUrl: null,
               validUntil: "31 Oct 2027",
               domain: domainHost,
-              website,
-              tagline,
               showVerifyHostOnCard: showHost,
-              phone,
-              email,
             }}
           />
           <p className="mt-2 text-xs text-muted">{t("cardPreviewHint")}</p>

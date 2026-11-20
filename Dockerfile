@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7
 # Multi-stage build for the Employee Verification System.
 # Targets: runner (Next.js standalone server), tools (migrations/worker/seed scripts).
 
@@ -54,10 +53,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/assets ./assets
 COPY --from=builder /app/prisma ./prisma
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gosu \
-    && rm -rf /var/lib/apt/lists/* \
-    && chmod 755 /usr/local/bin/docker-entrypoint.sh \
+# setpriv ships with the base image; avoids an apt-get network dependency.
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && mkdir -p /app/storage && chown -R node:node /app
 USER root
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

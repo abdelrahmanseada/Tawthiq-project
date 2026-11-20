@@ -34,7 +34,7 @@ export default async function OnboardingPage() {
     },
     {
       title: "Add your workforce",
-      body: "Create the first employee or import a spreadsheet with optional photos.",
+      body: "Create the first employee or import a spreadsheet.",
       done: employeeCount > 0 && cardCount > 0,
       href: "/employees/new",
       action: employeeCount > 0 ? "Add another employee" : "Add first employee",

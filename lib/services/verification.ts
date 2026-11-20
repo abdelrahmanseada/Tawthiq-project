@@ -1,12 +1,7 @@
 import type { CardStatus, EmployeeStatus, ScanReason, ScanResult } from "@prisma/client";
 import { prisma } from "@/lib/db";
 import { normalizeUnicode, truncate } from "@/lib/text";
-import {
-  createPhotoToken,
-  hashCardToken,
-  isValidCardTokenFormat,
-  safeTokenPrefix,
-} from "@/lib/security/crypto";
+import { hashCardToken, isValidCardTokenFormat, safeTokenPrefix } from "@/lib/security/crypto";
 import { recordInvalidVerifyAttempt } from "@/lib/security/rate-limit";
 import { COMPANY_NAME } from "@/lib/brand";
 
@@ -55,7 +50,6 @@ export interface PublicEmployee {
   full_name: string;
   job_title: string | null;
   department: string | null;
-  photo_url: string | null;
 }
 
 export interface VerificationView {
@@ -212,7 +206,6 @@ export async function verifyPublicToken(
   if (outcome.result === "INVALID") await recordInvalidVerifyAttempt(meta.ipHash, now);
 
   if (outcome.state === "valid") {
-    const photoUrl = card.employee.photo_path ? createPhotoToken(card.employee.id).path : null;
     return {
       state: "valid",
       result: "VALID",
@@ -221,7 +214,6 @@ export async function verifyPublicToken(
         full_name: card.employee.full_name,
         job_title: card.employee.job_title,
         department: card.employee.department,
-        photo_url: photoUrl,
       },
       valid_until: card.expires_at.toISOString(),
     };
@@ -253,7 +245,6 @@ export function toPublicVerificationJson(view: VerificationView) {
           full_name: view.employee.full_name,
           job_title: view.employee.job_title,
           department: view.employee.department,
-          photo_url: view.employee.photo_url,
         }
       : null,
     valid_until: view.valid_until,

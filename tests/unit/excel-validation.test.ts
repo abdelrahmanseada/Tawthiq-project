@@ -11,8 +11,6 @@ function row(rowNumber: number, values: ParsedImportRow["values"]): ParsedImport
 function options(overrides: Partial<Parameters<typeof validateImportRows>[1]> = {}) {
   return {
     companyId: "company-1",
-    photoFilenames: new Set<string>(),
-    hasPhotoZip: false,
     existingRows: [] as ExistingEmployeeRecord[],
     now: NOW,
     ...overrides,
@@ -142,28 +140,5 @@ describe("import row validation", () => {
     expect(result.rows[0]?.issues).toContainEqual({ column: "employee_code", message: "invalid_employee_code" });
     expect(result.rows[0]?.issues).toContainEqual({ column: "full_name", message: "too_long" });
     expect(result.rows[0]?.issues).toContainEqual({ column: "department", message: "too_long" });
-  });
-
-  it("requires a matching photo in the ZIP when photo_filename is set", async () => {
-    const missing = await validateImportRows(
-      [row(2, { employee_code: "EMP-1", full_name: "Person One", photo_filename: "ahmed.jpg" })],
-      options({ hasPhotoZip: true }),
-    );
-    expect(missing.rows[0]?.issues).toContainEqual({ column: "photo_filename", message: "photo_not_found" });
-
-    const found = await validateImportRows(
-      [row(2, { employee_code: "EMP-1", full_name: "Person One", photo_filename: "ahmed.jpg" })],
-      options({ hasPhotoZip: true, photoFilenames: new Set(["ahmed.jpg"]) }),
-    );
-    expect(found.rows[0]?.issues).toEqual([]);
-    expect(found.rows[0]?.photo_filename).toBe("ahmed.jpg");
-  });
-
-  it("rejects a photo reference when no ZIP was uploaded", async () => {
-    const result = await validateImportRows(
-      [row(2, { employee_code: "EMP-1", full_name: "Person One", photo_filename: "ahmed.jpg" })],
-      options(),
-    );
-    expect(result.rows[0]?.issues).toContainEqual({ column: "photo_filename", message: "photo_not_found" });
   });
 });

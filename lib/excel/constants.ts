@@ -2,7 +2,7 @@
 import type { Locale } from "@/lib/locale";
 
 export const REQUIRED_HEADERS = ["employee_code", "full_name"] as const;
-export const OPTIONAL_HEADERS = ["department", "job_title", "expires_at", "photo_filename"] as const;
+export const OPTIONAL_HEADERS = ["department", "job_title", "expires_at"] as const;
 export const TEMPLATE_HEADERS = [...REQUIRED_HEADERS, ...OPTIONAL_HEADERS] as const;
 export type TemplateHeader = (typeof TEMPLATE_HEADERS)[number];
 
@@ -14,7 +14,6 @@ export const HEADER_LABELS: Record<Locale, Record<TemplateHeader, string>> = {
     department: "Department",
     job_title: "Job title",
     expires_at: "Expiry date",
-    photo_filename: "Photo file name",
   },
 };
 

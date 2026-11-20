@@ -4,11 +4,9 @@ import { env, isBullMqEnabled } from "@/lib/env";
 import { ImportFileError } from "@/lib/excel/constants";
 import { parseSpreadsheet } from "@/lib/excel/parse";
 import { validateImportRows, type ImportPreviewData, type ValidatedImportRow } from "@/lib/excel/validate";
-import { normalizeEmployeePhoto } from "@/lib/images";
 import { newId } from "@/lib/security/crypto";
 import { readStorageFile, removeStorageFile, storageFileExists, storageKey, writeEncryptedJson, writeStorageFile, readEncryptedJson } from "@/lib/storage";
 import { normalizeUnicode, truncate } from "@/lib/text";
-import { readPhotoZip, type ZipPhotoEntry } from "@/lib/zip";
 import {
   cardExpiryFromInput,
   defaultCardExpiry,
@@ -51,10 +49,6 @@ function previewKey(companyId: string, batchId: string): string {
   return storageKey("imports", companyId, batchId, "preview.json.enc");
 }
 
-function zipKey(companyId: string, batchId: string): string {
-  return storageKey("imports", companyId, batchId, "photos.zip");
-}
-
 function reportKey(companyId: string, batchId: string): string {
   return storageKey("reports", companyId, `${batchId}.xlsx`);
 }
@@ -79,25 +73,18 @@ export async function previewImport(input: {
   adminId: string;
   filename: string;
   spreadsheet: Buffer;
-  photoZip: Buffer | null;
   ip: string | null;
 }): Promise<{ batch: ImportBatch; preview: ImportPreviewData }> {
   if (input.spreadsheet.length > env.MAX_SPREADSHEET_BYTES) {
     throw new ImportFileError("file_too_large", "Spreadsheet exceeds the 10 MB limit");
   }
-  if (input.photoZip && input.photoZip.length > env.MAX_ZIP_BYTES) {
-    throw new ImportFileError("file_too_large", "Photo ZIP exceeds the 200 MB limit");
-  }
 
   const safeFilename = truncate(normalizeUnicode(input.filename), 255);
 
   const parsed = await parseSpreadsheet(input.spreadsheet, safeFilename);
-  const photos = input.photoZip ? readPhotoZip(input.photoZip) : new Map<string, ZipPhotoEntry>();
 
   const preview = await validateImportRows(parsed.rows, {
     companyId: input.companyId,
-    photoFilenames: new Set(photos.keys()),
-    hasPhotoZip: Boolean(input.photoZip),
   });
 
   const batchId = newId();
@@ -108,7 +95,6 @@ export async function previewImport(input: {
   };
 
   await writeEncryptedJson(previewKey(input.companyId, batchId), stored);
-  if (input.photoZip) await writeStorageFile(zipKey(input.companyId, batchId), input.photoZip);
 
   const batch = await prisma.importBatch.create({
     data: {
@@ -198,7 +184,6 @@ async function processRow(
     adminId: string;
     strategy: "SKIP" | "UPDATE" | "FAIL";
     company: Company;
-    photos: Map<string, ZipPhotoEntry>;
   },
 ): Promise<{ action: RowAction; errors: string[] }> {
   if (row.issues.length > 0) {
@@ -218,28 +203,15 @@ async function processRow(
     if (!existing) return { action: "ERROR", errors: ["employee_missing"] };
   }
 
-  let newPhotoPath: string | null = null;
-  let photoPath = existing?.photo_path ?? null;
   let prepared: PreparedCard | null = null;
 
   try {
-    if (row.photo_filename) {
-      const entry = context.photos.get(row.photo_filename.toLowerCase());
-      if (!entry) return { action: "ERROR", errors: ["photo_not_found"] };
-      const normalized = await normalizeEmployeePhoto(entry.data);
-      newPhotoPath = storageKey("photos", context.companyId, `${newId()}.jpg`);
-      await writeStorageFile(newPhotoPath, normalized.buffer);
-      photoPath = newPhotoPath;
-    }
-
     const employeeId = existing?.id ?? newId();
     const expiresAt = row.expires_at
       ? cardExpiryFromInput(row.expires_at, context.company)
       : defaultCardExpiry(context.company);
     prepared = prepareCard(expiresAt);
     const preparedCard = prepared;
-
-    let oldPhotoPath: string | null = null;
 
     const action = await prisma.$transaction(async (tx) => {
       if (existing) {
@@ -257,7 +229,6 @@ async function processRow(
             },
           });
         }
-        if (existing.photo_path && newPhotoPath) oldPhotoPath = existing.photo_path;
         await tx.employee.update({
           where: { id: employeeId },
           data: {
@@ -266,7 +237,6 @@ async function processRow(
             job_title: row.job_title,
             status: "ACTIVE",
             deleted_at: null,
-            ...(newPhotoPath ? { photo_path: newPhotoPath } : {}),
           },
         });
       } else {
@@ -278,7 +248,6 @@ async function processRow(
             full_name: row.full_name,
             department: row.department,
             job_title: row.job_title,
-            photo_path: photoPath,
             status: "ACTIVE",
             batch_id: context.batchId,
           },
@@ -294,10 +263,8 @@ async function processRow(
       return existing ? (existing.deleted_at ? "RESTORE" : "UPDATE") : "CREATE";
     });
 
-    if (oldPhotoPath) await removeStorageFile(oldPhotoPath);
     return { action, errors: [] };
   } catch (error) {
-    if (newPhotoPath) await removeStorageFile(newPhotoPath);
     return {
       action: "ERROR",
       errors: [error instanceof Error ? truncate(error.message, 300) : "processing_error"],
@@ -326,18 +293,12 @@ export async function processImportBatch(batchId: string): Promise<void> {
       return;
     }
 
-    let photos = new Map<string, ZipPhotoEntry>();
-    if (await storageFileExists(zipKey(batch.company_id, batchId))) {
-      photos = readPhotoZip(await readStorageFile(zipKey(batch.company_id, batchId)));
-    }
-
     const context = {
       batchId,
       companyId: batch.company_id,
       adminId: batch.admin_id,
       strategy: batch.duplicate_strategy,
       company: batch.company,
-      photos,
     };
 
     const existingCount = await prisma.employee.count({ where: { company_id: batch.company_id, deleted_at: null } });
@@ -439,8 +400,6 @@ export async function processImportBatch(batchId: string): Promise<void> {
       },
     });
 
-    if (await storageFileExists(zipKey(batch.company_id, batchId))) await removeStorageFile(zipKey(batch.company_id, batchId));
-
     await writeAuditLog({
       adminId: batch.admin_id,
       action: "import.completed",
@@ -538,7 +497,6 @@ export async function rollbackImportBatch(
   });
 
   if (await storageFileExists(previewKey(batch.company_id, batchId))) await removeStorageFile(previewKey(batch.company_id, batchId));
-  if (await storageFileExists(zipKey(batch.company_id, batchId))) await removeStorageFile(zipKey(batch.company_id, batchId));
 
   await writeAuditLog({
     adminId,

@@ -80,8 +80,6 @@ describe("English-only active build", () => {
     const bytes = await renderCardPdf({
       company: {
         name: "Bremer",
-        logo_path: null,
-        logo_bg_dark: false,
         website: "bremer.example",
         tagline: "Established 1989",
         show_verify_host_on_card: false,
@@ -96,8 +94,6 @@ describe("English-only active build", () => {
       employee: {
         full_name: "Amelia Hart",
         job_title: "Maintenance Technician",
-        department: "Operations",
-        photo_path: null,
         employee_code: "NW-0001",
       },
       expiresAt: new Date("2027-11-01T00:00:00.000Z"),
@@ -108,9 +104,9 @@ describe("English-only active build", () => {
     for (let index = 0; index < doc.countPages(); index += 1) {
       const text = doc.loadPage(index).toStructuredText("preserve-whitespace").asText();
       expect(ARABIC.test(text)).toBe(false);
-      expect(text).toContain(index === 0 ? "Amelia Hart" : "Bremer");
-      if (index === 0) expect(text).toContain("Scan to verify");
-      if (index === 1) expect(text).toContain("bremer.example");
+      expect(text).toContain(index === 0 ? "AMELIA HART" : "BREMER");
+      if (index === 0) expect(text).toContain("MAINTENANCE TECHNICIAN");
+      if (index === 1) expect(text).toContain("VALID UNTIL");
     }
   });
 

@@ -22,7 +22,6 @@ export interface ExpiringCard {
   employeeName: string;
   employeeCode: string;
   expiresAt: Date;
-  hasPhoto: boolean;
 }
 
 export interface DashboardData {
@@ -43,7 +42,6 @@ export interface DashboardData {
   series: DailyScanPoint[];
   recentInvalid: RecentScan[];
   expiringCards: ExpiringCard[];
-  missingPhotos: number;
   failedImports: number;
   pendingPreviews: number;
   legacyCards: number;
@@ -103,7 +101,6 @@ export async function getDashboardData(companyId: string, now: Date = new Date()
     invalidPrevious24h,
     recentInvalid,
     expiringCards,
-    missingPhotos,
     failedImports,
     pendingPreviews,
     legacyCards,
@@ -150,9 +147,8 @@ export async function getDashboardData(companyId: string, now: Date = new Date()
       },
       orderBy: { expires_at: "asc" },
       take: 8,
-      include: { employee: { select: { id: true, full_name: true, employee_code: true, photo_path: true } } },
+      include: { employee: { select: { id: true, full_name: true, employee_code: true } } },
     }),
-    prisma.employee.count({ where: { company_id: companyId, deleted_at: null, photo_path: null } }),
     prisma.importBatch.count({ where: { company_id: companyId, status: "FAILED" } }),
     prisma.importBatch.count({ where: { company_id: companyId, status: "PENDING" } }),
     prisma.card.count({
@@ -203,9 +199,7 @@ export async function getDashboardData(companyId: string, now: Date = new Date()
       employeeName: card.employee.full_name,
       employeeCode: card.employee.employee_code,
       expiresAt: card.expires_at,
-      hasPhoto: Boolean(card.employee.photo_path),
     })),
-    missingPhotos,
     failedImports,
     pendingPreviews,
     legacyCards,
