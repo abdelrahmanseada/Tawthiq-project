@@ -5,7 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { BRAND } from "@/lib/brand";
 import { PRODUCT_PRIMARY_COLOR, PRODUCT_SECONDARY_COLOR, mixHex, readableTextOn } from "@/lib/colors";
-import { latinFont } from "@/lib/web-fonts";
+import { cardBodyFont, cardDisplayFont, cardMonoFont, latinFont } from "@/lib/web-fonts";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -49,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" dir="ltr" data-theme="light" style={variables} suppressHydrationWarning>
-      <body className={`${latinFont.variable} min-h-screen bg-surface text-ink antialiased`}>
+      <body className={`${latinFont.variable} ${cardDisplayFont.variable} ${cardBodyFont.variable} ${cardMonoFont.variable} min-h-screen bg-surface text-ink antialiased`}>
         {isPublicVerifyPage ? (
           children
         ) : (

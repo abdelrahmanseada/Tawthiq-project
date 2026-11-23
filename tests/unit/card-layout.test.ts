@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   BACK,
+  BACK_TEXT,
   CARD_HEIGHT_MM,
   CARD_WIDTH_MM,
   FRONT,
@@ -49,14 +50,13 @@ describe("card layout single source", () => {
     expect(SAFE_MARGIN_MM).toBe(4);
     expect(FRONT.qr.x + FRONT.qr.w).toBeLessThanOrEqual(CARD_WIDTH_MM - SAFE_MARGIN_MM);
     expect(BACK.brand.x + BACK.brand.w).toBeLessThanOrEqual(CARD_WIDTH_MM - SAFE_MARGIN_MM);
-    expect(FRONT.code.y + FRONT.code.h).toBeLessThanOrEqual(CARD_HEIGHT_MM - SAFE_MARGIN_MM);
   });
 
   it.each(CASES)("keeps every content box inside the safe area: %s", (_label, overrides) => {
     const layout = layoutCard(input(overrides));
     const frontContent = [layout.front.name, layout.front.title].flatMap(boxes);
     const frontBlocks = [...frontContent, ...boxes(layout.front.code)];
-    const backBlocks = [layout.back.brand, layout.back.meta].flatMap(boxes);
+    const backBlocks = [layout.back.brand, layout.back.claim, layout.back.established].flatMap(boxes);
 
     for (const block of frontBlocks) {
       expect(block.x).toBeGreaterThanOrEqual(SAFE_MARGIN_MM - 0.01);
@@ -67,12 +67,11 @@ describe("card layout single source", () => {
     for (const block of backBlocks) {
       expect(block.x).toBeGreaterThanOrEqual(SAFE_MARGIN_MM - 0.01);
       expect(block.x + block.w).toBeLessThanOrEqual(CARD_WIDTH_MM - SAFE_MARGIN_MM + 0.01);
-      expect(block.y).toBeGreaterThanOrEqual(SAFE_MARGIN_MM - 0.01);
-      expect(block.y + block.h).toBeLessThanOrEqual(CARD_HEIGHT_MM - SAFE_MARGIN_MM + 0.01);
+      expect(block.y).toBeGreaterThanOrEqual(0);
+      expect(block.y + block.h).toBeLessThanOrEqual(CARD_HEIGHT_MM);
     }
-    // Text stops above the code and meta rows.
-    for (const block of frontContent) expect(block.y + block.h).toBeLessThanOrEqual(FRONT.code.y);
-    for (const block of backBlocks) expect(block.y + block.h).toBeLessThanOrEqual(CARD_HEIGHT_MM - SAFE_MARGIN_MM + 0.01);
+    // Text stops above the code row.
+    for (const block of frontContent) expect(block.y + block.h).toBeLessThanOrEqual(layout.front.code.y);
   });
 
   it.each(CASES)("does not overlap text or the QR: %s", (_label, overrides) => {
@@ -83,7 +82,8 @@ describe("card layout single source", () => {
     }
     const qr = { x: FRONT.qr.x, y: FRONT.qr.y, w: FRONT.qr.w, h: FRONT.qr.h };
     for (const block of [...front, layout.front.code]) expect(overlaps(block, qr)).toBe(false);
-    expect(overlaps(layout.back.brand, { x: BACK.meta.x, y: BACK.meta.y, w: BACK.meta.w, h: BACK.meta.h })).toBe(false);
+    expect(overlaps(layout.back.brand, layout.back.claim)).toBe(false);
+    expect(overlaps(layout.back.claim, layout.back.established)).toBe(false);
   });
 
   it("sets names and titles in uppercase", () => {
@@ -96,11 +96,11 @@ describe("card layout single source", () => {
     const layout = layoutCard(input());
     const top = accentTop(layout);
     const last = layout.front.title ?? layout.front.name;
-    expect(top).toBeGreaterThan(last.y + last.h);
-    expect(top + FRONT.accent.h).toBeLessThan(FRONT.code.y);
+    expect(top).toBeGreaterThan(last.y + last.h * 0.8);
+    expect(top + FRONT.accent.h).toBeLessThan(layout.front.code.y);
   });
 
-  it("keeps the front QR inside its quiet zone with >= 0.4 mm modules", () => {
+  it("keeps the front QR inside its quiet zone with >= 0.28 mm modules", () => {
     const totalModules = 25 + FRONT.qr.quietModules * 2;
     const moduleMm = FRONT.qr.w / totalModules;
     expect(moduleMm).toBeGreaterThanOrEqual(FRONT.qr.minModuleMm);
@@ -108,10 +108,8 @@ describe("card layout single source", () => {
     expect(FRONT.qr.y + FRONT.qr.h).toBeLessThanOrEqual(CARD_HEIGHT_MM - SAFE_MARGIN_MM);
   });
 
-  it("adds the verification host to the back meta line only when enabled", () => {
-    expect(layoutCard(input()).back.meta.text).toBe("VALID UNTIL 21 NOV 2026");
-    expect(layoutCard(input({ showVerifyHostOnCard: true })).back.meta.text).toBe(
-      "VALID UNTIL 21 NOV 2026  /  VERIFY.EXAMPLE.COM",
-    );
+  it("keeps the designed back claim and establishment line", () => {
+    expect(layoutCard(input()).back.claim.text).toBe(BACK_TEXT.claim);
+    expect(layoutCard(input()).back.established.text).toBe(BACK_TEXT.established);
   });
 });

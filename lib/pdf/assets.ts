@@ -13,8 +13,15 @@ export interface FontFamily {
   bold: PDFFont;
 }
 
+export interface CardFontFamily {
+  display: PDFFont;
+  body: PDFFont;
+  mono: PDFFont;
+}
+
 export interface PdfFonts {
   primary: FontFamily;
+  card: CardFontFamily;
 }
 
 const fontBytes = new Map<string, Promise<Buffer>>();
@@ -36,10 +43,16 @@ async function embedPair(pdf: PDFDocument, regularFile: string, boldFile: string
   };
 }
 
-/** Inter is the only PDF font in the active build. Full embedding keeps card output deterministic. */
+/** UI sans plus the three card faces. Full embedding keeps card output deterministic. */
 export async function embedPdfFonts(pdf: PDFDocument, _locale?: string): Promise<PdfFonts> {
   pdf.registerFontkit(fontkit);
-  return { primary: await embedPair(pdf, "inter-400.ttf", "inter-700.ttf") };
+  const [primary, display, body, mono] = await Promise.all([
+    embedPair(pdf, "inter-400.ttf", "inter-700.ttf"),
+    load("nord-medium.ttf").then((bytes) => pdf.embedFont(bytes, { subset: false })),
+    load("nord-book.ttf").then((bytes) => pdf.embedFont(bytes, { subset: false })),
+    load("arvo-regular.ttf").then((bytes) => pdf.embedFont(bytes, { subset: false })),
+  ]);
+  return { primary, card: { display, body, mono } };
 }
 
 export async function embedWatermarkFont(pdf: PDFDocument, _locale?: string): Promise<PDFFont> {

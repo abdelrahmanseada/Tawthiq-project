@@ -1,10 +1,19 @@
-import { PDFDocument, PDFFont, rgb, type RGB } from "pdf-lib";
-import { CARD_HEIGHT_MM, CARD_WIDTH_MM, FRONT, BACK, CARD_COLORS, MM_TO_PT, accentTop, layoutCard, type TextBlock } from "@/lib/card/layout";
+import { PDFDocument, PDFFont, rgb, type PDFPage } from "pdf-lib";
+import {
+  BACK,
+  CARD_COLORS,
+  CARD_HEIGHT_MM,
+  CARD_WIDTH_MM,
+  FRONT,
+  MM_TO_PT,
+  accentTop,
+  layoutCard,
+  type TextBlock,
+} from "@/lib/card/layout";
 // MM_TO_PT keeps the exported point dimensions below in sync with the layout.
 import { buildVerifyUrl, cardQrFit, displayVerifyDomain, QrCapacityError, qrModules } from "@/lib/qr";
 import { formatDate } from "@/lib/format";
-import { embedPdfFonts, pdfColor, type FontFamily } from "@/lib/pdf/assets";
-import { DEFAULT_SECONDARY_COLOR, normalizeHexColor } from "@/lib/colors";
+import { embedPdfFonts, pdfColor, type CardFontFamily } from "@/lib/pdf/assets";
 
 export const CARD_WIDTH = CARD_WIDTH_MM * MM_TO_PT;
 export const CARD_HEIGHT = CARD_HEIGHT_MM * MM_TO_PT;
@@ -72,37 +81,46 @@ function y(page: PageGeometry, mm: number): number {
   return page.pageHeight - page.originY - MM(mm);
 }
 
+function lineWidth(text: string, font: PDFFont, fontSizePt: number, trackingEm: number): number {
+  let width = 0;
+  const glyphs = [...text];
+  for (const glyph of glyphs) width += font.widthOfTextAtSize(glyph, fontSizePt);
+  return width + Math.max(0, glyphs.length - 1) * trackingEm * fontSizePt;
+}
+
 function drawBlock(
-  page: import("pdf-lib").PDFPage,
+  page: PDFPage,
   geometryValue: PageGeometry,
   text: TextBlock,
-  fonts: FontFamily,
-  primary: RGB,
+  fonts: CardFontFamily,
 ) {
-  const font = text.weight === "bold" ? fonts.bold : fonts.regular;
-  const color = text.color === "primary" ? primary : pdfColor(text.color);
+  const font = fonts[text.font];
+  const color = pdfColor(text.color);
   for (let index = 0; index < text.lines.length; index += 1) {
     const line = text.lines[index]!;
-    const width = font.widthOfTextAtSize(line, text.fontSizePt);
-    const xPt =
+    const width = lineWidth(line, font, text.fontSizePt, text.trackingEm);
+    let cursor =
       text.align === "right"
         ? x(geometryValue, text.x + text.w) - width
         : text.align === "center"
           ? x(geometryValue, text.x + text.w / 2) - width / 2
           : x(geometryValue, text.x);
-    const baselineMm = text.y + text.lineHeightPt * 0.352778 * (index + 0.78);
-    page.drawText(line, {
-      x: xPt,
-      y: y(geometryValue, baselineMm),
-      size: text.fontSizePt,
-      font,
-      color,
-    });
+    const baseline = y(geometryValue, text.baselines[index] ?? text.baselines[0] ?? 0);
+    for (const glyph of line) {
+      page.drawText(glyph, {
+        x: cursor,
+        y: baseline,
+        size: text.fontSizePt,
+        font,
+        color,
+      });
+      cursor += font.widthOfTextAtSize(glyph, text.fontSizePt) + text.trackingEm * text.fontSizePt;
+    }
   }
 }
 
 function drawTestPattern(
-  page: import("pdf-lib").PDFPage,
+  page: PDFPage,
   g: PageGeometry,
   font: PDFFont,
 ) {
@@ -121,7 +139,7 @@ function drawTestPattern(
   }
 }
 
-function drawTestBand(page: import("pdf-lib").PDFPage, g: PageGeometry, fonts: FontFamily) {
+function drawTestBand(page: PDFPage, g: PageGeometry, font: PDFFont) {
   const band = BACK.testBand;
   page.drawRectangle({
     x: x(g, band.x),
@@ -131,13 +149,46 @@ function drawTestBand(page: import("pdf-lib").PDFPage, g: PageGeometry, fonts: F
     color: pdfColor(CARD_COLORS.test),
   });
   const label = "TEST PRINT - NOT VALID";
-  const width = fonts.bold.widthOfTextAtSize(label, 6);
+  const width = font.widthOfTextAtSize(label, 6);
   page.drawText(label, {
     x: x(g, CARD_WIDTH_MM / 2) - width / 2,
     y: y(g, band.y + 2.1),
     size: 6,
-    font: fonts.bold,
+    font,
     color: rgb(1, 1, 1),
+  });
+}
+
+function roundedRectPath(w: number, h: number, radius: number): string {
+  const r = Math.min(radius, w / 2, h / 2);
+  return [
+    `M ${r} 0`,
+    `L ${w - r} 0`,
+    `Q ${w} 0 ${w} ${r}`,
+    `L ${w} ${h - r}`,
+    `Q ${w} ${h} ${w - r} ${h}`,
+    `L ${r} ${h}`,
+    `Q 0 ${h} 0 ${h - r}`,
+    `L 0 ${r}`,
+    `Q 0 0 ${r} 0`,
+    "Z",
+  ].join(" ");
+}
+
+function drawRoundedRect(
+  page: PDFPage,
+  g: PageGeometry,
+  left: number,
+  top: number,
+  w: number,
+  h: number,
+  radius: number,
+  color: ReturnType<typeof pdfColor>,
+) {
+  page.drawSvgPath(roundedRectPath(MM(w), MM(h), MM(radius)), {
+    x: x(g, left),
+    y: y(g, top),
+    color,
   });
 }
 
@@ -145,8 +196,8 @@ async function drawFront(
   pdf: PDFDocument,
   g: PageGeometry,
   input: RenderCardInput,
-  fonts: FontFamily,
-  secondary: RGB,
+  fonts: CardFontFamily,
+  testFont: PDFFont,
   test: boolean,
   watermarkFont: PDFFont | null,
 ) {
@@ -172,8 +223,8 @@ async function drawFront(
 
   // White modules on the dark card, matching the reference artwork.
   const moduleSize = MM(moduleMm);
-  const qrOriginX = x(g, FRONT.qr.x + FRONT.qr.quietModules * moduleMm);
-  const qrTopY = y(g, FRONT.qr.y + FRONT.qr.quietModules * moduleMm);
+  const qrOriginX = x(g, FRONT.qr.x);
+  const qrTopY = y(g, FRONT.qr.y);
   for (let row = 0; row < qr.size; row += 1) {
     for (let column = 0; column < qr.size; column += 1) {
       if (!qr.modules[row]?.[column]) continue;
@@ -187,35 +238,33 @@ async function drawFront(
     }
   }
 
-  // Decorated corners: three small brackets around the QR finder patterns.
-  const qx = FRONT.qr.x;
-  const qy = FRONT.qr.y;
-  const qrEdge = qx + FRONT.qr.w;
-  const qrBottom = qy + FRONT.qr.h;
-  const arm = 3.2;
-  const thick = 0.6;
-  const line = (x1: number, y1: number, x2: number, y2: number) =>
-    page.drawLine({ start: { x: x(g, x1), y: y(g, y1) }, end: { x: x(g, x2), y: y(g, y2) }, thickness: thick, color: secondary });
-  line(qx, qy, qx + arm, qy);
-  line(qx, qy, qx, qy + arm);
-  line(qrEdge - arm, qy, qrEdge, qy);
-  line(qrEdge, qy, qrEdge, qy + arm);
-  line(qx, qrBottom - arm, qx, qrBottom);
-  line(qx, qrBottom, qx + arm, qrBottom);
+  // Square, contrast-safe finder eyes for print: white frame, dark ring, red core.
+  const eyes: Array<[number, number]> = [
+    [0, 0],
+    [qr.size - 7, 0],
+    [0, qr.size - 7],
+  ];
+  for (const [row, column] of eyes) {
+    const left = FRONT.qr.x + column * moduleMm;
+    const top = FRONT.qr.y + row * moduleMm;
+    drawRoundedRect(page, g, left, top, moduleMm * 7, moduleMm * 7, moduleMm * 1.4, rgb(1, 1, 1));
+    drawRoundedRect(page, g, left + moduleMm, top + moduleMm, moduleMm * 5, moduleMm * 5, moduleMm * 1.1, pdfColor(CARD_COLORS.front));
+    drawRoundedRect(page, g, left + moduleMm * 2, top + moduleMm * 2, moduleMm * 3, moduleMm * 3, moduleMm * 0.9, pdfColor(CARD_COLORS.qrEyePrint));
+  }
+
+  drawBlock(page, g, layout.front.name, fonts);
+  if (layout.front.title) drawBlock(page, g, layout.front.title, fonts);
+  drawBlock(page, g, layout.front.code, fonts);
 
   page.drawRectangle({
     x: x(g, FRONT.accent.x),
     y: y(g, accentTop(layout) + FRONT.accent.h),
     width: MM(FRONT.accent.w),
     height: MM(FRONT.accent.h),
-    color: secondary,
+    color: pdfColor(CARD_COLORS.accent),
   });
 
-  drawBlock(page, g, layout.front.name, fonts, secondary);
-  if (layout.front.title) drawBlock(page, g, layout.front.title, fonts, secondary);
-  drawBlock(page, g, layout.front.code, fonts, secondary);
-
-  if (test) drawTestBand(page, g, fonts);
+  if (test) drawTestBand(page, g, testFont);
 
   if (g.bleed > 0) drawCropMarks(page, g);
 }
@@ -224,8 +273,8 @@ async function drawBack(
   pdf: PDFDocument,
   g: PageGeometry,
   input: RenderCardInput,
-  fonts: FontFamily,
-  secondary: RGB,
+  fonts: CardFontFamily,
+  testFont: PDFFont,
   test: boolean,
   watermarkFont: PDFFont | null,
 ) {
@@ -244,14 +293,22 @@ async function drawBack(
 
   if (test && watermarkFont) drawTestPattern(page, g, watermarkFont);
 
-  drawBlock(page, g, layout.back.brand, fonts, secondary);
-  drawBlock(page, g, layout.back.meta, fonts, secondary);
+  drawBlock(page, g, layout.back.brand, fonts);
+  drawBlock(page, g, layout.back.claim, fonts);
+  drawBlock(page, g, layout.back.established, fonts);
+  page.drawLine({
+    start: { x: x(g, BACK.slash.x1), y: y(g, BACK.slash.y1) },
+    end: { x: x(g, BACK.slash.x2), y: y(g, BACK.slash.y2) },
+    thickness: MM(BACK.slash.thickness),
+    color: pdfColor(CARD_COLORS.accent),
+    lineCap: 1,
+  });
 
-  if (test) drawTestBand(page, g, fonts);
+  if (test) drawTestBand(page, g, testFont);
   if (g.bleed > 0) drawCropMarks(page, g);
 }
 
-function drawCropMarks(page: import("pdf-lib").PDFPage, g: PageGeometry) {
+function drawCropMarks(page: PDFPage, g: PageGeometry) {
   const mark = MM(2);
   const gap = MM(0.5);
   const color = rgb(0, 0, 0);
@@ -284,11 +341,9 @@ export async function renderCardPdf(input: RenderCardInput): Promise<Uint8Array>
   const fonts = await embedPdfFonts(pdf);
   const watermarkFont = mode === "test" ? await (await import("@/lib/pdf/assets")).embedWatermarkFont(pdf) : null;
 
-  const secondary = pdfColor(normalizeHexColor(input.company.secondary_color, DEFAULT_SECONDARY_COLOR));
   const test = mode === "test";
-  await drawFront(pdf, g, input, fonts.primary, secondary, test, watermarkFont);
-  await drawBack(pdf, g, input, fonts.primary, secondary, test, watermarkFont);
+  await drawFront(pdf, g, input, fonts.card, fonts.primary.bold, test, watermarkFont);
+  await drawBack(pdf, g, input, fonts.card, fonts.primary.bold, test, watermarkFont);
 
   return pdf.save();
 }
-

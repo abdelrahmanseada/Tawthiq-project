@@ -66,12 +66,20 @@ describe("English-only active build", () => {
     expect(offenders).toEqual([]);
   });
 
-  it("loads only the English catalog and only Inter font assets", async () => {
+  it("loads only the English catalog and the Latin card font assets", async () => {
     const requestConfig = await readFile(path.join(ROOT, "i18n", "request.ts"), "utf8");
     expect(requestConfig).toContain('import en from "@/messages/en.json"');
     expect(requestConfig).not.toContain("ar.json");
     const fonts = await readdir(path.join(ROOT, "assets", "fonts"));
-    expect(fonts.sort()).toEqual(["inter-400.ttf", "inter-500.ttf", "inter-600.ttf", "inter-700.ttf"]);
+    expect(fonts.sort()).toEqual([
+      "arvo-regular.ttf",
+      "inter-400.ttf",
+      "inter-500.ttf",
+      "inter-600.ttf",
+      "inter-700.ttf",
+      "nord-book.ttf",
+      "nord-medium.ttf",
+    ]);
     const activeFonts = await readFile(path.join(ROOT, "lib", "fonts.ts"), "utf8");
     expect(activeFonts).not.toContain("arabic");
   });
@@ -106,7 +114,7 @@ describe("English-only active build", () => {
       expect(ARABIC.test(text)).toBe(false);
       expect(text).toContain(index === 0 ? "AMELIA HART" : "BREMER");
       if (index === 0) expect(text).toContain("MAINTENANCE TECHNICIAN");
-      if (index === 1) expect(text).toContain("VALID UNTIL");
+      if (index === 1) expect(text).toContain("QUALITAT HAT EINEN NAMEN");
     }
   });
 

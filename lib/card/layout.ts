@@ -15,28 +15,36 @@ export const SAFE_MARGIN_MM = 4;
 export const MM_TO_PT = 72 / 25.4;
 
 export const CARD_COLORS = {
-  front: "#1B1B1B",
-  back: "#141414",
+  front: "#0D0D0D",
+  back: "#0D0D0D",
   white: "#FFFFFF",
-  muted: "#A3A3A3",
-  faint: "#8A8A8A",
+  accent: "#A12B2B",
+  qrEye: "#B22D2D",
+  qrEyePrint: "#FF7070",
   test: "#DC2626",
-  pattern: "#FFFFFF",
 } as const;
 
+export type CardFont = "display" | "body" | "mono";
+
 export const FRONT = {
-  text: { x: 10, y: 12.5, w: 44 },
-  name: { minPt: 8.5, maxPt: 11, maxLines: 2, gapAfter: 1.1 },
-  title: { minPt: 5.4, maxPt: 6.4, maxLines: 2, gapAfter: 0.5 },
-  accent: { x: 10, y: 0, w: 14, h: 0.6 },
-  qr: { x: 57.5, y: 25.5, w: 21, h: 21, quietModules: 4, minModuleMm: 0.4 },
-  code: { x: 10, y: 46.4, w: 42, h: 3, pt: 5.4 },
+  name: { x: 8.02, baseline: 11.415, w: 52, minPt: 5.5, maxPt: 8, maxLines: 2, lineHeightFactor: 1.14, trackingEm: -0.05 },
+  title: { x: 8.12, baseline: 13.919, w: 52, minPt: 3.6, maxPt: 5.3, maxLines: 2, lineHeightFactor: 1.16, trackingEm: -0.05 },
+  accent: { x: 8.489, y: 16.295, w: 11.776, h: 0.462 },
+  qr: { x: 67.552, y: 36.313, w: 11.887, h: 11.887, quietModules: 0, minModuleMm: 0.28 },
+  code: { x: 8.45, baseline: 47.492, w: 40, pt: 4.42, minPt: 3.2, trackingEm: 0.2, lineHeightFactor: 1.2 },
 } as const;
 
 export const BACK = {
-  brand: { x: 10, y: 36.5, w: 52, h: 11, minPt: 9, maxPt: 18 },
-  meta: { x: 10, y: 7, w: 69.6, h: 3, minPt: 3.8, maxPt: 4.8 },
+  brand: { x: 5.55, baseline: 48.65, w: 48, minPt: 7, maxPt: 14.3, trackingEm: 0 },
+  claim: { x: 56.2, baseline: 48.63, w: 15.2, pt: 2.85, trackingEm: 0 },
+  slash: { x1: 71.98, y1: 48.86, x2: 72.78, y2: 47.69, thickness: 0.12 },
+  established: { x: 74.22, baseline: 48.55, w: 7, pt: 2.6, trackingEm: 0 },
   testBand: { x: 0, y: 51, w: CARD_WIDTH_MM, h: 3 },
+} as const;
+
+export const BACK_TEXT = {
+  claim: "QUALITAT HAT EINEN NAMEN",
+  established: "ESTD. 1989",
 } as const;
 
 export interface CardTextInput {
@@ -56,9 +64,12 @@ export interface TextBlock {
   y: number;
   w: number;
   h: number;
+  baselines: number[];
   fontSizePt: number;
   lineHeightPt: number;
   weight: "regular" | "bold";
+  font: CardFont;
+  trackingEm: number;
   align: "left" | "right" | "center";
   color: string;
   maxLines: number;
@@ -69,39 +80,45 @@ export interface CardLayout {
     name: TextBlock;
     title: TextBlock | null;
     code: TextBlock;
+    accentY: number;
   };
   back: {
     brand: TextBlock;
-    meta: TextBlock;
+    claim: TextBlock;
+    established: TextBlock;
   };
 }
 
 /** Approximate advance width as a fraction of font size; shared by both renderers. */
-function glyphFactor(weight: "regular" | "bold"): number {
-  return weight === "bold" ? 0.585 : 0.55;
+function glyphFactor(font: CardFont): number {
+  if (font === "display") return 0.72;
+  if (font === "mono") return 0.68;
+  return 0.69;
 }
 
-export function textWidthMm(text: string, fontSizePt: number, weight: "regular" | "bold"): number {
-  return text.length * fontSizePt * glyphFactor(weight) * 0.352778;
+export function textWidthMm(text: string, fontSizePt: number, font: CardFont, trackingEm = 0): number {
+  const glyphs = [...text].length;
+  const tracking = Math.max(0, glyphs - 1) * trackingEm;
+  return (glyphs * glyphFactor(font) + tracking) * fontSizePt * 0.352778;
 }
 
-function wrapWords(text: string, maxWidthMm: number, fontSizePt: number, weight: "regular" | "bold"): string[] {
+function wrapWords(text: string, maxWidthMm: number, fontSizePt: number, font: CardFont, trackingEm: number): string[] {
   const words = text.trim().split(/\s+/).filter(Boolean);
   if (words.length === 0) return [];
   const lines: string[] = [];
   let current = "";
   for (const word of words) {
     const candidate = current ? `${current} ${word}` : word;
-    if (textWidthMm(candidate, fontSizePt, weight) <= maxWidthMm) {
+    if (textWidthMm(candidate, fontSizePt, font, trackingEm) <= maxWidthMm) {
       current = candidate;
       continue;
     }
     if (current) lines.push(current);
     // Break a single over-long token rather than allowing it outside the column.
-    if (textWidthMm(word, fontSizePt, weight) > maxWidthMm) {
+    if (textWidthMm(word, fontSizePt, font, trackingEm) > maxWidthMm) {
       let chunk = "";
       for (const char of word) {
-        if (textWidthMm(chunk + char, fontSizePt, weight) > maxWidthMm && chunk) {
+        if (textWidthMm(chunk + char, fontSizePt, font, trackingEm) > maxWidthMm && chunk) {
           lines.push(chunk);
           chunk = char;
         } else {
@@ -117,10 +134,10 @@ function wrapWords(text: string, maxWidthMm: number, fontSizePt: number, weight:
   return lines;
 }
 
-function ellipsize(text: string, maxWidthMm: number, fontSizePt: number, weight: "regular" | "bold"): string {
-  if (textWidthMm(text, fontSizePt, weight) <= maxWidthMm) return text;
+function ellipsize(text: string, maxWidthMm: number, fontSizePt: number, font: CardFont, trackingEm: number): string {
+  if (textWidthMm(text, fontSizePt, font, trackingEm) <= maxWidthMm) return text;
   let result = text;
-  while (result.length > 1 && textWidthMm(`${result}…`, fontSizePt, weight) > maxWidthMm) {
+  while (result.length > 1 && textWidthMm(`${result}…`, fontSizePt, font, trackingEm) > maxWidthMm) {
     result = result.slice(0, -1).trimEnd();
   }
   return `${result}…`;
@@ -136,19 +153,20 @@ export function fitText(
   maxLines: number,
   maxPt: number,
   minPt: number,
-  weight: "regular" | "bold",
+  font: CardFont,
+  trackingEm = 0,
   allowEllipsis = true,
 ): { lines: string[]; fontSizePt: number } {
   const clean = text.replace(/\s+/g, " ").trim();
   if (!clean) return { lines: [], fontSizePt: maxPt };
-  for (let size = maxPt; size >= minPt; size -= 0.25) {
-    let lines = wrapWords(clean, maxWidthMm, size, weight);
+  for (let size = maxPt; size >= minPt; size -= 0.1) {
+    let lines = wrapWords(clean, maxWidthMm, size, font, trackingEm);
     if (lines.length <= maxLines) return { lines, fontSizePt: size };
-    if (size === minPt) {
+    if (size <= minPt + 0.001) {
       lines = lines.slice(0, maxLines);
       if (allowEllipsis && lines.length > 0) {
         const last = lines.length - 1;
-        lines[last] = ellipsize(lines[last]!, maxWidthMm, size, weight);
+        lines[last] = ellipsize(lines[last]!, maxWidthMm, size, font, trackingEm);
       }
       return { lines, fontSizePt: size };
     }
@@ -159,27 +177,34 @@ export function fitText(
 function block(
   text: string,
   x: number,
-  y: number,
+  baseline: number,
   w: number,
   fontSizePt: number,
   lineHeightPt: number,
   weight: "regular" | "bold",
+  font: CardFont,
+  trackingEm: number,
   color: string,
   maxLines: number,
   lines?: string[],
   align: "left" | "right" | "center" = "left",
 ): TextBlock {
   const resolved = lines ?? [text];
+  const lineHeightMm = lineHeightPt * 0.352778;
+  const emMm = fontSizePt * 0.352778;
   return {
     text,
     lines: resolved,
     x,
-    y,
+    y: baseline - emMm * 0.72,
     w,
-    h: (resolved.length || 1) * lineHeightPt * 0.352778,
+    h: Math.max(0, resolved.length - 1) * lineHeightMm + emMm * 0.72,
+    baselines: resolved.map((_, index) => baseline + index * lineHeightMm),
     fontSizePt,
     lineHeightPt,
     weight,
+    font,
+    trackingEm,
     align,
     color,
     maxLines,
@@ -192,72 +217,135 @@ function upper(value: string): string {
 }
 
 export function layoutCard(input: CardTextInput): CardLayout {
-  // ── Front: name block on the left, QR on the right, code at the bottom. ────
-  const name = fitText(upper(input.fullName), FRONT.text.w, FRONT.name.maxLines, FRONT.name.maxPt, FRONT.name.minPt, "bold");
-  const nameLineHeight = name.fontSizePt * 1.12;
+  // ── Front: name and title top-left, rule under them, code bottom-left. ────
+  const name = fitText(upper(input.fullName), FRONT.name.w, FRONT.name.maxLines, FRONT.name.maxPt, FRONT.name.minPt, "display", FRONT.name.trackingEm);
+  const nameLineHeightPt = name.fontSizePt * FRONT.name.lineHeightFactor;
   const nameBlock = block(
     input.fullName,
-    FRONT.text.x,
-    FRONT.text.y,
-    FRONT.text.w,
+    FRONT.name.x,
+    FRONT.name.baseline,
+    FRONT.name.w,
     name.fontSizePt,
-    nameLineHeight,
+    nameLineHeightPt,
     "bold",
+    "display",
+    FRONT.name.trackingEm,
     CARD_COLORS.white,
     FRONT.name.maxLines,
     name.lines,
   );
+  const nameShift = (name.lines.length - 1) * nameLineHeightPt * 0.352778;
 
-  const cursor = FRONT.text.y + nameBlock.h + FRONT.name.gapAfter;
   const title = input.jobTitle?.trim() || "";
-  const titleFit = title ? fitText(upper(title), FRONT.text.w, FRONT.title.maxLines, FRONT.title.maxPt, FRONT.title.minPt, "regular") : null;
-  const titleBlock = titleFit
-    ? block(title, FRONT.text.x, cursor, FRONT.text.w, titleFit.fontSizePt, titleFit.fontSizePt * 1.18, "regular", CARD_COLORS.muted, FRONT.title.maxLines, titleFit.lines)
+  const titleFit = title
+    ? fitText(upper(title), FRONT.title.w, FRONT.title.maxLines, FRONT.title.maxPt, FRONT.title.minPt, "body", FRONT.title.trackingEm)
     : null;
+  const titleLineHeightPt = (titleFit?.fontSizePt ?? FRONT.title.maxPt) * FRONT.title.lineHeightFactor;
+  const titleBlock = titleFit
+    ? block(
+        title,
+        FRONT.title.x,
+        FRONT.title.baseline + nameShift,
+        FRONT.title.w,
+        titleFit.fontSizePt,
+        titleLineHeightPt,
+        "regular",
+        "body",
+        FRONT.title.trackingEm,
+        CARD_COLORS.white,
+        FRONT.title.maxLines,
+        titleFit.lines,
+      )
+    : null;
+  const titleShift = titleFit ? (titleFit.lines.length - 1) * titleLineHeightPt * 0.352778 : 0;
 
-  const codeBlock = block(`#${input.employeeCode}`, FRONT.code.x, FRONT.code.y, FRONT.code.w, FRONT.code.pt, 6, "regular", CARD_COLORS.muted, 1);
+  const codeFit = fitText(
+    `#${input.employeeCode}`,
+    FRONT.code.w,
+    1,
+    FRONT.code.pt,
+    FRONT.code.minPt,
+    "mono",
+    FRONT.code.trackingEm,
+  );
+  const codeBlock = block(
+    `#${input.employeeCode}`,
+    FRONT.code.x,
+    FRONT.code.baseline,
+    FRONT.code.w,
+    codeFit.fontSizePt,
+    codeFit.fontSizePt * FRONT.code.lineHeightFactor,
+    "regular",
+    "mono",
+    FRONT.code.trackingEm,
+    CARD_COLORS.white,
+    1,
+    codeFit.lines,
+  );
 
-  // ── Back: a quiet wordmark and the validity line. ──────────────────────────
-  const brandFit = fitText(upper(input.companyName), BACK.brand.w, 1, BACK.brand.maxPt, BACK.brand.minPt, "bold");
+  // ── Back: wordmark bottom-left, claim and ESTD. line bottom-right. ────────
+  const brandFit = fitText(upper(input.companyName), BACK.brand.w, 1, BACK.brand.maxPt, BACK.brand.minPt, "display", BACK.brand.trackingEm);
   const brandBlock = block(
     input.companyName,
     BACK.brand.x,
-    BACK.brand.y + (BACK.brand.h - brandFit.fontSizePt * 1.1 * 0.352778) / 2,
+    BACK.brand.baseline,
     BACK.brand.w,
     brandFit.fontSizePt,
     brandFit.fontSizePt * 1.1,
     "bold",
+    "display",
+    BACK.brand.trackingEm,
     CARD_COLORS.white,
     1,
     brandFit.lines,
   );
 
-  const metaText = [
-    `VALID UNTIL ${upper(input.validUntil)}`,
-    input.showVerifyHostOnCard && input.host ? upper(input.host) : "",
-  ]
-    .filter(Boolean)
-    .join("  /  ");
-  const metaFit = fitText(metaText, BACK.meta.w, 1, BACK.meta.maxPt, BACK.meta.minPt, "regular", false);
-  const metaBlock = block(metaText, BACK.meta.x, BACK.meta.y, BACK.meta.w, metaFit.fontSizePt, 5, "regular", CARD_COLORS.faint, 1, metaFit.lines, "right");
+  const claimBlock = block(
+    BACK_TEXT.claim,
+    BACK.claim.x,
+    BACK.claim.baseline,
+    BACK.claim.w,
+    BACK.claim.pt,
+    BACK.claim.pt * 1.2,
+    "regular",
+    "body",
+    BACK.claim.trackingEm,
+    CARD_COLORS.white,
+    1,
+  );
+
+  const establishedBlock = block(
+    BACK_TEXT.established,
+    BACK.established.x,
+    BACK.established.baseline,
+    BACK.established.w,
+    BACK.established.pt,
+    BACK.established.pt * 1.2,
+    "bold",
+    "display",
+    BACK.established.trackingEm,
+    CARD_COLORS.white,
+    1,
+  );
 
   return {
     front: {
       name: nameBlock,
       title: titleBlock,
       code: codeBlock,
+      accentY: FRONT.accent.y + nameShift + titleShift,
     },
     back: {
       brand: brandBlock,
-      meta: metaBlock,
+      claim: claimBlock,
+      established: establishedBlock,
     },
   };
 }
 
-/** Red rule sits just under the name block, like the reference card. */
+/** Red rule fixed under the name block. */
 export function accentTop(layout: CardLayout): number {
-  const last = layout.front.title ?? layout.front.name;
-  return last.y + last.h + 2;
+  return layout.front.accentY;
 }
 
 /** Geometry helpers used by the renderer and tests. */

@@ -34,7 +34,7 @@ function input(verifyBaseUrl: string): RenderCardInput {
 describe("card QR capacity", () => {
   it("rejects a matrix that is denser than the print minimum", () => {
     const fit = cardQrFit(45, 83);
-    expect(fit.totalModules).toBe(53);
+    expect(fit.totalModules).toBe(45);
     expect(fit.moduleMm).toBeLessThan(fit.minModuleMm);
     expect(fit.ok).toBe(false);
   });

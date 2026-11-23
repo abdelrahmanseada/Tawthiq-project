@@ -31,7 +31,7 @@ test("settings accepts IANA zones, reports every invalid field and falls back ca
   await expect(page.getByText("Choose a valid IANA time zone.").first()).toBeVisible();
   await expect(page.getByText("Use a six-digit hex colour.").first()).toBeVisible();
 
-  await expect(page.locator('[data-card-side="front"] > div').first()).toHaveCSS("background-color", "rgb(0, 0, 0)");
+  await expect(page.locator('[data-card-side="front"]')).toHaveCSS("background-color", "rgb(13, 13, 13)");
 
   await page.fill('input[name="name"]', "Bremer");
   await page.fill('input[name="primary_color"]', "#000000");
