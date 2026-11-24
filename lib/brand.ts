@@ -3,6 +3,8 @@ import en from "@/messages/en.json";
 
 export const PRODUCT_NAME = en.brand.name;
 export const COMPANY_NAME = PRODUCT_NAME;
+/** Company identity printed on the card and shown on the public verification page. */
+export const CARD_BRAND_NAME = "Bremer";
 export const TAGLINE = en.brand.tagline;
 export const COMPANY_DESCRIPTION = en.brand.description;
 export const DEFAULT_COPYRIGHT_TEMPLATE = `© {year} ${PRODUCT_NAME}`;

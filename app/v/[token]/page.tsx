@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import type { CSSProperties } from "react";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { BadgeCheck, CalendarClock, ShieldX, TriangleAlert } from "lucide-react";
-import { LogoMark } from "@/components/ui";
-import { PRODUCT_PRIMARY_COLOR, PRODUCT_SECONDARY_COLOR } from "@/lib/colors";
+import { VerifyBrandFooter, VerifyBrandHeader } from "@/components/VerifyBrand";
+import { CARD_BRAND_NAME } from "@/lib/brand";
 import { formatDate, formatDateTime } from "@/lib/format";
 import { getIpHash, sanitizeUserAgent } from "@/lib/http";
 import { checkVerifyRateLimit } from "@/lib/security/rate-limit";
 import { verifyPublicToken, type VerificationView } from "@/lib/services/verification";
-import { COMPANY_NAME, PRODUCT_NAME, copyrightText } from "@/lib/brand";
 import { DEFAULT_TIME_ZONE } from "@/lib/config";
 
 export const dynamic = "force-dynamic";
@@ -19,18 +17,20 @@ export const revalidate = 0;
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("verify");
   return {
-    title: t("pageTitle"),
+    title: { absolute: `${CARD_BRAND_NAME} · ${t("pageTitle")}` },
     robots: { index: false, follow: false, nocache: true },
   };
 }
 
 function StateIcon({ state }: { state: VerificationView["state"] }) {
-  const className = "h-10 w-10";
+  const className = "h-9 w-9";
   if (state === "valid") return <BadgeCheck className={className} aria-hidden="true" />;
   if (state === "expired") return <CalendarClock className={className} aria-hidden="true" />;
   if (state === "cancelled") return <ShieldX className={className} aria-hidden="true" />;
   return <TriangleAlert className={className} aria-hidden="true" />;
 }
+
+const LABEL = "text-[11px] font-semibold uppercase tracking-[0.16em] text-white/60";
 
 export default async function VerifyPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;
@@ -47,33 +47,30 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
   const now = new Date();
 
   const rate = await checkVerifyRateLimit(ipHash);
-  const productPrimary = PRODUCT_PRIMARY_COLOR;
 
   if (!rate.allowed) {
     return (
-      <main className="min-h-screen bg-surface" style={{ "--brand": productPrimary } as CSSProperties}>
-        <header className="border-b border-border bg-card">
-          <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-4">
-            <LogoMark className="h-10 w-10" />
-            <span className="font-bold text-ink">{PRODUCT_NAME}</span>
-          </div>
-        </header>
+      <main className="verify-shell min-h-screen">
+        <VerifyBrandHeader company={null} />
         <section className="mx-auto max-w-xl px-4 py-16 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-warning-tint text-warning">
-            <CalendarClock className="h-8 w-8" aria-hidden="true" />
+          <div className="verify-panel p-8">
+            <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#b45309] text-white">
+              <CalendarClock className="h-8 w-8" aria-hidden="true" />
+            </span>
+            <h1 className="verify-display mt-5 text-2xl font-semibold text-white">{t("rateLimitedTitle")}</h1>
+            <p className="verify-body mt-2 text-sm text-white/75">
+              {t("rateLimitedBody", { seconds: rate.retryAfterSeconds })}
+            </p>
           </div>
-          <h1 className="text-2xl font-bold text-ink">{t("rateLimitedTitle")}</h1>
-          <p className="mt-2 text-sm text-muted">{t("rateLimitedBody", { seconds: rate.retryAfterSeconds })}</p>
         </section>
+        <VerifyBrandFooter company={null} />
       </main>
     );
   }
 
   const result = await verifyPublicToken(token, { ipHash, userAgent, host: requestHost }, now);
   const company = result.company;
-  const brandPrimary = PRODUCT_PRIMARY_COLOR;
-  const brandSecondary = PRODUCT_SECONDARY_COLOR;
-  const brandName = company?.name ?? COMPANY_NAME;
+  const brandName = company?.name ?? CARD_BRAND_NAME;
   const timeZone = company?.time_zone ?? DEFAULT_TIME_ZONE;
   const valid = result.state === "valid";
   const title =
@@ -94,107 +91,98 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
           : t("invalidBody");
   const stateTone =
     result.state === "valid"
-      ? "border-success bg-success-tint text-success-fg"
+      ? "border-s-[#a12b2b]"
       : result.state === "expired"
-        ? "border-warning bg-warning-tint text-warning-fg"
-        : "border-danger bg-danger-tint text-danger-fg";
+        ? "border-s-[#b45309]"
+        : "border-s-[#5f5f5f]";
   const iconTone =
-    result.state === "valid" ? "bg-success text-white" : result.state === "expired" ? "bg-warning text-white" : "bg-danger text-white";
+    result.state === "valid"
+      ? "bg-[#8f0015] text-white"
+      : result.state === "expired"
+        ? "bg-[#b45309] text-white"
+        : "bg-[#333333] text-white";
 
   return (
-    <main className="min-h-screen bg-surface"
-      style={{ "--brand": brandPrimary, "--secondary": brandSecondary } as CSSProperties}
-    >
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4">
-          <div className="flex min-w-0 items-center gap-3">
-            <LogoMark className="h-10 w-10" />
-            <span className="truncate text-base font-bold text-ink">{PRODUCT_NAME}</span>
-          </div>
-        </div>
-      </header>
+    <main className="verify-shell min-h-screen">
+      <VerifyBrandHeader company={company} />
 
-      <section className="mx-auto max-w-5xl px-4 py-6 sm:py-10">
-        <div className={`verify-banner rounded-card border-s-8 p-5 sm:p-7 ${stateTone}`} role="status" aria-live="polite">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <span className={`verify-icon flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${iconTone}`}>
-              <StateIcon state={result.state} />
-            </span>
-            <div className="min-w-0">
-              <p className="text-xs font-bold uppercase tracking-[0.14em]">{tb("product")}</p>
-              <h1 className="mt-1 text-2xl font-bold leading-tight sm:text-3xl">{title}</h1>
-              <p className="mt-1.5 max-w-2xl text-sm leading-relaxed">{subtitle}</p>
-            </div>
+      <section className="mx-auto max-w-3xl px-4 py-6 sm:py-10">
+        <div
+          className={`verify-banner verify-panel flex flex-col gap-4 border-s-[6px] p-5 sm:flex-row sm:items-center sm:p-7 ${stateTone}`}
+          role="status"
+          aria-live="polite"
+        >
+          <span className={`verify-icon flex h-16 w-16 shrink-0 items-center justify-center rounded-full ${iconTone}`}>
+            <StateIcon state={result.state} />
+          </span>
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/60">{tb("product")}</p>
+            <h1 className="verify-display mt-2 text-2xl font-semibold leading-tight text-white sm:text-3xl">{title}</h1>
+            <p className="verify-body mt-2 max-w-2xl text-sm leading-relaxed text-white/75">{subtitle}</p>
           </div>
         </div>
 
         {valid && result.employee ? (
           <div className="mt-5">
-            <div className="card p-5 sm:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted">{t("validBadge")}</p>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight text-ink">{result.employee.full_name}</h2>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <div className="verify-panel p-5 sm:p-7">
+              <p className={LABEL}>{t("validBadge")}</p>
+              <h2 className="verify-display mt-2 text-2xl font-semibold uppercase leading-tight tracking-[0.01em] text-white sm:text-3xl">
+                {result.employee.full_name}
+              </h2>
+              <span className="mt-3 block h-[3px] w-12 bg-[#a12b2b]" aria-hidden="true" />
+
+              <dl className="mt-5 grid gap-4 sm:grid-cols-2">
                 {result.employee.job_title ? (
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t("jobTitle")}</p>
-                    <p className="mt-0.5 text-sm font-medium text-ink">{result.employee.job_title}</p>
+                    <dt className={LABEL}>{t("jobTitle")}</dt>
+                    <dd className="verify-body mt-1 text-base text-white">{result.employee.job_title}</dd>
                   </div>
                 ) : null}
                 {result.employee.department ? (
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t("department")}</p>
-                    <p className="mt-0.5 text-sm font-medium text-ink">{result.employee.department}</p>
+                    <dt className={LABEL}>{t("department")}</dt>
+                    <dd className="verify-body mt-1 text-base text-white">{result.employee.department}</dd>
                   </div>
                 ) : null}
                 {result.valid_until ? (
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted">{t("validUntil")}</p>
-                    <p className="mt-0.5 text-sm font-medium text-ink">{formatDate(new Date(result.valid_until), "en", timeZone)}</p>
+                    <dt className={LABEL}>{t("validUntil")}</dt>
+                    <dd className="verify-body mt-1 text-base text-white">
+                      {formatDate(new Date(result.valid_until), "en", timeZone)}
+                    </dd>
                   </div>
                 ) : null}
-              </div>
+              </dl>
 
-              <div className="checked-pulse mt-6 rounded-control border border-border bg-surface px-4 py-3">
-                <p className="text-xs font-medium text-muted">{t("checkedNowLabel")}</p>
-                <p className="mt-0.5 font-mono text-sm font-semibold text-ink" data-live-clock>
+              <div className="checked-pulse verify-inset mt-6 px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/55">
+                  {t("checkedNowLabel")}
+                </p>
+                <p className="verify-mono mt-1 text-sm font-semibold text-white" data-live-clock>
                   {formatDateTime(now, "en", timeZone)}
                 </p>
-                <p className="mt-1 text-[11px] text-subtle">{t("freshnessHint")}</p>
+                <p className="mt-1 text-[11px] text-white/50">{t("freshnessHint")}</p>
               </div>
             </div>
           </div>
         ) : (
-          <div className="mt-5 card p-5 sm:p-7">
-            <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-danger-tint text-danger">
-                <ShieldX className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-ink">{t("invalidTitle")}</p>
-                <p className="mt-1 text-sm leading-relaxed text-muted">{t("invalidBody")}</p>
-              </div>
-            </div>
-            <div className="mt-5 rounded-control border border-border bg-surface px-4 py-3">
-              <p className="text-xs font-medium text-muted">{t("checkedNowLabel")}</p>
-              <p className="mt-0.5 font-mono text-sm font-semibold text-ink" data-live-clock>
-                {formatDateTime(now, "en", timeZone)}
-              </p>
-            </div>
+          <div className="verify-panel mt-5 p-5 sm:p-7">
+            <p className={LABEL}>{t("checkedNowLabel")}</p>
+            <p className="verify-mono mt-1 text-sm font-semibold text-white" data-live-clock>
+              {formatDateTime(now, "en", timeZone)}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-white/70">{t("footerNote")}</p>
           </div>
         )}
 
         <div className="mt-6 flex justify-end">
-          <Link href={`/v/${token}/report`} className="btn btn-secondary">
+          <Link href={`/v/${token}/report`} className="btn verify-button">
             {t("reportProblem")}
           </Link>
         </div>
       </section>
 
-      <footer className="border-t border-border bg-card">
-        <div className="mx-auto max-w-5xl px-4 py-5 text-center text-xs text-muted">
-          <p className="font-semibold text-ink">{copyrightText()}</p>
-        </div>
-      </footer>
+      <VerifyBrandFooter company={company} />
 
       <script
         nonce={nonce}

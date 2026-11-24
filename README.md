@@ -1,12 +1,12 @@
 # Tawthiq — employee identity and verification
 
-Tawthiq is the system brand used across the website, login, dashboard, exports and public verification page. Bremer is the client company whose employees are managed here; only the printed card and its preview use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on the front of an ID card; photos are optional and the card falls back to initials. Anyone can scan the card with a normal phone camera. The public page shows a green **Verified employee of Bremer** with photo, name and job title, or a neutral amber/red invalid state.
+Tawthiq is the system brand used across the admin website, login, dashboard and exports. Bremer is the client company whose employees are managed here; the printed card, its preview and the public QR verification page use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on the front of an ID card; photos are optional and the card falls back to initials. Anyone can scan the card with a normal phone camera. The public page shows a black Bremer card page with a red-accented **Verified employee of Bremer** banner, name, job title, department and expiry date, or a neutral invalid state.
 
 ## What is in this build
 
 - Single company data: `Company.name = "Bremer"`, with tagline, website, phone, e-mail, card logo and card colours. Website identity is Tawthiq with teal `#0F766E` and amber `#F59E0B`.
 - English-only active UI, cards, XLSX, CSV and PDFs. Arabic remains dormant in `messages/ar.json`, `lib/pdf/arabic.ts` and `assets/dormant/`.
-- Light theme only, on every admin, auth and public verification page. `color-scheme: light`.
+- Light theme on every admin and auth page. `color-scheme: light`. The public verification page is a fixed dark Bremer card surface (`#0D0D0D`, red `#A12B2B`), not a user-selectable theme.
 - Bremer card logo upload with dark-background detection (`logo_bg_dark`); Tawthiq shield favicon/apple icon and system branding.
 - Owner/Admin/Viewer RBAC, forced first password change, TOTP 2FA with 10 single-use recovery codes, lockout, sessions, CSP nonces, rate limits, audit and scan logs.
 - CR80 85.6 × 54 mm cards from one millimetre layout source shared by PDF and web preview: QR on the front; a full-brand logo/website panel on the back; exact CR80, 3 mm bleed print-shop, A4 8-up duplex sheet, ZIP, test print.

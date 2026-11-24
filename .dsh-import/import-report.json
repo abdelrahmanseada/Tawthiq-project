@@ -1,0 +1,5798 @@
+﻿[
+    {
+        "pack":  "superpowers",
+        "skill":  "brainstorming",
+        "status":  "installed",
+        "detail":  "skills/brainstorming"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "diagnosing-superpowers",
+        "status":  "installed",
+        "detail":  "skills/diagnosing-superpowers"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "dispatching-parallel-agents",
+        "status":  "installed",
+        "detail":  "skills/dispatching-parallel-agents"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "executing-plans",
+        "status":  "installed",
+        "detail":  "skills/executing-plans"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "finishing-a-development-branch",
+        "status":  "installed",
+        "detail":  "skills/finishing-a-development-branch"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "receiving-code-review",
+        "status":  "installed",
+        "detail":  "skills/receiving-code-review"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "requesting-code-review",
+        "status":  "installed",
+        "detail":  "skills/requesting-code-review"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "subagent-driven-development",
+        "status":  "installed",
+        "detail":  "skills/subagent-driven-development"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "systematic-debugging",
+        "status":  "installed",
+        "detail":  "skills/systematic-debugging"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "test-driven-development",
+        "status":  "installed",
+        "detail":  "skills/test-driven-development"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "using-git-worktrees",
+        "status":  "installed",
+        "detail":  "skills/using-git-worktrees"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "using-superpowers",
+        "status":  "installed",
+        "detail":  "skills/using-superpowers"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "verification-before-completion",
+        "status":  "installed",
+        "detail":  "skills/verification-before-completion"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "writing-plans",
+        "status":  "installed",
+        "detail":  "skills/writing-plans"
+    },
+    {
+        "pack":  "superpowers",
+        "skill":  "writing-skills",
+        "status":  "installed",
+        "detail":  "skills/writing-skills"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-audit",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail-audit"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-debt",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail-debt"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-gain",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail-gain"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-help",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail-help"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail",
+        "status":  "installed",
+        "detail":  "skills/ponytail"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail-audit",
+        "status":  "installed",
+        "detail":  "skills/ponytail-audit"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail-debt",
+        "status":  "installed",
+        "detail":  "skills/ponytail-debt"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail-gain",
+        "status":  "installed",
+        "detail":  "skills/ponytail-gain"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail-help",
+        "status":  "installed",
+        "detail":  "skills/ponytail-help"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-ponytail-review",
+        "status":  "installed",
+        "detail":  "skills/ponytail-review"
+    },
+    {
+        "pack":  "ponytail",
+        "skill":  "ponytail-review",
+        "status":  "installed",
+        "detail":  ".openclaw/skills/ponytail-review"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "banner-design",
+        "status":  "installed",
+        "detail":  ".claude/skills/banner-design"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "brand",
+        "status":  "installed",
+        "detail":  ".claude/skills/brand"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "design",
+        "status":  "installed",
+        "detail":  ".claude/skills/design"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "design-system",
+        "status":  "installed",
+        "detail":  ".claude/skills/design-system"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "slides",
+        "status":  "installed",
+        "detail":  ".claude/skills/slides"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "ui-styling",
+        "status":  "installed",
+        "detail":  ".claude/skills/ui-styling"
+    },
+    {
+        "pack":  "ui-ux-pro-max",
+        "skill":  "ui-ux-pro-max",
+        "status":  "installed",
+        "detail":  ".claude/skills/ui-ux-pro-max"
+    },
+    {
+        "pack":  "graphify",
+        "skill":  "graphify",
+        "status":  "installed",
+        "detail":  "graphify"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "cavecrew",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/cavecrew"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/caveman"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-cavecrew",
+        "status":  "installed",
+        "detail":  "skills/cavecrew"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-caveman",
+        "status":  "installed",
+        "detail":  "skills/caveman"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-caveman-compress",
+        "status":  "installed",
+        "detail":  "skills/caveman-compress"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-caveman-stats",
+        "status":  "installed",
+        "detail":  "skills/caveman-stats"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-commit",
+        "status":  "installed",
+        "detail":  "skills/caveman-commit"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-compress",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/caveman-compress"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-discover",
+        "status":  "installed",
+        "detail":  "skills/caveman-discover"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-evidence-review",
+        "status":  "installed",
+        "detail":  "skills/caveman-evidence-review"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-explore",
+        "status":  "installed",
+        "detail":  "skills/caveman-explore"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-help",
+        "status":  "installed",
+        "detail":  "skills/caveman-help"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-learn",
+        "status":  "installed",
+        "detail":  "skills/caveman-learn"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-manage",
+        "status":  "installed",
+        "detail":  "skills/caveman-manage"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-megacave",
+        "status":  "installed",
+        "detail":  "skills/megacave"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-optimize",
+        "status":  "installed",
+        "detail":  "skills/caveman-optimize"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-review",
+        "status":  "installed",
+        "detail":  "skills/caveman-review"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-setup",
+        "status":  "installed",
+        "detail":  "skills/caveman-setup"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-stats",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/caveman-stats"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "caveman-ultracave",
+        "status":  "installed",
+        "detail":  "skills/ultracave"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "investigate-first",
+        "status":  "installed",
+        "detail":  "skills/investigate-first"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "lean-build",
+        "status":  "installed",
+        "detail":  "skills/lean-build"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "megacave",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/megacave"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "migration",
+        "status":  "installed",
+        "detail":  "skills/migration"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "safe-refactor",
+        "status":  "installed",
+        "detail":  "skills/safe-refactor"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "surgical-patch",
+        "status":  "installed",
+        "detail":  "skills/surgical-patch"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "ultracave",
+        "status":  "installed",
+        "detail":  "plugins/caveman/skills/ultracave"
+    },
+    {
+        "pack":  "caveman",
+        "skill":  "verify-and-stop",
+        "status":  "installed",
+        "detail":  "skills/verify-and-stop"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "accessibility-engineering",
+        "status":  "installed",
+        "detail":  "skills/accessibility-engineering"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "agent-skills-test-driven-development",
+        "status":  "installed",
+        "detail":  "skills/test-driven-development"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "api-and-interface-design",
+        "status":  "installed",
+        "detail":  "skills/api-and-interface-design"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "browser-testing-with-devtools",
+        "status":  "installed",
+        "detail":  "skills/browser-testing-with-devtools"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "ci-cd-and-automation",
+        "status":  "installed",
+        "detail":  "skills/ci-cd-and-automation"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "code-review-and-quality",
+        "status":  "installed",
+        "detail":  "skills/code-review-and-quality"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "code-simplification",
+        "status":  "installed",
+        "detail":  "skills/code-simplification"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "constraint-driven-development",
+        "status":  "installed",
+        "detail":  "skills/constraint-driven-development"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "context-engineering",
+        "status":  "installed",
+        "detail":  "skills/context-engineering"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "debugging-and-error-recovery",
+        "status":  "installed",
+        "detail":  "skills/debugging-and-error-recovery"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "deprecation-and-migration",
+        "status":  "installed",
+        "detail":  "skills/deprecation-and-migration"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "documentation-and-adrs",
+        "status":  "installed",
+        "detail":  "skills/documentation-and-adrs"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "doubt-driven-development",
+        "status":  "installed",
+        "detail":  "skills/doubt-driven-development"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "frontend-ui-engineering",
+        "status":  "installed",
+        "detail":  "skills/frontend-ui-engineering"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "git-workflow-and-versioning",
+        "status":  "installed",
+        "detail":  "skills/git-workflow-and-versioning"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "idea-refine",
+        "status":  "installed",
+        "detail":  "skills/idea-refine"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "incremental-implementation",
+        "status":  "installed",
+        "detail":  "skills/incremental-implementation"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "interview-me",
+        "status":  "installed",
+        "detail":  "skills/interview-me"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "observability-and-instrumentation",
+        "status":  "installed",
+        "detail":  "skills/observability-and-instrumentation"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "performance-optimization",
+        "status":  "installed",
+        "detail":  "skills/performance-optimization"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "planning-and-task-breakdown",
+        "status":  "installed",
+        "detail":  "skills/planning-and-task-breakdown"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "security-and-hardening",
+        "status":  "installed",
+        "detail":  "skills/security-and-hardening"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "shipping-and-launch",
+        "status":  "installed",
+        "detail":  "skills/shipping-and-launch"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "source-driven-development",
+        "status":  "installed",
+        "detail":  "skills/source-driven-development"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "spec-driven-development",
+        "status":  "installed",
+        "detail":  "skills/spec-driven-development"
+    },
+    {
+        "pack":  "agent-skills",
+        "skill":  "using-agent-skills",
+        "status":  "installed",
+        "detail":  "skills/using-agent-skills"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-chat",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-chat"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-dashboard",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-dashboard"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-diff",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-diff"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-domain",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-domain"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-explain",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-explain"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-figma",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-figma"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-knowledge",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-knowledge"
+    },
+    {
+        "pack":  "understand-anything",
+        "skill":  "understand-onboard",
+        "status":  "installed",
+        "detail":  "understand-anything-plugin/skills/understand-onboard"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "-21risk-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/-21risk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "-2chat-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/-2chat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ably-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ably-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "abstract-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/abstract-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "abuselpdb-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/abuselpdb-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "abyssale-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/abyssale-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "accelo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/accelo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "accredible-certificates-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/accredible-certificates-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "acculynx-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/acculynx-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "active-campaign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/active-campaign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "addresszen-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/addresszen-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "adobe-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/adobe-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "adrapid-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/adrapid-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "adyntel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/adyntel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "aeroleads-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/aeroleads-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "aero-workflow-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/aero-workflow-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "affinda-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/affinda-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "affinity-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/affinity-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agencyzoom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agencyzoom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agent-mail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agent-mail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agentql-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agentql-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agenty-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agenty-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agiled-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agiled-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "agility-cms-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/agility-cms-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Ahrefs Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/ahrefs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ai-ml-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ai-ml-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "aivoov-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/aivoov-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "alchemy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/alchemy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "algodocs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/algodocs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "algolia-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/algolia-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "all-images-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/all-images-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "alpha-vantage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/alpha-vantage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "altoviz-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/altoviz-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "alttext-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/alttext-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "amara-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/amara-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "amazon-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/amazon-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ambee-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ambee-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ambient-weather-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ambient-weather-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "amcards-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/amcards-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "anchor-browser-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/anchor-browser-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "anonyflow-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/anonyflow-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "anthropic_administrator-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/anthropic_administrator-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "anthropic-administrator-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/anthropic-administrator-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apaleo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apaleo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apex27-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apex27-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "api2pdf-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/api2pdf-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "api-bible-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/api-bible-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apiflash-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apiflash-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Apify Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/apify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "api-labz-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/api-labz-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apilio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apilio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "api-ninjas-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/api-ninjas-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apipie-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apipie-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "api-sports-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/api-sports-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apitemplate-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apitemplate-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "apiverve-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/apiverve-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Apollo Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/apollo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "appcircle-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/appcircle-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "appdrag-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/appdrag-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "appointo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/appointo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "appsflyer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/appsflyer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "appveyor-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/appveyor-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "artifacts-builder",
+        "status":  "installed",
+        "detail":  "artifacts-builder"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "aryn-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/aryn-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ascora-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ascora-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Ashby Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/ashby-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "asin-data-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/asin-data-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "astica-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/astica-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "async-interview-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/async-interview-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "atlassian-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/atlassian-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Attio Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/attio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "auth0-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/auth0-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "autobound-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/autobound-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "autom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/autom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "axonaut-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/axonaut-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ayrshare-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ayrshare-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "backendless-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/backendless-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bannerbear-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bannerbear-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bart-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bart-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "baselinker-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/baselinker-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "baserow-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/baserow-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "basin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/basin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "battlenet-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/battlenet-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "beaconchain-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/beaconchain-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "beaconstac-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/beaconstac-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "beamer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/beamer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "beeminder-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/beeminder-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bench-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bench-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "benchmark-email-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/benchmark-email-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "benzinga-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/benzinga-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bestbuy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bestbuy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "better-proposals-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/better-proposals-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "better-stack-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/better-stack-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bidsketch-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bidsketch-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "big-data-cloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/big-data-cloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bigmailer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bigmailer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bigml-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bigml-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bigpicture-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bigpicture-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bitquery-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bitquery-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bitwarden-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bitwarden-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "blackbaud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/blackbaud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "blackboard-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/blackboard-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "blocknative-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/blocknative-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "boldsign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/boldsign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bolna-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bolna-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "boloforms-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/boloforms-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bolt-iot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bolt-iot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bonsai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bonsai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bookingmood-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bookingmood-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "booqable-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/booqable-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "borneo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/borneo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "botbaba-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/botbaba-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "botpress-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/botpress-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "botsonic-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/botsonic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "botstar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/botstar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bouncer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bouncer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "boxhero-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/boxhero-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Braintree Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/braintree-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brandfetch-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brandfetch-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brand-guidelines",
+        "status":  "installed",
+        "detail":  "brand-guidelines"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "breeze-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/breeze-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "breezy-hr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/breezy-hr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brex-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brex-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brex-staging-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brex-staging-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brightdata-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brightdata-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brightpearl-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brightpearl-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "brilliant-directories-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/brilliant-directories-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "browseai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/browseai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "browserbase-tool-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/browserbase-tool-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "browserhub-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/browserhub-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "browserless-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/browserless-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "browser-tool-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/browser-tool-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "btcpay-server-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/btcpay-server-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bubble-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bubble-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bugbug-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bugbug-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bugherd-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bugherd-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bugsnag-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bugsnag-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "buildkite-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/buildkite-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "builtwith-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/builtwith-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "bunnycdn-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/bunnycdn-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "byteforms-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/byteforms-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cabinpanda-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cabinpanda-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cal-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cal-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "calendarhero-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/calendarhero-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "callerapi-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/callerapi-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "callingly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/callingly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "callpage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/callpage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "campaign-cleaner-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/campaign-cleaner-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "campayn-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/campayn-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "canny-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/canny-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "canvas-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/canvas-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "canvas-design",
+        "status":  "installed",
+        "detail":  "canvas-design"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Capsule CRM Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/capsule-crm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "capsule_crm-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/capsule_crm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "carbone-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/carbone-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cardly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cardly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "castingwords-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/castingwords-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cats-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cats-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cdr-platform-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cdr-platform-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "census-bureau-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/census-bureau-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "centralstationcrm-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/centralstationcrm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "certifier-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/certifier-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "changelog-generator",
+        "status":  "installed",
+        "detail":  "changelog-generator"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "chaser-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/chaser-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "chatbotkit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/chatbotkit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "chatfai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/chatfai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "chatwork-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/chatwork-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "chmeetings-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/chmeetings-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cincopa-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cincopa-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "claid-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/claid-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "classmarker-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/classmarker-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "clearout-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/clearout-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "clickmeeting-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/clickmeeting-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Clockify Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/clockify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudcart-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudcart-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudconvert-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudconvert-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudflare-api-key-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudflare-api-key-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudflare-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudflare-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudflare-browser-rendering-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudflare-browser-rendering-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Cloudinary Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/cloudinary-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudlayer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudlayer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cloudpress-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cloudpress-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "coassemble-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/coassemble-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "codacy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/codacy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "codeinterpreter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/codeinterpreter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "codereadr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/codereadr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Coinbase Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/coinbase-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "coinmarketcal-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/coinmarketcal-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "coinmarketcap-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/coinmarketcap-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "coinranking-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/coinranking-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "college-football-data-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/college-football-data-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "competitive-ads-extractor",
+        "status":  "installed",
+        "detail":  "competitive-ads-extractor"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "composio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/composio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "composio-search-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/composio-search-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "connect",
+        "status":  "installed",
+        "detail":  "connect"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "connect-apps",
+        "status":  "installed",
+        "detail":  "connect-apps"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "connecteam-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/connecteam-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Contentful Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/contentful-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "contentful-graphql-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/contentful-graphql-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "content-research-writer",
+        "status":  "installed",
+        "detail":  "content-research-writer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "control-d-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/control-d-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "conversion-tools-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/conversion-tools-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "convertapi-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/convertapi-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "conveyor-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/conveyor-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "convolo-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/convolo-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "corrently-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/corrently-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "countdown-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/countdown-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "coupa-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/coupa-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "craftmypdf-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/craftmypdf-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "crowdin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/crowdin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "crustdata-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/crustdata-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cults-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cults-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "curated-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/curated-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "currents-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/currents-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Customer.io Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/customerio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "customgpt-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/customgpt-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "customjs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/customjs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "cutt-ly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/cutt-ly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "d2lbrightspace-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/d2lbrightspace-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dadata-ru-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dadata-ru-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "daffy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/daffy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dailybot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dailybot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "datagma-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/datagma-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "datarobot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/datarobot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "deadline-funnel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/deadline-funnel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "deel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/deel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "deepgram-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/deepgram-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "demio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/demio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "desktime-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/desktime-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "detrack-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/detrack-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "developer-growth-analysis",
+        "status":  "installed",
+        "detail":  "developer-growth-analysis"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dialmycalls-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dialmycalls-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dialpad-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dialpad-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dictionary-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dictionary-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "diffbot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/diffbot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "digicert-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/digicert-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "digital-ocean-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/digital-ocean-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "discordbot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/discordbot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dnsfilter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dnsfilter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dock-certs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dock-certs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Docker Hub Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/docker-hub-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docker_hub-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/docker_hub-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docmosis-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docmosis-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docnify-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docnify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docsbot-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docsbot-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docsumo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docsumo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docugenerate-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docugenerate-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "documenso-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/documenso-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "documint-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/documint-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docupilot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docupilot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docupost-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docupost-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docuseal-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/docuseal-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "docx",
+        "status":  "installed",
+        "detail":  "document-skills/docx"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "domain-name-brainstormer",
+        "status":  "installed",
+        "detail":  "domain-name-brainstormer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "doppler-marketing-automation-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/doppler-marketing-automation-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "doppler-secretops-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/doppler-secretops-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dotsimple-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dotsimple-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dovetail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dovetail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dpd2-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dpd2-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "draftable-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/draftable-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dreamstudio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dreamstudio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dripcel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dripcel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "drip-jobs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/drip-jobs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dromo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dromo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dropbox-sign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dropbox-sign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dropcontact-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dropcontact-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "dungeon-fighter-online-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/dungeon-fighter-online-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Dynamics 365 Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/dynamics365-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "echtpost-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/echtpost-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ElevenLabs Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/elevenlabs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "elorus-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/elorus-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "emailable-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/emailable-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "emaillistverify-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/emaillistverify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "emailoctopus-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/emailoctopus-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "emelia-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/emelia-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "encodian-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/encodian-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "endorsal-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/endorsal-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "enginemailer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/enginemailer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "enigma-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/enigma-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "entelligence-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/entelligence-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "eodhd-apis-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/eodhd-apis-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "epic-games-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/epic-games-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "esignatures-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/esignatures-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "espocrm-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/espocrm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "esputnik-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/esputnik-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "etermin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/etermin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "evenium-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/evenium-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Eventbrite Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/eventbrite-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "eventee-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/eventee-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "eventzilla-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/eventzilla-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "everhour-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/everhour-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "eversign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/eversign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "exa-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/exa-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Excel Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/excel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "exist-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/exist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "expofp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/expofp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "extracta-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/extracta-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Facebook Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/facebook-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "faceup-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/faceup-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "factorial-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/factorial-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "feathery-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/feathery-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "felt-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/felt-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fibery-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fibery-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fidel-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fidel-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "file-organizer",
+        "status":  "installed",
+        "detail":  "file-organizer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "files-com-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/files-com-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fillout_forms-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/fillout_forms-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fillout-forms-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fillout-forms-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "finage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/finage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "findymail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/findymail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "finerworks-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/finerworks-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fingertip-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fingertip-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "finmei-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/finmei-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fireberry-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fireberry-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Firecrawl Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/firecrawl-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fireflies-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fireflies-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "firmao-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/firmao-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fitbit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fitbit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fixer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fixer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fixer-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fixer-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "flexisign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/flexisign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "flowiseai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/flowiseai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "flutterwave-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/flutterwave-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fluxguard-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fluxguard-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "folk-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/folk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fomo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fomo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "forcemanager-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/forcemanager-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "formbricks-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/formbricks-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "formcarry-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/formcarry-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "formdesk-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/formdesk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "formsite-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/formsite-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "foursquare-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/foursquare-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fraudlabs-pro-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fraudlabs-pro-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "FreshBooks Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/freshbooks-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "front-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/front-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "fullenrich-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/fullenrich-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gagelist-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gagelist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gamma-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gamma-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gan-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gan-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gatherup-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gatherup-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gemini-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gemini-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gender-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gender-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "genderapi-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/genderapi-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "genderize-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/genderize-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "geoapify-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/geoapify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "geocodio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/geocodio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "geokeo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/geokeo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "getform-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/getform-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gift-up-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gift-up-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gigasheet-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gigasheet-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "giphy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/giphy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gist-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "givebutter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/givebutter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gladia-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gladia-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gleap-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gleap-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "globalping-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/globalping-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "godial-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/godial-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Gong Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/gong-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "goodbits-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/goodbits-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "goody-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/goody-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google_admin-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/google_admin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google_classroom-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/google_classroom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google_maps-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/google_maps-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google_search_console-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/google_search_console-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-address-validation-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-address-validation-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-admin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-admin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googleads-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googleads-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googlebigquery-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googlebigquery-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googlecalendar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googlecalendar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-classroom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-classroom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-cloud-vision-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-cloud-vision-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googledocs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googledocs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googledrive-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googledrive-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-maps-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-maps-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googlemeet-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googlemeet-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googlephotos-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googlephotos-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "google-search-console-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/google-search-console-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googleslides-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googleslides-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googlesuper-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googlesuper-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "googletasks-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/googletasks-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Gorgias Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/gorgias-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "gosquared-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/gosquared-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "go-to-webinar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/go-to-webinar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "grafbase-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/grafbase-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "graphhopper-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/graphhopper-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "griptape-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/griptape-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "grist-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/grist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "GroqCloud Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/groqcloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Gumroad Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/gumroad-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "habitica-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/habitica-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hackernews-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hackernews-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "happy-scribe-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/happy-scribe-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Harvest Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/harvest-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hashnode-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hashnode-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "helcim-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/helcim-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "helloleads-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/helloleads-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "helpwise-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/helpwise-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "here-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/here-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "HeyGen Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/heygen-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "heyreach-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/heyreach-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "heyzine-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/heyzine-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "highergov-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/highergov-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "highlevel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/highlevel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "honeybadger-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/honeybadger-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "honeyhive-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/honeyhive-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hookdeck-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hookdeck-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hotspotsystem-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hotspotsystem-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "html-to-image-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/html-to-image-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "humanitix-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/humanitix-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "humanloop-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/humanloop-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Hunter Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/hunter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hypeauditor-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hypeauditor-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hyperbrowser-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hyperbrowser-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hyperise-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hyperise-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "hystruct-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/hystruct-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "icims-talent-cloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/icims-talent-cloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "icypeas-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/icypeas-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "idea-scale-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/idea-scale-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "identitycheck-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/identitycheck-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ignisign-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ignisign-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "image-enhancer",
+        "status":  "installed",
+        "detail":  "image-enhancer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "imagekit-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/imagekit-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "imgbb-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/imgbb-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "imgix-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/imgix-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "influxdb-cloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/influxdb-cloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "insighto-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/insighto-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "instacart-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/instacart-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Instantly Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/instantly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "intelliprint-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/intelliprint-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "internal-comms",
+        "status":  "installed",
+        "detail":  "internal-comms"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "interzoid-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/interzoid-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "invoice-organizer",
+        "status":  "installed",
+        "detail":  "invoice-organizer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ip2location-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ip2location-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ip2location-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ip2location-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ip2proxy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ip2proxy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ip2whois-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ip2whois-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ipdata-co-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ipdata-co-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ipinfo-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ipinfo-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "iqair-airvisual-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/iqair-airvisual-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "jigsawstack-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/jigsawstack-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "jobnimbus-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/jobnimbus-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Jotform Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/jotform-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "jumpcloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/jumpcloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "junglescout-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/junglescout-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kadoa-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kadoa-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kaggle-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kaggle-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kaleido-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kaleido-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "keap-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/keap-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "keen-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/keen-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kickbox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kickbox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "klipfolio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/klipfolio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ko-fi-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ko-fi-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Kommo Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/kommo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kontent-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kontent-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "kraken-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/kraken-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "l2s-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/l2s-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "labs64-netlicensing-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/labs64-netlicensing-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "landbot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/landbot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "langbase-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/langbase-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "langsmith-fetch",
+        "status":  "installed",
+        "detail":  "langsmith-fetch"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lastpass-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lastpass-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "launch_darkly-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/launch_darkly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "LaunchDarkly Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/launch-darkly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "leadfeeder-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/leadfeeder-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "leadoku-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/leadoku-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lead-research-assistant",
+        "status":  "installed",
+        "detail":  "lead-research-assistant"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "leiga-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/leiga-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Lemlist Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/lemlist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Lemon Squeezy Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/lemon-squeezy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lemon_squeezy-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/lemon_squeezy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lessonspace-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lessonspace-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Lever Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/lever-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "leverly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/leverly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lever-sandbox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lever-sandbox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lexoffice-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lexoffice-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "linguapop-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/linguapop-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "linkhut-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/linkhut-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "linkup-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/linkup-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "listclean-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/listclean-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "listennotes-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/listennotes-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "livesession-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/livesession-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lmnt-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lmnt-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "lodgify-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/lodgify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "logo-dev-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/logo-dev-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "loomio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/loomio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "loyverse-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/loyverse-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "magnetic-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/magnetic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailbluster-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailbluster-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailboxlayer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailboxlayer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailcheck-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailcheck-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailcoach-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailcoach-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "MailerLite Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/mailerlite-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailersend-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailersend-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mailsoftly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mailsoftly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mails-so-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mails-so-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "maintainx-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/maintainx-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "many_chat-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/many_chat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "many-chat-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/many-chat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mapbox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mapbox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mapulus-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mapulus-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mboum-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mboum-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mcp-builder",
+        "status":  "installed",
+        "detail":  "mcp-builder"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "meeting-insights-analyzer",
+        "status":  "installed",
+        "detail":  "meeting-insights-analyzer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "melo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/melo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mem0-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mem0-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mem-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mem-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "memberspot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/memberspot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "memberstack-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/memberstack-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "membervault-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/membervault-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "metaads-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/metaads-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "metaphor-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/metaphor-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mezmo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mezmo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Microsoft Clarity Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/microsoft-clarity-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "microsoft_clarity-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/microsoft_clarity-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "microsoft-tenant-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/microsoft-tenant-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "minerstat-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/minerstat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "missive-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/missive-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Mistral AI Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/mistral-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mistral_ai-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/mistral_ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mocean-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mocean-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moco-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moco-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "modelry-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/modelry-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moneybird-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moneybird-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moonclerk-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moonclerk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moosend-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moosend-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mopinion-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mopinion-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "more-trees-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/more-trees-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moxie-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moxie-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "moz-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/moz-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "msg91-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/msg91-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mural-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mural-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mx-technologies-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mx-technologies-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "mx-toolbox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/mx-toolbox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nango-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nango-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nano-nets-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nano-nets-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nasa-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nasa-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nasdaq-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nasdaq-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ncscale-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ncscale-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "needle-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/needle-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Neon Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/neon-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "NetSuite Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/netsuite-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "neuronwriter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/neuronwriter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "neutrino-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/neutrino-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "neverbounce-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/neverbounce-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "New Relic Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/new-relic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "new_relic-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/new_relic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "news-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/news-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nextdns-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nextdns-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ngrok-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ngrok-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ninox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ninox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "nocrm-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/nocrm-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "npm-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/npm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ocrspace-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ocrspace-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ocr-web-service-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ocr-web-service-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Omnisend Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/omnisend-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "oncehub-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/oncehub-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "onedesk-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/onedesk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "onepage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/onepage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "onesignal_rest_api-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/onesignal_rest_api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "onesignal-rest-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/onesignal-rest-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "onesignal-user-auth-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/onesignal-user-auth-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "OpenAI Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/openai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "opencage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/opencage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "opengraph-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/opengraph-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "openperplex-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/openperplex-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "openrouter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/openrouter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "open-sea-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/open-sea-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "openweather-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/openweather-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "optimoroute-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/optimoroute-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "owl-protocol-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/owl-protocol-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "page-x-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/page-x-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "PandaDoc Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/pandadoc-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "paradym-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/paradym-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "parallel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/parallel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "parma-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/parma-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "parsehub-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/parsehub-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "parsera-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/parsera-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "parseur-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/parseur-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "passcreator-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/passcreator-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "passslot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/passslot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "payhip-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/payhip-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdf",
+        "status":  "installed",
+        "detail":  "document-skills/pdf"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdf4me-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pdf4me-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdf-api-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pdf-api-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdf-co-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pdf-co-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdfless-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pdfless-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pdfmonkey-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pdfmonkey-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "peopledatalabs-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/peopledatalabs-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "perigon-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/perigon-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "perplexityai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/perplexityai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "persistiq-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/persistiq-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pexels-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pexels-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "PhantomBuster Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/phantombuster-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "piggy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/piggy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "piloterr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/piloterr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pilvio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pilvio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pingdom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pingdom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pipeline-crm-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pipeline-crm-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "placekey-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/placekey-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "placid-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/placid-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "plain-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/plain-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "plasmic-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/plasmic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "platerecognizer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/platerecognizer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "plisio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/plisio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "polygon-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/polygon-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "polygon-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/polygon-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "poptin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/poptin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "postgrid-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/postgrid-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "postgrid-verify-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/postgrid-verify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pptx",
+        "status":  "installed",
+        "detail":  "document-skills/pptx"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "precoro-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/precoro-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "prerender-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/prerender-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "printautopilot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/printautopilot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "prisma-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/prisma-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Prismic Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/prismic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "process-street-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/process-street-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "procfu-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/procfu-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Productboard Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/productboard-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "productlane-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/productlane-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "project-bubble-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/project-bubble-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "proofly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/proofly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "proxiedmail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/proxiedmail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pushbullet-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pushbullet-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "pushover-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/pushover-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "quaderno-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/quaderno-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "qualaroo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/qualaroo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "QuickBooks Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/quickbooks-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "radar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/radar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "raffle-winner-picker",
+        "status":  "installed",
+        "detail":  "raffle-winner-picker"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rafflys-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rafflys-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ragic-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ragic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "raisely-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/raisely-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Ramp Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/ramp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ravenseotools-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ravenseotools-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "realphonevalidation-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/realphonevalidation-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "re-amaze-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/re-amaze-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "recallai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/recallai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "recruitee-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/recruitee-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "refiner-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/refiner-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "remarkety-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/remarkety-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "remote-retrieval-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/remote-retrieval-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "remove-bg-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/remove-bg-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "renderform-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/renderform-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "repairshopr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/repairshopr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Replicate Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/replicate-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "reply-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/reply-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "reply-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/reply-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "resend-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/resend-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "respond-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/respond-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "retailed-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/retailed-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "retellai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/retellai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "retently-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/retently-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rev-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rev-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "revolt-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/revolt-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ring_central-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/ring_central-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "RingCentral Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/ring-central-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rippling-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rippling-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ritekit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ritekit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rkvst-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rkvst-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rocketlane-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rocketlane-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rootly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rootly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "rosette-text-analytics-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/rosette-text-analytics-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "route4me-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/route4me-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "safetyculture-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/safetyculture-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sage-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sage-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "salesforce-marketing-cloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/salesforce-marketing-cloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "salesforce-service-cloud-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/salesforce-service-cloud-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "salesmate-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/salesmate-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sap-successfactors-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sap-successfactors-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "satismeter-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/satismeter-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "scrape-do-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/scrape-do-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "scrapegraph-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/scrapegraph-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "scrapfly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/scrapfly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "scrapingant-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/scrapingant-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "scrapingbee-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/scrapingbee-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "screenshot-fyi-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/screenshot-fyi-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "screenshotone-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/screenshotone-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "seat-geek-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/seat-geek-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "securitytrails-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/securitytrails-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "segmetrics-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/segmetrics-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "seismic-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/seismic-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "semanticscholar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/semanticscholar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "SEMrush Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/semrush-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendbird-ai-chabot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendbird-ai-chabot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendbird-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendbird-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendfox-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendfox-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendlane-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendlane-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendloop-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendloop-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sendspark-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sendspark-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sensibo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sensibo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "seqera-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/seqera-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "serpapi-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/serpapi-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "serpdog-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/serpdog-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "serply-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/serply-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "servicem8-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/servicem8-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sevdesk-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sevdesk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "share_point-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/share_point-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "SharePoint Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/share-point-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "shipengine-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/shipengine-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Shortcut Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/shortcut-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "shorten-rest-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/shorten-rest-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "short-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/short-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "short-menu-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/short-menu-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "shortpixel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/shortpixel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "shotstack-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/shotstack-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sidetracker-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sidetracker-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "signaturely-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/signaturely-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "signpath-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/signpath-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "signwell-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/signwell-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "similarweb_digitalrank_api-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/similarweb_digitalrank_api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "similarweb-digitalrank-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/similarweb-digitalrank-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "simla-com-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/simla-com-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "simple-analytics-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/simple-analytics-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "simplesat-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/simplesat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sitespeakai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sitespeakai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "skill-creator",
+        "status":  "installed",
+        "detail":  "skill-creator"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "skill-share",
+        "status":  "installed",
+        "detail":  "skill-share"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "skyfire-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/skyfire-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "slackbot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/slackbot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "slack-gif-creator",
+        "status":  "installed",
+        "detail":  "slack-gif-creator"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "smartproxy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/smartproxy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "smartrecruiters-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/smartrecruiters-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sms-alert-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sms-alert-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "smtp2go-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/smtp2go-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "smugmug-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/smugmug-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Snowflake Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/snowflake-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sourcegraph-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sourcegraph-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "splitwise-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/splitwise-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "spoki-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/spoki-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "spondyr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/spondyr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Spotify Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/spotify-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "spotlightr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/spotlightr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sslmate-cert-spotter-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sslmate-cert-spotter-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "stack-exchange-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/stack-exchange-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "stannp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/stannp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "starton-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/starton-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "statuscake-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/statuscake-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "storeganise-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/storeganise-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "storerocket-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/storerocket-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "stormglass-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/stormglass-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "strava-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/strava-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "streamtime-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/streamtime-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "supadata-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/supadata-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "superchat-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/superchat-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "supportbee-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/supportbee-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "supportivekoala-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/supportivekoala-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "survey_monkey-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/survey_monkey-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "SurveyMonkey Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/survey-monkey-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "svix-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/svix-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "sympla-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/sympla-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "synthflow-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/synthflow-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "taggun-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/taggun-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tailored-resume-generator",
+        "status":  "installed",
+        "detail":  "tailored-resume-generator"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "talenthr-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/talenthr-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tally-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tally-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tapfiliate-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tapfiliate-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tapform-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tapform-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tavily-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tavily-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "taxjar-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/taxjar-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "teamcamp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/teamcamp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "telnyx-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/telnyx-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "teltel-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/teltel-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "templated-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/templated-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "template-skill",
+        "status":  "installed",
+        "detail":  "template-skill"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "test-app-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/test-app-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "textcortex-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/textcortex-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "textit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/textit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "textrazor-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/textrazor-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "text-to-pdf-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/text-to-pdf-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "thanks-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/thanks-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "theme-factory",
+        "status":  "installed",
+        "detail":  "theme-factory"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "the-odds-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/the-odds-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ticketmaster-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ticketmaster-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ticktick-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ticktick-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "timecamp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/timecamp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "timekit-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/timekit-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "timelinesai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/timelinesai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "timelink-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/timelink-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "timely-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/timely-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tinyurl-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tinyurl-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tisane-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tisane-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Toggl Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/toggl-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "token-metrics-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/token-metrics-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tomba-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tomba-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tomtom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tomtom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "toneden-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/toneden-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tpscheck-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tpscheck-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "triggercmd-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/triggercmd-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "tripadvisor-content-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/tripadvisor-content-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "turbot-pipes-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/turbot-pipes-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "turso-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/turso-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "twelve-data-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/twelve-data-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "twitch-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/twitch-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "twitter-algorithm-optimizer",
+        "status":  "installed",
+        "detail":  "twitter-algorithm-optimizer"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "twocaptcha-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/twocaptcha-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "typefully-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/typefully-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "typless-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/typless-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "u301-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/u301-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "unione-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/unione-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "updown-io-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/updown-io-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Uploadcare Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/uploadcare-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "uptimerobot-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/uptimerobot-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "userlist-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/userlist-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "v0-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/v0-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "venly-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/venly-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "veo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/veo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "verifiedemail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/verifiedemail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "veriphone-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/veriphone-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "vero-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/vero-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "vestaboard-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/vestaboard-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "virustotal-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/virustotal-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "visme-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/visme-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "waboxapp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/waboxapp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wachete-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wachete-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "waiverfile-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/waiverfile-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wakatime-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wakatime-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wati-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wati-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Wave Accounting Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/wave-accounting-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wave_accounting-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/wave_accounting-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "weathermap-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/weathermap-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "webapp-testing",
+        "status":  "installed",
+        "detail":  "webapp-testing"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Webex Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/webex-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "webscraping-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/webscraping-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "webvizio-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/webvizio-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "whautomate-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/whautomate-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "winston-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/winston-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wit-ai-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wit-ai-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wiz-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wiz-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "wolfram-alpha-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/wolfram-alpha-api-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "woodpecker-co-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/woodpecker-co-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "workable-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/workable-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Workday Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/workday-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "workiom-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/workiom-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "worksnaps-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/worksnaps-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "writer-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/writer-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Xero Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/xero-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "xlsx",
+        "status":  "installed",
+        "detail":  "document-skills/xlsx"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "yandex-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/yandex-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "yelp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/yelp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "y-gy-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/y-gy-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "ynab-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/ynab-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "yousearch-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/yousearch-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "youtube-downloader",
+        "status":  "installed",
+        "detail":  "video-downloader"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zenrows-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zenrows-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zenserp-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zenserp-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zeplin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zeplin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zerobounce-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zerobounce-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Zoho Books Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho-books-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "Zoho Desk Automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho-desk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_bigin-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_bigin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_books-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_books-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_desk-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_desk-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_inventory-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_inventory-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_invoice-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_invoice-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho_mail-automation",
+        "status":  "invalid-name",
+        "detail":  "composio-skills/zoho_mail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoho-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho-bigin-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoho-bigin-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho-inventory-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoho-inventory-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho-invoice-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoho-invoice-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoho-mail-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoho-mail-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zoominfo-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zoominfo-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zylvie-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zylvie-automation"
+    },
+    {
+        "pack":  "awesome-claude-skills",
+        "skill":  "zyte-api-automation",
+        "status":  "installed",
+        "detail":  "composio-skills/zyte-api-automation"
+    },
+    {
+        "pack":  "archify",
+        "skill":  null,
+        "status":  "error",
+        "detail":  "remote: Repository not found."
+    },
+    {
+        "pack":  "impeccable",
+        "skill":  "impeccable",
+        "status":  "installed",
+        "detail":  ".agent/skills/impeccable"
+    },
+    {
+        "pack":  "impeccable",
+        "skill":  "impeccable-impeccable",
+        "status":  "installed",
+        "detail":  ".agents/skills/impeccable"
+    },
+    {
+        "pack":  "impeccable",
+        "skill":  "impeccable-impeccable-2",
+        "status":  "installed",
+        "detail":  ".dsh/skills/impeccable"
+    }
+]

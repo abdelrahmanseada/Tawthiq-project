@@ -49,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" dir="ltr" data-theme="light" style={variables} suppressHydrationWarning>
-      <body className={`${latinFont.variable} ${cardDisplayFont.variable} ${cardBodyFont.variable} ${cardMonoFont.variable} min-h-screen bg-surface text-ink antialiased`}>
+      <body className={`${latinFont.variable} ${cardDisplayFont.variable} ${cardBodyFont.variable} ${cardMonoFont.variable} min-h-screen ${isPublicVerifyPage ? "bg-[#0d0d0d]" : "bg-surface"} text-ink antialiased`}>
         {isPublicVerifyPage ? (
           children
         ) : (

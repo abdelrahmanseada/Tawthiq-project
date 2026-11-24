@@ -1,0 +1,129 @@
+{
+  "width": 1181,
+  "height": 745,
+  "channels": 3,
+  "bitsPerChannel": 16,
+  "colorMode": 3,
+  "children": [
+    {
+      "depth": 0,
+      "id": 9,
+      "name": "Layer 4",
+      "type": "layer",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 33,
+        "right": 1181,
+        "bottom": 779,
+        "w": 1181,
+        "h": 746
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 0,
+      "id": 10,
+      "name": "Color Fill 1",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 0,
+      "id": 17,
+      "name": "Group 1",
+      "type": "group",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "pass through",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 1,
+      "id": 15,
+      "name": "Shape 2",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 1,
+      "id": 16,
+      "name": "Shape 2 copy",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 0,
+      "id": 11,
+      "name": "Shape 1",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    }
+  ]
+}

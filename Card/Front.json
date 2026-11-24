@@ -1,0 +1,320 @@
+{
+  "width": 1011,
+  "height": 638,
+  "channels": 3,
+  "bitsPerChannel": 16,
+  "colorMode": 3,
+  "children": [
+    {
+      "depth": 0,
+      "id": 8,
+      "name": "Color Fill 1",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 0,
+      "id": 10,
+      "name": "Senior Graphic Designer",
+      "type": "text",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 97,
+        "top": 149,
+        "right": 397,
+        "bottom": 165,
+        "w": 300,
+        "h": 16
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null,
+      "text": {
+        "value": "Senior Graphic Designer",
+        "transform": [
+          2.0361572158584993,
+          0,
+          0,
+          2.0482361447109634,
+          95.95831986785855,
+          164.45504320308203
+        ],
+        "orientation": "horizontal",
+        "antiAlias": "crisp",
+        "style": {
+          "font": {
+            "name": "Nord-Book",
+            "script": 0,
+            "type": 1,
+            "synthetic": 0
+          },
+          "fontSize": 10.78029,
+          "leading": 27,
+          "tracking": -50,
+          "autoKerning": true,
+          "kerning": 0,
+          "baselineDirection": 1,
+          "language": 37,
+          "fillColor": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          },
+          "hindiNumbers": true
+        },
+        "paragraphStyle": {
+          "justification": "left",
+          "autoHyphenate": false
+        },
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal"
+        },
+        "shapeType": "point"
+      }
+    },
+    {
+      "depth": 0,
+      "id": 11,
+      "name": "Alexander Mcqueen",
+      "type": "text",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 96,
+        "top": 113,
+        "right": 484,
+        "bottom": 136,
+        "w": 388,
+        "h": 23
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null,
+      "text": {
+        "value": "Alexander Mcqueen",
+        "transform": [
+          2.674108812433163,
+          0,
+          0,
+          2.689972209344536,
+          94.77362050700658,
+          134.87236296225524
+        ],
+        "orientation": "horizontal",
+        "antiAlias": "crisp",
+        "style": {
+          "font": {
+            "name": "Nord-Medium",
+            "script": 0,
+            "type": 0,
+            "synthetic": 0
+          },
+          "fontSize": 12.39493,
+          "leading": 27,
+          "tracking": -50,
+          "autoKerning": true,
+          "kerning": 0,
+          "baselineDirection": 1,
+          "language": 37,
+          "fillColor": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          },
+          "hindiNumbers": true
+        },
+        "paragraphStyle": {
+          "justification": "left",
+          "autoHyphenate": false
+        },
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal"
+        },
+        "shapeType": "point"
+      }
+    },
+    {
+      "depth": 0,
+      "id": 12,
+      "name": "Rectangle 2",
+      "type": "shape",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "w": 0,
+        "h": 0
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    },
+    {
+      "depth": 0,
+      "id": 16,
+      "name": "#345678923",
+      "type": "text",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 100,
+        "top": 547,
+        "right": 240,
+        "bottom": 562,
+        "w": 140,
+        "h": 15
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null,
+      "text": {
+        "value": "#345678923",
+        "transform": [
+          1.7502449264253372,
+          0,
+          0,
+          1.7502449264253386,
+          99.79881129316425,
+          561.118866726765
+        ],
+        "orientation": "horizontal",
+        "antiAlias": "crisp",
+        "style": {
+          "font": {
+            "name": "Arvo",
+            "script": 0,
+            "type": 1,
+            "synthetic": 0
+          },
+          "fontSize": 10.5201,
+          "fauxBold": false,
+          "fauxItalic": false,
+          "autoLeading": true,
+          "leading": 0.01,
+          "horizontalScale": 1,
+          "verticalScale": 1,
+          "tracking": 200,
+          "autoKerning": true,
+          "kerning": 0,
+          "baselineShift": 0,
+          "fontCaps": 0,
+          "fontBaseline": 0,
+          "underline": false,
+          "strikethrough": false,
+          "ligatures": true,
+          "dLigatures": false,
+          "baselineDirection": 1,
+          "tsume": 0,
+          "styleRunAlignment": 2,
+          "language": 37,
+          "noBreak": false,
+          "fillColor": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          },
+          "strokeColor": {
+            "r": 255,
+            "g": 255,
+            "b": 255
+          },
+          "yUnderline": 1,
+          "hindiNumbers": true,
+          "kashida": 1
+        },
+        "paragraphStyle": {
+          "justification": "left",
+          "firstLineIndent": 0,
+          "startIndent": 0,
+          "endIndent": 0,
+          "spaceBefore": 0,
+          "spaceAfter": 0,
+          "autoHyphenate": false,
+          "hyphenatedWordSize": 6,
+          "preHyphen": 2,
+          "postHyphen": 2,
+          "consecutiveHyphens": 8,
+          "zone": 36,
+          "wordSpacing": [
+            0.8,
+            1,
+            1.33
+          ],
+          "letterSpacing": [
+            0,
+            0,
+            0
+          ],
+          "glyphSpacing": [
+            1,
+            1,
+            1
+          ],
+          "autoLeading": 1.2,
+          "leadingType": 0,
+          "hanging": false,
+          "burasagari": false,
+          "kinsokuOrder": 0,
+          "everyLineComposer": false
+        },
+        "warp": {
+          "style": "none",
+          "value": 0,
+          "perspective": 0,
+          "perspectiveOther": 0,
+          "rotate": "horizontal"
+        },
+        "shapeType": "point"
+      }
+    },
+    {
+      "depth": 0,
+      "id": 18,
+      "name": "Vector Smart Object",
+      "type": "layer",
+      "hidden": false,
+      "opacity": 1,
+      "blendMode": "normal",
+      "bounds": {
+        "left": 797,
+        "top": 428,
+        "right": 939,
+        "bottom": 570,
+        "w": 142,
+        "h": 142
+      },
+      "clipping": false,
+      "fillColor": null,
+      "effects": null
+    }
+  ]
+}

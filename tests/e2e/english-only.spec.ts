@@ -24,7 +24,7 @@ test("company pages contain no Arabic text", async ({ page }) => {
   }
 });
 
-test("verify states are English and unknown tokens use neutral product branding", async ({ page }) => {
+test("verify states are English and unknown tokens use card company branding", async ({ page }) => {
   const employee = await prisma.employee.findFirstOrThrow({
     where: { company: { slug: "bremer" }, status: "ACTIVE", deleted_at: null },
   });
@@ -44,12 +44,12 @@ test("verify states are English and unknown tokens use neutral product branding"
     const validBody = await page.locator("body").innerText();
     expect(validBody).not.toMatch(ARABIC);
     expect(validBody).toContain("Bremer");
-    expect(validBody).toContain("© 2026 Tawthiq");
+    expect(validBody).toContain("© 2026 Bremer");
 
     await page.goto(`/v/${"B".repeat(32)}`);
     const invalidBody = await page.locator("body").innerText();
     expect(invalidBody).not.toMatch(ARABIC);
-    expect(invalidBody).toContain("Tawthiq");
+    expect(invalidBody).toContain("Bremer");
   } finally {
     await prisma.card.delete({ where: { id: card.id } });
   }

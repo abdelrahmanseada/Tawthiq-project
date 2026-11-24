@@ -177,6 +177,74 @@
   .skeleton {
     @apply animate-pulse rounded-control bg-border;
   }
+
+  /* Public card verification: Bremer card identity — black card, red rule, Nord/Arvo type. */
+  .verify-shell {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    color-scheme: dark;
+  }
+
+  .verify-wordmark {
+    font-family: var(--font-card-display), "Arial Narrow", Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.34em;
+    font-weight: 500;
+  }
+
+  .verify-display {
+    font-family: var(--font-card-display), "Arial Narrow", Arial, sans-serif;
+  }
+
+  .verify-body {
+    font-family: var(--font-card-body), "Arial Narrow", Arial, sans-serif;
+  }
+
+  .verify-mono {
+    font-family: var(--font-card-mono), Georgia, "Times New Roman", serif;
+  }
+
+  .verify-panel {
+    border: 1px solid #2b2b2b;
+    border-radius: 12px;
+    background-color: #151515;
+    box-shadow: 0 24px 60px -36px rgba(0, 0, 0, 0.95);
+  }
+
+  .verify-inset {
+    border: 1px solid #2b2b2b;
+    border-inline-start: 2px solid #a12b2b;
+    border-radius: 10px;
+    background-color: #0a0a0a;
+  }
+
+  .verify-button {
+    border-color: #5c5c5c;
+    background-color: transparent;
+    color: #ffffff;
+  }
+
+  .verify-button:hover {
+    background-color: #202020;
+  }
+
+  .verify-shell :focus-visible {
+    outline-color: #ffffff;
+  }
+
+  .verify-shell .input {
+    border-color: #2b2b2b;
+    background-color: #0a0a0a;
+    color: #ffffff;
+  }
+
+  .verify-shell .input::placeholder {
+    color: #9a9a9a;
+  }
+
+  .verify-shell .label {
+    color: #ffffff;
+  }
 }
 
 
