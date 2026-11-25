@@ -3,7 +3,7 @@ import { cardQrFit, measureVerifyBaseUrl, QrCapacityError, buildVerifyUrl } from
 import { renderCardPdf, type RenderCardInput } from "@/lib/pdf/card";
 
 const TOKEN = "Zx7Qp2Lm9Rt4Vw8Yb3Nc6Hd1Ks5Jf0Ga";
-const LONG_TUNNEL = "https://corn-seem-barbara-dirt.trycloudflare.com";
+const LONG_TUNNEL = "https://corn-seem-barbara-dirt-extra-long-tunnel-name-for-test.trycloudflare.com";
 const PRODUCTION_HOST = "https://verify.bremer-eg.com";
 
 function input(verifyBaseUrl: string): RenderCardInput {
@@ -33,8 +33,8 @@ function input(verifyBaseUrl: string): RenderCardInput {
 
 describe("card QR capacity", () => {
   it("rejects a matrix that is denser than the print minimum", () => {
-    const fit = cardQrFit(45, 83);
-    expect(fit.totalModules).toBe(45);
+    const fit = cardQrFit(53, 83);
+    expect(fit.totalModules).toBe(53);
     expect(fit.moduleMm).toBeLessThan(fit.minModuleMm);
     expect(fit.ok).toBe(false);
   });
@@ -49,20 +49,20 @@ describe("card QR capacity", () => {
     const fit = await measureVerifyBaseUrl(PRODUCTION_HOST);
     expect(fit.ok).toBe(true);
     expect(fit.hostLength).toBe("verify.bremer-eg.com".length);
-    expect(fit.maxHostLength).toBe(31);
+    expect(fit.maxHostLength).toBe(52);
   });
 
   it("refuses a long tunnel host and says how long the host may be", async () => {
     const fit = await measureVerifyBaseUrl(LONG_TUNNEL);
     expect(fit.ok).toBe(false);
     expect(fit.hostLength).toBeGreaterThan(fit.maxHostLength);
-    expect(fit.maxHostLength).toBe(31);
+    expect(fit.maxHostLength).toBe(65);
   });
 
   it("does not render a card whose QR cannot be printed, and names the fix", async () => {
     const error = await renderCardPdf(input(LONG_TUNNEL)).catch((caught: unknown) => caught);
     expect(error).toBeInstanceOf(QrCapacityError);
-    expect((error as QrCapacityError).host).toBe("corn-seem-barbara-dirt.trycloudflare.com");
+    expect((error as QrCapacityError).host).toBe("corn-seem-barbara-dirt-extra-long-tunnel-name-for-test.trycloudflare.com");
     expect((error as Error).message).toContain("Use a shorter verification domain");
   });
 

@@ -91,16 +91,16 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
           : t("invalidBody");
   const stateTone =
     result.state === "valid"
-      ? "border-s-[#a12b2b]"
+      ? "border-s-[#15803d]"
       : result.state === "expired"
         ? "border-s-[#b45309]"
-        : "border-s-[#5f5f5f]";
+        : "border-s-[#a12b2b]";
   const iconTone =
     result.state === "valid"
-      ? "bg-[#8f0015] text-white"
+      ? "bg-[#15803d] text-white"
       : result.state === "expired"
         ? "bg-[#b45309] text-white"
-        : "bg-[#333333] text-white";
+        : "bg-[#8f0015] text-white";
 
   return (
     <main className="verify-shell min-h-screen">

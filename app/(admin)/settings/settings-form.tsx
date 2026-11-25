@@ -148,7 +148,7 @@ export function SettingsForm({
         ) : null}
         {state.error === "verify_url_too_long" ? (
           <Alert tone="danger" title={t("verifyUrlTooLongTitle")}>
-            {t("verifyUrlTooLong", { max: state.maxHostLength ?? 31 })}
+            {t("verifyUrlTooLong", { max: state.maxHostLength ?? 65 })}
           </Alert>
         ) : null}
 

@@ -30,13 +30,13 @@ export const FRONT = {
   name: { x: 8.02, baseline: 11.415, w: 52, minPt: 5.5, maxPt: 8, maxLines: 2, lineHeightFactor: 1.14, trackingEm: -0.05 },
   title: { x: 8.12, baseline: 13.919, w: 52, minPt: 3.6, maxPt: 5.3, maxLines: 2, lineHeightFactor: 1.16, trackingEm: -0.05 },
   accent: { x: 8.489, y: 16.295, w: 11.776, h: 0.462 },
-  qr: { x: 67.552, y: 36.313, w: 11.887, h: 11.887, quietModules: 0, minModuleMm: 0.28 },
-  code: { x: 8.45, baseline: 47.492, w: 40, pt: 4.42, minPt: 3.2, trackingEm: 0.2, lineHeightFactor: 1.2 },
+  qr: { x: 67.6, y: 36, w: 14, h: 14, quietModules: 0, minModuleMm: 0.28 },
+  code: { x: 8.45, baseline: 47.492, w: 40, pt: 5.2, minPt: 3.8, trackingEm: 0.2, lineHeightFactor: 1.2 },
 } as const;
 
 export const BACK = {
   brand: { x: 5.55, baseline: 48.65, w: 48, minPt: 7, maxPt: 14.3, trackingEm: 0 },
-  claim: { x: 56.2, baseline: 48.63, w: 15.2, pt: 2.85, trackingEm: 0 },
+  claim: { x: 53.9, baseline: 48.63, w: 17.4, pt: 3.2, trackingEm: 0 },
   slash: { x1: 71.98, y1: 48.86, x2: 72.78, y2: 47.69, thickness: 0.12 },
   established: { x: 74.22, baseline: 48.55, w: 7, pt: 2.6, trackingEm: 0 },
   testBand: { x: 0, y: 51, w: CARD_WIDTH_MM, h: 3 },
@@ -275,7 +275,7 @@ export function layoutCard(input: CardTextInput): CardLayout {
     FRONT.code.w,
     codeFit.fontSizePt,
     codeFit.fontSizePt * FRONT.code.lineHeightFactor,
-    "regular",
+    "bold",
     "mono",
     FRONT.code.trackingEm,
     CARD_COLORS.white,

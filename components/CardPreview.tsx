@@ -38,6 +38,7 @@ function SvgText({ block }: { block: TextBlock }) {
     <text
       fontFamily={FONT_VARS[block.font]}
       fontSize={fontSizeMm}
+      fontWeight={block.weight === "bold" ? 700 : 400}
       letterSpacing={block.trackingEm * fontSizeMm}
       fill={block.color}
       textAnchor={block.align === "right" ? "end" : block.align === "center" ? "middle" : "start"}

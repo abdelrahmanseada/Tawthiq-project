@@ -1,4 +1,4 @@
-import { PDFDocument, PDFFont, rgb, type PDFPage } from "pdf-lib";
+import { PDFDocument, PDFFont, PDFNumber, PDFOperator, PDFOperatorNames, rgb, type PDFPage } from "pdf-lib";
 import {
   BACK,
   CARD_COLORS,
@@ -96,6 +96,19 @@ function drawBlock(
 ) {
   const font = fonts[text.font];
   const color = pdfColor(text.color);
+  const bold = text.weight === "bold";
+  if (bold) {
+    // The card faces ship one weight each; fill+stroke fakes the heavier cut without a second font file.
+    page.pushOperators(
+      PDFOperator.of(PDFOperatorNames.StrokingColorRgb, [
+        PDFNumber.of(color.red),
+        PDFNumber.of(color.green),
+        PDFNumber.of(color.blue),
+      ]),
+      PDFOperator.of(PDFOperatorNames.SetLineWidth, [PDFNumber.of(text.fontSizePt * 0.045)]),
+      PDFOperator.of(PDFOperatorNames.SetTextRenderingMode, [PDFNumber.of(2)]),
+    );
+  }
   for (let index = 0; index < text.lines.length; index += 1) {
     const line = text.lines[index]!;
     const width = lineWidth(line, font, text.fontSizePt, text.trackingEm);
@@ -117,6 +130,7 @@ function drawBlock(
       cursor += font.widthOfTextAtSize(glyph, text.fontSizePt) + text.trackingEm * text.fontSizePt;
     }
   }
+  if (bold) page.pushOperators(PDFOperator.of(PDFOperatorNames.SetTextRenderingMode, [PDFNumber.of(0)]));
 }
 
 function drawTestPattern(

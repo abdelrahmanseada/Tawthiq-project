@@ -1,6 +1,6 @@
 # Tawthiq — employee identity and verification
 
-Tawthiq is the system brand used across the admin website, login, dashboard and exports. Bremer is the client company whose employees are managed here; the printed card, its preview and the public QR verification page use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on the front of an ID card; photos are optional and the card falls back to initials. Anyone can scan the card with a normal phone camera. The public page shows a black Bremer card page with a red-accented **Verified employee of Bremer** banner, name, job title, department and expiry date, or a neutral invalid state.
+Tawthiq is the system brand used across the admin website, login, dashboard and exports. Bremer is the client company whose employees are managed here; the printed card, its preview and the public QR verification page use Bremer’s logo, name and black/red card palette. Bremer HR adds employees one at a time or from Excel; each employee receives a unique QR code printed on the front of an ID card; photos are optional and the card falls back to initials. Anyone can scan the card with a normal phone camera. The public page shows a black Bremer card page with a green-accented **Verified employee of Bremer** banner, name, job title, department and expiry date, or a red/amber invalid state.
 
 ## What is in this build
 
