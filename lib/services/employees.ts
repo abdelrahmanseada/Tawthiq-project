@@ -297,20 +297,15 @@ export async function updateEmployee(
 
   const photoChanged = Boolean(photoBuffer && photoBuffer.length > 0);
   const photoRemoved = removePhoto && !photoChanged && Boolean(existing.photo_path);
-  const identityChanged =
-    photoChanged ||
-    existing.full_name !== fullName ||
-    (existing.department ?? null) !== department ||
-    (existing.job_title ?? null) !== jobTitle;
-  const expiryChanged = !activeCard || activeCard.expires_at.getTime() !== expiresAt.getTime();
-  const needsNewCard = identityChanged || expiryChanged || Boolean(activeCard && !activeCard.token_enc);
+  // Cards are permanent credentials: editing employee data or validity never rotates the token.
+  const needsCard = !activeCard || !activeCard.token_enc;
 
   try {
     if (photoChanged && photoBuffer) {
       newPhotoPath = await savePhoto(companyId, photoBuffer);
     }
 
-    if (needsNewCard) {
+    if (needsCard) {
       prepared = prepareCard(expiresAt);
     }
 
@@ -328,17 +323,21 @@ export async function updateEmployee(
 
       let card: Card | null = activeCard;
       if (prepared) {
-        if (activeCard) {
-          await tx.card.updateMany({
-            where: { employee_id: employeeId, status: "ACTIVE" },
-            data: {
-              status: "REVOKED",
-              revoked_at: new Date(),
-              revoked_reason: "Employee data updated",
-            },
-          });
-        }
+        // Only reached for legacy cards without a recoverable token.
+        await tx.card.updateMany({
+          where: { employee_id: employeeId, status: "ACTIVE" },
+          data: {
+            status: "REVOKED",
+            revoked_at: new Date(),
+            revoked_reason: "Replaced (no usable token)",
+          },
+        });
         card = await persistCard(tx, prepared, { employeeId, adminId: context.adminId });
+      } else if (activeCard && activeCard.expires_at.getTime() !== expiresAt.getTime()) {
+        card = await tx.card.update({
+          where: { id: activeCard.id },
+          data: { expires_at: expiresAt },
+        });
       }
       return { employee, card };
     });

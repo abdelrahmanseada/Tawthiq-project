@@ -12,7 +12,6 @@ import {
   defaultCardExpiry,
   persistCard,
   prepareCard,
-  type PreparedCard,
 } from "@/lib/services/cards";
 import { writeAuditLog } from "@/lib/audit";
 import { buildErrorReport, type ImportErrorReportRow } from "@/lib/excel/report";
@@ -203,32 +202,21 @@ async function processRow(
     if (!existing) return { action: "ERROR", errors: ["employee_missing"] };
   }
 
-  let prepared: PreparedCard | null = null;
-
   try {
     const employeeId = existing?.id ?? newId();
-    const expiresAt = row.expires_at
+    const requestedExpiry = row.expires_at
       ? cardExpiryFromInput(row.expires_at, context.company)
-      : defaultCardExpiry(context.company);
-    prepared = prepareCard(expiresAt);
-    const preparedCard = prepared;
+      : null;
 
     const action = await prisma.$transaction(async (tx) => {
+      const activeCard = existing
+        ? await tx.card.findFirst({
+            where: { employee_id: employeeId, status: "ACTIVE", token_enc: { not: null } },
+            orderBy: { issued_at: "desc" },
+          })
+        : null;
+
       if (existing) {
-        const activeCards = await tx.card.findMany({
-          where: { employee_id: employeeId, status: "ACTIVE" },
-          select: { id: true },
-        });
-        if (activeCards.length > 0) {
-          await tx.card.updateMany({
-            where: { employee_id: employeeId, status: "ACTIVE" },
-            data: {
-              status: "REVOKED",
-              revoked_at: new Date(),
-              revoked_reason: "Updated by bulk import",
-            },
-          });
-        }
         await tx.employee.update({
           where: { id: employeeId },
           data: {
@@ -254,11 +242,17 @@ async function processRow(
         });
       }
 
-      await persistCard(tx, preparedCard, {
-        employeeId,
-        adminId: context.adminId,
-        importBatchId: context.batchId,
-      });
+      // Existing cards keep their token; only mint one when there is no usable active card.
+      if (!existing || !activeCard) {
+        const prepared = prepareCard(requestedExpiry ?? defaultCardExpiry(context.company));
+        await persistCard(tx, prepared, {
+          employeeId,
+          adminId: context.adminId,
+          importBatchId: context.batchId,
+        });
+      } else if (requestedExpiry && activeCard.expires_at.getTime() !== requestedExpiry.getTime()) {
+        await tx.card.update({ where: { id: activeCard.id }, data: { expires_at: requestedExpiry } });
+      }
 
       return existing ? (existing.deleted_at ? "RESTORE" : "UPDATE") : "CREATE";
     });
